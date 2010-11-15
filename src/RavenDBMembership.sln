@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenDBMembership.Web", "RavenDBMembership.Web\RavenDBMembership.Web.csproj", "{1F8650C0-9240-4B75-A2FF-FD7E5990F64A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenDBMembership", "RavenDBMembership\RavenDBMembership.csproj", "{07CCE5B6-9111-46DC-AAEC-00D80E19FE4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenDBMembership.Tests", "RavenDBMembership.Tests\RavenDBMembership.Tests.csproj", "{FAC94456-EEE7-46D5-8356-532EAD56E8DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F8650C0-9240-4B75-A2FF-FD7E5990F64A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F8650C0-9240-4B75-A2FF-FD7E5990F64A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F8650C0-9240-4B75-A2FF-FD7E5990F64A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F8650C0-9240-4B75-A2FF-FD7E5990F64A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07CCE5B6-9111-46DC-AAEC-00D80E19FE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07CCE5B6-9111-46DC-AAEC-00D80E19FE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07CCE5B6-9111-46DC-AAEC-00D80E19FE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07CCE5B6-9111-46DC-AAEC-00D80E19FE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAC94456-EEE7-46D5-8356-532EAD56E8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC94456-EEE7-46D5-8356-532EAD56E8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC94456-EEE7-46D5-8356-532EAD56E8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC94456-EEE7-46D5-8356-532EAD56E8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = ..
+	EndGlobalSection
+EndGlobal

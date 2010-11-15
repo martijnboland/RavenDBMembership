@@ -1,0 +1,2 @@
+ASP.NET Membership provider with RavenDB as backend. The Solution contains the
+provider, a unit test project and an ASP.NET MVC 3 sample app.
