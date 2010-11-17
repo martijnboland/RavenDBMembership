@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAuthorizationService.cs" />
     <Compile Include="PasswordUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\RavenDBMembershipProvider.cs" />

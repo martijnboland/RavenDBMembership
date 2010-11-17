@@ -333,6 +333,8 @@ namespace RavenDBMembership.Provider
 				var user = q.SingleOrDefault();
 				if (user != null && user.PasswordHash == PasswordUtil.HashPassword(password, user.PasswordSalt))
 				{
+					user.DateLastLogin = DateTime.Now;
+					session.SaveChanges();
 					return true;
 				}
 			}

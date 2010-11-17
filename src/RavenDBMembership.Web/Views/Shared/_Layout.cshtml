@@ -16,11 +16,13 @@
             <div id="logindisplay">
                 @Html.Partial("_LogOnPartial")
             </div>
-
+			
             <div id="menucontainer">
 
                 <ul id="menu">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+					<li>@Html.ActionLink("Manage Users", "ManageUsers", "Account")</li>
+					<li>@Html.ActionLink("Manage Roles and Permissions", "ManageRoles", "Account")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
 

@@ -88,10 +88,10 @@ namespace RavenDBMembership.Tests
 				var membershipUser = provider.CreateUser("martijn", "1234ABCD", "martijn@boland.org", null, null, true, null, out status);
 
 				// Act
-				Thread.Sleep(500);
 				provider.DeleteUser("martijn", true);
 
 				// Assert
+				Thread.Sleep(500);
 				using (var session = store.OpenSession())
 				{
 					Assert.Equal(0, session.Query<User>().Count());

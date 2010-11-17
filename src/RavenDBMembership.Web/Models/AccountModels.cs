@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Transactions;
 
 namespace RavenDBMembership.Web.Models
 {
@@ -85,20 +86,33 @@ namespace RavenDBMembership.Web.Models
 		bool ValidateUser(string userName, string password);
 		MembershipCreateStatus CreateUser(string userName, string password, string email);
 		bool ChangePassword(string userName, string oldPassword, string newPassword);
+
+		MembershipUserCollection GetAllUsers();
+
+		MembershipUser GetUser(string username);
+
+		string[] GetAllRoles();
+
+		string[] GetRolesForUser(string username);
+
+		void AddRole(string roleName);
+
+		void UpdateUser(MembershipUser user, string[] roles);
 	}
 
 	public class AccountMembershipService : IMembershipService
 	{
 		private readonly MembershipProvider _provider;
+		private readonly RoleProvider _roleProvider;
 
-		public AccountMembershipService()
-			: this(null)
+		public AccountMembershipService() : this(null, null)
 		{
 		}
 
-		public AccountMembershipService(MembershipProvider provider)
+		public AccountMembershipService(MembershipProvider provider, RoleProvider roleProvider)
 		{
 			_provider = provider ?? Membership.Provider;
+			_roleProvider = roleProvider ?? Roles.Provider;
 		}
 
 		public int MinPasswordLength
@@ -148,6 +162,53 @@ namespace RavenDBMembership.Web.Models
 			catch (MembershipPasswordException)
 			{
 				return false;
+			}
+		}
+
+		public MembershipUserCollection GetAllUsers()
+		{
+			int totalRecords;
+			return _provider.GetAllUsers(0, 1000, out totalRecords);
+		}
+
+		public MembershipUser GetUser(string username)
+		{
+			return _provider.GetUser(username, false);
+		}
+
+		public string[] GetAllRoles()
+		{
+			return _roleProvider.GetAllRoles();
+		}
+
+		public string[] GetRolesForUser(string username)
+		{
+			return _roleProvider.GetRolesForUser(username);
+		}
+
+		public void AddRole(string roleName)
+		{
+			_roleProvider.CreateRole(roleName);
+		}
+
+		public void UpdateUser(MembershipUser user, string[] roles)
+		{
+			using (var ts = new TransactionScope())
+			{
+				_provider.UpdateUser(user);
+				var existingRoles = _roleProvider.GetRolesForUser(user.UserName);
+				if (roles != null && roles.Length > 0)
+				{
+					var rolesToBeAdded = roles.Except(existingRoles).ToArray();
+					_roleProvider.AddUsersToRoles(new[] { user.UserName }, rolesToBeAdded);
+				}
+				if (existingRoles.Length > 0)
+				{
+					var rolesToBeDeleted = (roles != null ? existingRoles.Except(roles) : existingRoles).ToArray();
+					_roleProvider.RemoveUsersFromRoles(new[] { user.UserName }, rolesToBeDeleted);
+				}
+
+				ts.Complete();
 			}
 		}
 	}

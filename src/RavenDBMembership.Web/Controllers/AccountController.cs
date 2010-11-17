@@ -147,5 +147,49 @@ namespace RavenDBMembership.Web.Controllers
 			return View();
 		}
 
+		public ActionResult ManageUsers()
+		{
+			var users = MembershipService.GetAllUsers();
+			return View(users);
+		}
+
+		public ActionResult ManageRoles()
+		{
+			var roles = MembershipService.GetAllRoles();
+			return View(roles);
+		}
+
+		[HttpPost]
+		public ActionResult ManageRoles(string roleName)
+		{
+			if (String.IsNullOrEmpty(roleName))
+			{
+				ModelState.AddModelError("roleName", "Name is required");
+				return ManageRoles();
+			}
+			else
+			{
+				MembershipService.AddRole(roleName);
+				return RedirectToAction("ManageRoles");
+			}
+
+		}
+
+		public ActionResult EditUser(string username)
+		{
+			var user = MembershipService.GetUser(username);
+			var roles = MembershipService.GetAllRoles();
+			var userRoles = MembershipService.GetRolesForUser(user.UserName);
+
+			return View(new EditUserModel(user.UserName, user.Email, roles, userRoles));
+		}
+
+		[HttpPost]
+		public ActionResult EditUser(EditUserModel model)
+		{
+			var user = MembershipService.GetUser(model.Username);
+			MembershipService.UpdateUser(user, model.UserRoles);
+			return RedirectToAction("ManageUsers");
+		}
 	}
 }

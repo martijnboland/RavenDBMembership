@@ -50,6 +50,10 @@ namespace RavenDBMembership.Provider
 
 		public override void AddUsersToRoles(string[] usernames, string[] roleNames)
 		{
+			if (usernames.Length == 0 || roleNames.Length == 0)
+			{
+				return;
+			}
 			using (var session = this.DocumentStore.OpenSession())
 			{
 				try
@@ -159,10 +163,10 @@ namespace RavenDBMembership.Provider
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
-				var roles = from r in session.Query<Role>()
+				var roles = (from r in session.Query<Role>()
 							where r.ApplicationName == this.ApplicationName
-							select r.Name;
-				return roles.ToArray();
+							select r).ToList();
+				return roles.Select(r => r.Name).ToArray();
 			}
 		}
 
@@ -170,13 +174,15 @@ namespace RavenDBMembership.Provider
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
-				var roleIds = (from u in session.Query<User>()
-							  where u.Username == username && u.ApplicationName == this.ApplicationName
-							  select u.Roles).ToArray();
-				var roleNames = from r in session.Query<Role>()
-								where roleIds.Contains(new List<string>() {r.Id})
-								select r.Name;
-				return roleNames.ToArray();
+				var user = (from u in session.Query<User>()
+							where u.Username == username && u.ApplicationName == this.ApplicationName
+							select u).Single();
+				if (user.Roles.Any())
+				{
+					var dbRoles = session.Query<Role>().ToList();
+					return dbRoles.Where(r => user.Roles.Contains(r.Id)).Select(r => r.Name).ToArray();
+				}
+				return new string[0];
 			}
 		}
 
@@ -221,6 +227,10 @@ namespace RavenDBMembership.Provider
 
 		public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
 		{
+			if (usernames.Length == 0 || roleNames.Length == 0)
+			{
+				return;
+			}
 			using (var session = this.DocumentStore.OpenSession())
 			{
 				try
