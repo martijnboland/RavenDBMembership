@@ -3,6 +3,7 @@
 <head>
     <title>@View.Title</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.4.1.min.js")"></script>
 </head>
 
 <body>
@@ -10,7 +11,7 @@
 
         <div id="header">
             <div id="title">
-                <h1>My MVC Application</h1>
+                <h1>RavenDB Membership</h1>
             </div>
 
             <div id="logindisplay">
@@ -22,7 +23,7 @@
                 <ul id="menu">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
 					<li>@Html.ActionLink("Manage Users", "ManageUsers", "Account")</li>
-					<li>@Html.ActionLink("Manage Roles and Permissions", "ManageRoles", "Account")</li>
+					<li>@Html.ActionLink("Manage Roles", "ManageRoles", "Account")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
 

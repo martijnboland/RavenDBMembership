@@ -98,6 +98,8 @@ namespace RavenDBMembership.Web.Models
 		void AddRole(string roleName);
 
 		void UpdateUser(MembershipUser user, string[] roles);
+
+		void DeleteRole(string roleName);
 	}
 
 	public class AccountMembershipService : IMembershipService
@@ -207,6 +209,17 @@ namespace RavenDBMembership.Web.Models
 					var rolesToBeDeleted = (roles != null ? existingRoles.Except(roles) : existingRoles).ToArray();
 					_roleProvider.RemoveUsersFromRoles(new[] { user.UserName }, rolesToBeDeleted);
 				}
+
+				ts.Complete();
+			}
+		}
+
+		public void DeleteRole(string roleName)
+		{
+			using (var ts = new TransactionScope())
+			{
+				// Delete role
+				_roleProvider.DeleteRole(roleName, false);
 
 				ts.Complete();
 			}

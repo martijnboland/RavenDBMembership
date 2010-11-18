@@ -19,8 +19,9 @@
 			<tr>
 				<td>@role</td>
 				<td>
-					@Html.ActionLink("Edit permissions", "EditRolePermissions", new { rolename = role })
-					@Html.ActionLink("Delete", "DeleteRole", new { rolename = role })
+					@using (Html.BeginForm("DeleteRole", "Account", new { roleName = @role }, FormMethod.Post)) {
+						<a href="#" onclick="if (confirm('Are you sure?')) { $(this).parents('form').submit(); } return false;">Delete</a>
+					}
 				</td>
 			</tr>
 		}

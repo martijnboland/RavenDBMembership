@@ -38,13 +38,13 @@
         </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.EndMultiGet(System.IAsyncResult)">
             <summary>
-            Ends the aync multi get operation
+            Ends the async multi get operation
             </summary>
             <param name="result">The result.</param>
         </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.BeginQuery(System.String,Raven.Database.Data.IndexQuery,System.AsyncCallback,System.Object)">
             <summary>
-            Begins the aysnc query.
+            Begins the async query.
             </summary>
             <param name="index">The index.</param>
             <param name="query">The query.</param>
@@ -62,13 +62,13 @@
             <summary>
             Begins the async batch operation
             </summary>
-            <param name="commandDatas">The command datas.</param>
+            <param name="commandDatas">The command data.</param>
             <param name="callback">The callback.</param>
             <param name="state">The state.</param>
         </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.EndBatch(System.IAsyncResult)">
             <summary>
-            Ends the aync batch operation
+            Ends the async batch operation
             </summary>
             <param name="result">The result.</param>
         </member>
@@ -112,14 +112,14 @@
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.EndMultiGet(System.IAsyncResult)">
             <summary>
-            Ends the aync multi get operation
+            Ends the async multi get operation
             </summary>
             <param name="result">The result.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.BeginQuery(System.String,Raven.Database.Data.IndexQuery,System.AsyncCallback,System.Object)">
             <summary>
-            Begins the aysnc query.
+            Begins the async query.
             </summary>
             <param name="index">The index.</param>
             <param name="query">The query.</param>
@@ -138,21 +138,21 @@
             <summary>
             Begins the async batch operation
             </summary>
-            <param name="commandDatas">The command datas.</param>
+            <param name="commandDatas">The command data.</param>
             <param name="callback">The callback.</param>
             <param name="state">The state.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.EndBatch(System.IAsyncResult)">
             <summary>
-            Ends the aync batch operation
+            Ends the async batch operation
             </summary>
             <param name="result">The result.</param>
             <returns></returns>
         </member>
         <member name="T:Raven.Client.Client.Async.AsyncServerClient.MultiStepAsyncResult">
             <summary>
-            An async result that contains mulitple steps 
+            An async result that contains multiple steps 
             </summary>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.MultiStepAsyncResult.#ctor(System.Object,Raven.Client.Client.HttpJsonRequest)">
@@ -160,7 +160,7 @@
             Initializes a new instance of the <see cref="T:Raven.Client.Client.Async.AsyncServerClient.MultiStepAsyncResult"/> class.
             </summary>
             <param name="state">The state.</param>
-            <param name="req">The req.</param>
+            <param name="req">The request</param>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.MultiStepAsyncResult.Complete">
             <summary>
@@ -268,7 +268,7 @@
         </member>
         <member name="T:Raven.Client.Client.HttpJsonRequest">
             <summary>
-            A representation of an http json request to the RavenDB server
+            A representation of an HTTP json request to the RavenDB server
             </summary>
         </member>
         <member name="M:Raven.Client.Client.HttpJsonRequest.CreateHttpJsonRequest(System.Object,System.String,System.String,System.Net.ICredentials)">
@@ -294,7 +294,7 @@
         </member>
         <member name="M:Raven.Client.Client.HttpJsonRequest.BeginReadResponseString(System.AsyncCallback,System.Object)">
             <summary>
-            Begins tp read response string.
+            Begins the read response string.
             </summary>
             <param name="callback">The callback.</param>
             <param name="state">The state.</param>
@@ -370,7 +370,7 @@
         </member>
         <member name="M:Raven.Client.Client.IDatabaseCommands.Get(System.String)">
             <summary>
-            Gets the docuent for the specified key.
+            Gets the document for the specified key.
             </summary>
             <param name="key">The key.</param>
             <returns></returns>
@@ -496,7 +496,7 @@
             <summary>
             Executed the specified commands as a single batch
             </summary>
-            <param name="commandDatas">The command datas.</param>
+            <param name="commandDatas">The command data.</param>
         </member>
         <member name="M:Raven.Client.Client.IDatabaseCommands.Commit(System.Guid)">
             <summary>
@@ -554,6 +554,13 @@
             Create a new instance of <see cref="T:Raven.Client.Client.IDatabaseCommands"/> that will interacts
             with the specified database
             </summary>
+        </member>
+        <member name="M:Raven.Client.Client.IDatabaseCommands.Suggest(System.String,Raven.Abstractions.Data.SuggestionQuery)">
+            <summary>
+            Returns a list of suggestions based on the specified suggestion query.
+            </summary>
+            <param name="index">The index to query for suggestions</param>
+            <param name="suggestionQuery">The suggestion query.</param>
         </member>
         <member name="P:Raven.Client.Client.IDatabaseCommands.OperationsHeaders">
             <summary>
@@ -734,14 +741,14 @@
         </member>
         <member name="M:Raven.Client.Client.ServerClient.Get(System.String)">
             <summary>
-            Gets the docuent for the specified key.
+            Gets the document for the specified key.
             </summary>
             <param name="key">The key.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Client.ServerClient.DirectGet(System.String,System.String)">
             <summary>
-            Perform a direct get for a document with the specified key on the sepcified server URL.
+            Perform a direct get for a document with the specified key on the specified server URL.
             </summary>
             <param name="serverUrl">The server URL.</param>
             <param name="key">The key.</param>
@@ -882,7 +889,7 @@
             <summary>
             Executed the specified commands as a single batch
             </summary>
-            <param name="commandDatas">The command datas.</param>
+            <param name="commandDatas">The command data.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Client.ServerClient.Commit(System.Guid)">
@@ -942,6 +949,14 @@
             <param name="patchRequests">The patch requests.</param>
             <param name="allowStale">if set to <c>true</c> [allow stale].</param>
         </member>
+        <member name="M:Raven.Client.Client.ServerClient.Suggest(System.String,Raven.Abstractions.Data.SuggestionQuery)">
+            <summary>
+            Returns a list of suggestions based on the specified suggestion query.
+            </summary>
+            <param name="index">The index to query for suggestions</param>
+            <param name="suggestionQuery">The suggestion query.</param>
+            <returns></returns>
+        </member>
         <member name="P:Raven.Client.Client.ServerClient.OperationsHeaders">
             <summary>
             Gets or sets the operations headers.
@@ -964,7 +979,7 @@
         </member>
         <member name="T:Raven.Client.Client.WebRequestEventArgs">
             <summary>
-            Event args for the event of creating a <see cref="T:System.Net.WebRequest"/>
+            Event arguments for the event of creating a <see cref="T:System.Net.WebRequest"/>
             </summary>
         </member>
         <member name="P:Raven.Client.Client.WebRequestEventArgs.Request">
@@ -987,13 +1002,13 @@
         </member>
         <member name="T:Raven.Client.Converters.GuidConverter">
             <summary>
-            Covnert strings from / to guids
+            Convert strings from / to guids
             </summary>
         </member>
         <member name="T:Raven.Client.Converters.ITypeConverter">
             <summary>
             Interface for performing type conversions.
-            We couldn't use te builtin TypeConverter because it is too big an interface for people to build on.
+            We couldn't use the built-in TypeConverter because it is too big an interface for people to build on.
             </summary>
         </member>
         <member name="M:Raven.Client.Converters.ITypeConverter.CanConvertFrom(System.Type)">
@@ -1056,7 +1071,7 @@
         </member>
         <member name="T:Raven.Client.Converters.Int32Converter">
             <summary>
-            Covnert strings from / to int32
+            Convert strings from / to int32
             </summary>
         </member>
         <member name="M:Raven.Client.Converters.Int32Converter.CanConvertFrom(System.Type)">
@@ -1090,7 +1105,7 @@
         </member>
         <member name="T:Raven.Client.Converters.Int64Converter">
             <summary>
-            Covnert strings from / to int64
+            Convert strings from / to int64
             </summary>
         </member>
         <member name="M:Raven.Client.Converters.Int64Converter.CanConvertFrom(System.Type)">
@@ -1349,7 +1364,7 @@
         </member>
         <member name="P:Raven.Client.Document.InMemoryDocumentSessionOperations.ResourceManagerId">
             <summary>
-            The transaction resource manager identifer
+            The transaction resource manager identifier
             </summary>
         </member>
         <member name="P:Raven.Client.Document.InMemoryDocumentSessionOperations.MaxNumberOfRequestsPerSession">
@@ -1417,7 +1432,7 @@
         </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.BeginLoad(System.String,System.AsyncCallback,System.Object)">
             <summary>
-            Begins the aysnc load operation
+            Begins the async load operation
             </summary>
             <param name="id">The id.</param>
             <param name="asyncCallback">The async callback.</param>
@@ -1611,7 +1626,7 @@
         </member>
         <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.BeginLoad(System.String,System.AsyncCallback,System.Object)">
             <summary>
-            Begins the aysnc load operation
+            Begins the async load operation
             </summary>
             <param name="id">The id.</param>
             <param name="asyncCallback">The async callback.</param>
@@ -1698,7 +1713,7 @@
         </member>
         <member name="T:Raven.Client.Document.Async.SyncronousLoadResult">
             <summary>
-            An <see cref="T:System.IAsyncResult"/> for a syncronous load
+            An <see cref="T:System.IAsyncResult"/> for a synchronous load
             </summary>
         </member>
         <member name="M:Raven.Client.Document.Async.SyncronousLoadResult.#ctor(System.Object,System.Object)">
@@ -1823,7 +1838,7 @@
         </member>
         <member name="P:Raven.Client.Document.DocumentConvention.IdentityTypeConvertors">
             <summary>
-             A list of type convertors that can be used to translate the document key (string)
+             A list of type converters that can be used to translate the document key (string)
              to whatever type it is that is used on the entity, if the type isn't already a string
             </summary>
         </member>
@@ -2198,6 +2213,34 @@
             <typeparam name="TProjection">The type of the projection.</typeparam>
             <param name="fields">The fields.</param>
         </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+            Filter matches to be inside the specified radius
+            </summary>
+            <param name="radius">The radius.</param>
+            <param name="latitude">The latitude.</param>
+            <param name="longitude">The longitude.</param>
+        </member>
+        <member name="T:Raven.Client.Client.IRavenQueryInspector">
+            <summary>
+            Provide access to the underlying <see cref="T:Raven.Client.IDocumentQuery`1"/>
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Client.IRavenQueryInspector.GetLastEqualityTerm">
+            <summary>
+            The last term that we asked the query to use equals on
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Client.IRavenQueryInspector.IndexQueried">
+            <summary>
+            Get the name of the index being queried
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Client.IRavenQueryInspector.Session">
+            <summary>
+            Grant access ot the query session
+            </summary>
+        </member>
         <member name="F:Raven.Client.Document.DocumentQuery`1.projectionFields">
             <summary>
             The list of fields to project directly from the index
@@ -2256,6 +2299,14 @@
             </summary>
             <typeparam name="TProjection">The type of the projection.</typeparam>
             <param name="fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+            Filter matches to be inside the specified radius
+            </summary>
+            <param name="radius">The radius.</param>
+            <param name="latitude">The latitude.</param>
+            <param name="longitude">The longitude.</param>
         </member>
         <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResults">
             <summary>
@@ -2585,6 +2636,11 @@
             A <see cref="T:System.String"/> that represents this instance.
             </returns>
         </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.GetLastEqualityTerm">
+            <summary>
+            The last term that we asked the query to use equals on
+            </summary>
+        </member>
         <member name="P:Raven.Client.Document.DocumentQuery`1.Includes">
             <summary>
             Gets the current includes on this query
@@ -2593,6 +2649,11 @@
         <member name="P:Raven.Client.Document.DocumentQuery`1.Commands">
             <summary>
             Gets the database commands associated with this document query
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.DocumentQuery`1.IndexQueried">
+            <summary>
+            Get the name of the index being queried
             </summary>
         </member>
         <member name="P:Raven.Client.Document.DocumentQuery`1.Session">
@@ -2734,12 +2795,12 @@
         </member>
         <member name="P:Raven.Client.ITransactionalDocumentSession.ResourceManagerId">
             <summary>
-            The transaction resource manager identifer
+            The transaction resource manager identifier
             </summary>
         </member>
         <member name="T:Raven.Client.ISyncAdvancedSessionOperation">
             <summary>
-            Advanced syncronous session operations
+            Advanced synchronous session operations
             </summary>
         </member>
         <member name="M:Raven.Client.ISyncAdvancedSessionOperation.Refresh``1(``0)">
@@ -3189,7 +3250,7 @@
         <member name="P:Raven.Client.Document.DocumentStore.ResourceManagerId">
             <summary>
             The resource manager id for the document store.
-            IMPORTANT: Using Guid.NewGuid() to set this value is almost cetainly a mistake, you should set
+            IMPORTANT: Using Guid.NewGuid() to set this value is almost certainly a mistake, you should set
             it to a value that remains consistent between restart of the system.
             </summary>
         </member>
@@ -3787,7 +3848,7 @@
         </member>
         <member name="T:Raven.Client.EntityStored">
             <summary>
-            Delegate defintion when an entity is stored in the session
+            Delegate definition when an entity is stored in the session
             </summary>
         </member>
         <member name="T:Raven.Client.EntityToDocument">
@@ -3798,7 +3859,7 @@
         <member name="T:Raven.Client.Exceptions.ConflictException">
             <summary>
             This exception occurs when a (replication) conflict is encountered.
-            Usually this required a user to manually resolve the conlict.
+            Usually this required a user to manually resolve the conflict.
             </summary>
         </member>
         <member name="M:Raven.Client.Exceptions.ConflictException.#ctor">
@@ -3931,9 +3992,19 @@
             <exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is null. </exception>
             <exception cref="T:System.Runtime.Serialization.SerializationException">The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0). </exception>
         </member>
+        <member name="T:Raven.Client.Extensions.MultiTenancyExtensions">
+            <summary>
+             Extension methods to create mutli tenants databases
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Extensions.MultiTenancyExtensions.EnsureDatabaseExists(Raven.Client.Client.IDatabaseCommands,System.String)">
+            <summary>
+             Ensures that the database exists, creating it if needed
+            </summary>
+        </member>
         <member name="T:Raven.Client.IDocumentDeleteListener">
             <summary>
-            Hook for users to provide additioanl logic on delete operations
+            Hook for users to provide additional logic on delete operations
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentDeleteListener.BeforeDelete(System.String,System.Object,Newtonsoft.Json.Linq.JObject)">
@@ -3946,7 +4017,7 @@
         </member>
         <member name="T:Raven.Client.IDocumentStoreListener">
             <summary>
-            Hook for users to provide additioanl logic on store operations
+            Hook for users to provide additional logic on store operations
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentStoreListener.BeforeStore(System.String,System.Object,Newtonsoft.Json.Linq.JObject)">
@@ -4029,7 +4100,7 @@
         </member>
         <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.Index(System.Linq.Expressions.Expression{System.Func{`1,System.Object}},Raven.Database.Indexing.FieldIndexing)">
             <summary>
-            Register a field to be indexeed
+            Register a field to be indexed
             </summary>
         </member>
         <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.Store(System.Linq.Expressions.Expression{System.Func{`1,System.Object}},Raven.Database.Indexing.FieldStorage)">
@@ -4049,12 +4120,12 @@
         </member>
         <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Reduce">
             <summary>
-            The reduce defintion
+            The reduce definition
             </summary>
         </member>
         <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Map">
             <summary>
-            The map defintion
+            The map definition
             </summary>
         </member>
         <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Stores">
@@ -4497,8 +4568,8 @@
         </member>
         <member name="T:Raven.Client.Indexes.IndexDefinition`2">
             <summary>
-            This class attempts to provide a strongly typed index defintion on the client.
-            It is here solely as a convienance, and it is _expected_ to fail in some scenarios.
+            This class attempts to provide a strongly typed index definition on the client.
+            It is here solely as a convenience, and it is _expected_ to fail in some scenarios.
             The recommended way is to define indexes outside your code, using the Web UI.
             </summary>
         </member>
@@ -4552,14 +4623,14 @@
         </member>
         <member name="T:Raven.Client.Indexes.IndexDefinition`1">
             <summary>
-            This class attempts to provide a strongly typed index defintion on the client.
-            It is here solely as a convienance, and it is _expected_ to fail in some scenarios.
+            This class attempts to provide a strongly typed index definition on the client.
+            It is here solely as a convenience, and it is _expected_ to fail in some scenarios.
             The recommended way is to define indexes outside your code, using the Web UI.
             </summary>
         </member>
         <member name="T:Raven.Client.Linq.DynamicQueryProviderProcessor`1">
             <summary>
-            A specialised query provider processor for querying dynamic types
+            A specialized query provider processor for querying dynamic types
             </summary>
             <typeparam name="T"></typeparam>
         </member>
@@ -4683,7 +4754,7 @@
         </member>
         <member name="M:Raven.Client.Linq.DynamicQueryProviderProcessor`1.#ctor(Raven.Client.IDocumentSession,System.Action{Raven.Client.IDocumentQueryCustomization},System.Action{Raven.Database.Data.QueryResult},System.String)">
             <summary>
-            Creates a dynamic query proivder around the provided session
+            Creates a dynamic query provider around the provided session
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.DynamicQueryProviderProcessor`1.GetMember(System.Linq.Expressions.Expression)">
@@ -4693,13 +4764,13 @@
             <param name="expression"></param>
             <returns></returns>
         </member>
-        <member name="T:Raven.Client.Linq.DynamicRavenQueryable`1">
+        <member name="T:Raven.Client.Linq.DynamicRavenQueryInspector`1">
             <summary>
-            A specialised queryable object for querying dynamic indexes
+            A specialized queryable object for querying dynamic indexes
             </summary>
             <typeparam name="T"></typeparam>
         </member>
-        <member name="T:Raven.Client.Linq.RavenQueryable`1">
+        <member name="T:Raven.Client.Linq.RavenQueryInspector`1">
             <summary>
             Implements <see cref="T:Raven.Client.Linq.IRavenQueryable`1"/>
             </summary>
@@ -4721,40 +4792,40 @@
             <param name="action">The action.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryable`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,Raven.Client.Linq.RavenQueryStatistics)">
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,Raven.Client.Linq.RavenQueryStatistics)">
             <summary>
-            Initializes a new instance of the <see cref="T:Raven.Client.Linq.RavenQueryable`1"/> class.
+            Initializes a new instance of the <see cref="T:Raven.Client.Linq.RavenQueryInspector`1"/> class.
             </summary>
             <param name="provider">The provider.</param>
             <param name="queryStats">The query stats to fill</param>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryable`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,System.Linq.Expressions.Expression,Raven.Client.Linq.RavenQueryStatistics)">
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,System.Linq.Expressions.Expression,Raven.Client.Linq.RavenQueryStatistics)">
             <summary>
-            Initializes a new instance of the <see cref="T:Raven.Client.Linq.RavenQueryable`1"/> class.
+            Initializes a new instance of the <see cref="T:Raven.Client.Linq.RavenQueryInspector`1"/> class.
             </summary>
             <param name="provider">The provider.</param>
             <param name="expression">The expression.</param>
             <param name="queryStats">The query stats to fill</param>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryable`1.GetEnumerator">
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.GetEnumerator">
             <summary>
             Gets the enumerator.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryable`1.Statistics(Raven.Client.Linq.RavenQueryStatistics@)">
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.Statistics(Raven.Client.Linq.RavenQueryStatistics@)">
             <summary>
             Provide statistics about the query, such as total count of matching records
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryable`1.Customize(System.Action{Raven.Client.IDocumentQueryCustomization})">
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.Customize(System.Action{Raven.Client.IDocumentQueryCustomization})">
             <summary>
             Customizes the query using the specified action
             </summary>
             <param name="action">The action.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryable`1.ToString">
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.ToString">
             <summary>
             Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
@@ -4762,25 +4833,39 @@
             A <see cref="T:System.String"/> that represents this instance.
             </returns>
         </member>
-        <member name="M:Raven.Client.Linq.DynamicRavenQueryable`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,Raven.Client.Linq.RavenQueryStatistics)">
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.GetLastEqualityTerm">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Linq.RavenQueryInspector`1.IndexQueried">
+            <summary>
+            Get the name of the index being queried
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Linq.RavenQueryInspector`1.Session">
+            <summary>
+            Grant access ot the query session
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.DynamicRavenQueryInspector`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,Raven.Client.Linq.RavenQueryStatistics)">
             <summary>
             Creates a dynamic raven queryable around the provided query provider
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.DynamicRavenQueryable`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,System.Linq.Expressions.Expression,Raven.Client.Linq.RavenQueryStatistics)">
+        <member name="M:Raven.Client.Linq.DynamicRavenQueryInspector`1.#ctor(Raven.Client.Linq.IRavenQueryProvider,System.Linq.Expressions.Expression,Raven.Client.Linq.RavenQueryStatistics)">
             <summary>
             Creates a dynamic raven queryable around the provided query provider + expression
             </summary>
         </member>
         <member name="T:Raven.Client.Linq.DynamicRavenQueryProvider`1">
             <summary>
-            This is a specialised query provider for querying dynamic indexes
+            This is a specialized query provider for querying dynamic indexes
             </summary>
             <typeparam name="T"></typeparam>
         </member>
         <member name="T:Raven.Client.Linq.IRavenQueryProvider">
             <summary>
-            Extension for the builtin <see cref="T:System.Linq.IQueryProvider"/> allowing for Raven specific operations
+            Extension for the built-in <see cref="T:System.Linq.IQueryProvider"/> allowing for Raven specific operations
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.IRavenQueryProvider.AfterQueryExecuted(System.Action{Raven.Database.Data.QueryResult})">
@@ -4867,7 +4952,7 @@
         </member>
         <member name="P:Raven.Client.Linq.DynamicRavenQueryProvider`1.CustomizedQuery">
             <summary>
-            Gets the actions for customising the generated lucene query
+            Gets the actions for customizing the generated lucene query
             </summary>
         </member>
         <member name="P:Raven.Client.Linq.DynamicRavenQueryProvider`1.Session">
@@ -4876,26 +4961,26 @@
             </summary>
             <value>The session.</value>
         </member>
-        <member name="T:Raven.Client.Linq.ExpressionMemberInfo">
+        <member name="T:Raven.Client.Linq.ExpressionInfo">
             <summary>
             This class represents a node in an expression, usually a member - but in the case of dynamic queries the path to a member
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.ExpressionMemberInfo.#ctor(System.String,System.Reflection.MemberInfo)">
+        <member name="M:Raven.Client.Linq.ExpressionInfo.#ctor(System.String,System.Type)">
             <summary>
             Creates an ExpressionMemberInfo
             </summary>
             <param name="path"></param>
-            <param name="innerMemberInfo"></param>
+            <param name="type"></param>
         </member>
-        <member name="P:Raven.Client.Linq.ExpressionMemberInfo.Path">
+        <member name="P:Raven.Client.Linq.ExpressionInfo.Path">
             <summary>
             Gets the full path of the member being referred to by this node
             </summary>
         </member>
-        <member name="P:Raven.Client.Linq.ExpressionMemberInfo.InnerMemberInfo">
+        <member name="P:Raven.Client.Linq.ExpressionInfo.Type">
             <summary>
-            Gets the actual member being referred to
+            Gets the actual type being referred to
             </summary>
         </member>
         <member name="T:Raven.Client.Linq.LinqExtensions">
@@ -4908,9 +4993,29 @@
             Project using a different type
             </summary>
         </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Suggest(System.Linq.IQueryable)">
+            <summary>
+            Suggest alternative values for the queried term
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Suggest(System.Linq.IQueryable,Raven.Abstractions.Data.SuggestionQuery)">
+            <summary>
+            Suggest alternative values for the queried term
+            </summary>
+        </member>
         <member name="M:Raven.Client.Linq.LinqExtensions.WhereEntityIs``1(System.Collections.Generic.IEnumerable{System.Object},System.String[])">
             <summary>
             Marker method for allowing complex (multi entity) queries on the server.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Hierarchy``1(``0,System.String)">
+            <summary>
+            Marker method for allowing hierarchical queries on the server.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Hierarchy``1(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+            Marker method for allowing hierarchical queries on the server.
             </summary>
         </member>
         <member name="T:Raven.Client.Linq.RavenQueryProvider`1">
@@ -4970,7 +5075,7 @@
         </member>
         <member name="P:Raven.Client.Linq.RavenQueryProvider`1.CustomizedQuery">
             <summary>
-            Gets the actions for customising the generated lucene query
+            Gets the actions for customizing the generated lucene query
             </summary>
         </member>
         <member name="P:Raven.Client.Linq.RavenQueryProvider`1.Session">
@@ -5018,7 +5123,7 @@
         </member>
         <member name="F:Raven.Client.RavenExtensions.RavenDocumentByEntityName">
             <summary>
-            Constant for the builtin index 
+            Constant for the built-in index 
             </summary>
         </member>
         <member name="M:Raven.Client.RavenExtensions.LuceneQuery``1(Raven.Client.ISyncAdvancedSessionOperation)">
@@ -5192,7 +5297,7 @@
         </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentSession.LuceneQuery``1">
             <summary>
-            Executes a dynamic lucene query against the RavendB store
+            Executes a dynamic lucene query against the RavenDB store
             </summary>
             <typeparam name="T"></typeparam>
             <returns></returns>
@@ -5379,7 +5484,7 @@
         </member>
         <member name="T:Raven.Client.Shard.Shards">
             <summary>
-            Referest a list of shards
+            Holds a list of shards
             </summary>
         </member>
         <member name="M:Raven.Client.Shard.Shards.#ctor">
@@ -5461,7 +5566,7 @@
         </member>
         <member name="T:Raven.Client.Shard.ShardStrategy.ShardResolution.AllShardsResolutionStrategy">
             <summary>
-            Shard resultion strategy that select all the shards
+            Shard resolution strategy that select all the shards
             </summary>
         </member>
         <member name="T:Raven.Client.Shard.ShardStrategy.ShardResolution.IShardResolutionStrategy">
@@ -5477,7 +5582,7 @@
         </member>
         <member name="M:Raven.Client.Shard.ShardStrategy.ShardResolution.AllShardsResolutionStrategy.SelectShardIds(Raven.Client.Shard.ShardStrategy.ShardResolution.ShardResolutionStrategyData)">
             <summary>
-            Selects the shard ids appropraite for the given data
+            Selects the shard ids appropriate for the given data
             </summary>
         </member>
         <member name="T:Raven.Client.Shard.ShardStrategy.ShardResolution.ShardResolutionStrategyData">
@@ -5549,7 +5654,7 @@
         </member>
         <member name="T:Raven.Client.StoredEntityEventArgs">
             <summary>
-            The event args raised when an entity is stored
+            The event arguments raised when an entity is stored
             </summary>
         </member>
         <member name="P:Raven.Client.StoredEntityEventArgs.SessionIdentifier">

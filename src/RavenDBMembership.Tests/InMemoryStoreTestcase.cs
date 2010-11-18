@@ -8,9 +8,9 @@ namespace RavenDBMembership.Tests
 {
 	public abstract class InMemoryStoreTestcase
 	{
-		protected EmbeddablDocumentStore NewInMemoryStore()
+		protected EmbeddableDocumentStore NewInMemoryStore()
 		{
-			var documentStore = new EmbeddablDocumentStore
+			var documentStore = new EmbeddableDocumentStore
 			{
 				RunInMemory = true
 			};

@@ -124,6 +124,18 @@ namespace RavenDBMembership.Provider
 							   select r).SingleOrDefault();
 					if (role != null)
 					{
+						// also find users that have this role
+						var users = (from u in session.Query<User>()
+									where u.Roles.Any(roleId => roleId == role.Id)
+									select u).ToList();
+						if (users.Any() && throwOnPopulatedRole)
+						{
+							throw new Exception(String.Format("Role {0} contains members and cannot be deleted.", role.Name));
+						}
+						foreach (var user in users)
+						{
+							user.Roles.Remove(role.Id);
+						}
 						session.Delete(role);
 						session.SaveChanges();
 						return true;

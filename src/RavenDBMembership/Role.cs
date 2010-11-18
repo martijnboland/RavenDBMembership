@@ -26,7 +26,6 @@ namespace RavenDBMembership
 		public string Name { get; set; }
 		public string ParentRoleId { get; set; }
 
-
 		public Role(string name, Role parentRole)
 		{
 			this.Name = name;

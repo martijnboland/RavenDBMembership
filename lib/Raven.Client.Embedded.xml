@@ -4,53 +4,58 @@
         <name>Raven.Client.Embedded</name>
     </assembly>
     <members>
-        <member name="T:Raven.Client.Client.EmbeddablDocumentStore">
+        <member name="T:Raven.Client.Client.EmbeddableDocumentStore">
             <summary>
             Manages access to RavenDB and open sessions to work with RavenDB.
             Also supports hosting RavenDB in an embedded mode
             </summary>
         </member>
-        <member name="M:Raven.Client.Client.EmbeddablDocumentStore.ProcessConnectionStringOption(System.Net.NetworkCredential,System.String,System.String)">
+        <member name="M:Raven.Client.Client.EmbeddableDocumentStore.ProcessConnectionStringOption(System.Net.NetworkCredential,System.String,System.String)">
             <summary>
             Parse the connection string option
             </summary>
         </member>
-        <member name="M:Raven.Client.Client.EmbeddablDocumentStore.Dispose">
+        <member name="M:Raven.Client.Client.EmbeddableDocumentStore.Dispose">
             <summary>
             Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
-        <member name="M:Raven.Client.Client.EmbeddablDocumentStore.InitializeInternal">
+        <member name="M:Raven.Client.Client.EmbeddableDocumentStore.InitializeInternal">
             <summary>
             Initialize the document store access method to RavenDB
             </summary>
         </member>
-        <member name="P:Raven.Client.Client.EmbeddablDocumentStore.Identifier">
+        <member name="P:Raven.Client.Client.EmbeddableDocumentStore.Identifier">
             <summary>
             Gets or sets the identifier for this store.
             </summary>
             <value>The identifier.</value>
         </member>
-        <member name="P:Raven.Client.Client.EmbeddablDocumentStore.Configuration">
+        <member name="P:Raven.Client.Client.EmbeddableDocumentStore.Configuration">
             <summary>
              Get or set the configuration instance for embedded RavenDB
             </summary>
         </member>
-        <member name="P:Raven.Client.Client.EmbeddablDocumentStore.RunInMemory">
+        <member name="P:Raven.Client.Client.EmbeddableDocumentStore.RunInMemory">
             <summary>
             Run RavenDB in an embedded mode, using in memory only storage.
             This is useful for unit tests, since it is very fast.
             </summary>
         </member>
-        <member name="P:Raven.Client.Client.EmbeddablDocumentStore.DataDirectory">
+        <member name="P:Raven.Client.Client.EmbeddableDocumentStore.DataDirectory">
             <summary>
             Run RavenDB in embedded mode, using the specified directory for data storage
             </summary>
             <value>The data directory.</value>
         </member>
-        <member name="P:Raven.Client.Client.EmbeddablDocumentStore.DocumentDatabase">
+        <member name="P:Raven.Client.Client.EmbeddableDocumentStore.DocumentDatabase">
             <summary>
-             Access the embedded instnace of RavenDB
+             Access the embedded instance of RavenDB
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Client.EmbeddableDocumentStore.UseEmbeddedHttpServer">
+            <summary>
+             Whatever we should also host an HTTP endpoint for the document database
             </summary>
         </member>
         <member name="T:Raven.Client.Client.EmbededDatabaseCommands">
@@ -65,7 +70,7 @@
         </member>
         <member name="M:Raven.Client.Client.EmbededDatabaseCommands.Get(System.String)">
             <summary>
-            Gets the docuent for the specified key.
+            Gets the document for the specified key.
             </summary>
             <param name="key">The key.</param>
             <returns></returns>
@@ -191,7 +196,7 @@
             <summary>
             Executed the specified commands as a single batch
             </summary>
-            <param name="commandDatas">The command datas.</param>
+            <param name="commandDatas">The command data.</param>
         </member>
         <member name="M:Raven.Client.Client.EmbededDatabaseCommands.Commit(System.Guid)">
             <summary>
@@ -249,6 +254,13 @@
             Create a new instance of <see cref="T:Raven.Client.Client.IDatabaseCommands"/> that will interacts
             with the specified database
             </summary>
+        </member>
+        <member name="M:Raven.Client.Client.EmbededDatabaseCommands.Suggest(System.String,Raven.Abstractions.Data.SuggestionQuery)">
+            <summary>
+            Returns a list of suggestions based on the specified suggestion query.
+            </summary>
+            <param name="index">The index to query for suggestions</param>
+            <param name="suggestionQuery">The suggestion query.</param>
         </member>
         <member name="M:Raven.Client.Client.EmbededDatabaseCommands.SpinBackgroundWorkers">
             <summary>

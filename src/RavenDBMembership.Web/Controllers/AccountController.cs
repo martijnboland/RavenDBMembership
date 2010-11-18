@@ -191,5 +191,12 @@ namespace RavenDBMembership.Web.Controllers
 			MembershipService.UpdateUser(user, model.UserRoles);
 			return RedirectToAction("ManageUsers");
 		}
+
+		[HttpPost]
+		public ActionResult DeleteRole(string roleName)
+		{
+			MembershipService.DeleteRole(roleName);
+			return RedirectToAction("ManageRoles");
+		}
 	}
 }
