@@ -2701,7 +2701,19 @@
             </summary>
             <param name="id">The id.</param>
         </member>
+        <member name="M:Raven.Client.IDocumentSession.IsLoaded(System.String)">
+            <summary>
+            Returns whatever a document with the specified id is loaded in the 
+            current session
+            </summary>
+        </member>
         <member name="M:Raven.Client.IDocumentSession.Load``1(System.String[])">
+            <summary>
+            Loads the specified entities with the specified ids.
+            </summary>
+            <param name="ids">The ids.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentSession.Load``1(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Loads the specified entities with the specified ids.
             </summary>
@@ -2850,6 +2862,12 @@
             <param name="deleteListeners">The delete listeners.</param>
             <param name="databaseCommands"></param>
         </member>
+        <member name="M:Raven.Client.Document.DocumentSession.IsLoaded(System.String)">
+            <summary>
+            Returns whatever a document with the specified id is loaded in the 
+            current session
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.DocumentSession.Load``1(System.String)">
             <summary>
             Loads the specified entity with the specified id.
@@ -2865,6 +2883,12 @@
             <typeparam name="T"></typeparam>
             <param name="ids">The ids.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentSession.Load``1(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Loads the specified entities with the specified ids.
+            </summary>
+            <param name="ids">The ids.</param>
         </member>
         <member name="M:Raven.Client.Document.DocumentSession.Query``1(System.String)">
             <summary>
@@ -4628,6 +4652,16 @@
             The recommended way is to define indexes outside your code, using the Web UI.
             </summary>
         </member>
+        <member name="T:Raven.Client.Indexes.SpatialIndex">
+            <summary>
+            Accessor for generating spatial queries on the client side
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.SpatialIndex.Generate(System.Double,System.Double)">
+            <summary>
+            Marker method for allowing generating sptial indexes on the client
+            </summary>
+        </member>
         <member name="T:Raven.Client.Linq.DynamicQueryProviderProcessor`1">
             <summary>
             A specialized query provider processor for querying dynamic types
@@ -5185,6 +5219,20 @@
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentSession.Load``1(System.String[])">
+            <summary>
+            Loads the specified entities with the specified ids.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="ids">The ids.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentSession.IsLoaded(System.String)">
+            <summary>
+            Returns whatever a document with the specified id is loaded in the 
+            current session
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentSession.Load``1(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Loads the specified entities with the specified ids.
             </summary>
