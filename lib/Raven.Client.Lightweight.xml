@@ -3265,6 +3265,12 @@
             </summary>
             <value>The URL.</value>
         </member>
+        <member name="P:Raven.Client.Document.DocumentStore.DefaultDatabase">
+            <summary>
+            Gets or sets the default database name.
+            </summary>
+            <value>The default database name.</value>
+        </member>
         <member name="P:Raven.Client.Document.DocumentStore.Conventions">
             <summary>
             Gets the conventions.
