@@ -22,41 +22,60 @@ namespace RavenDBMembership.Tests
 			}
 		}
 
-		[Fact]
-		public void StoreUserShouldCreateId()
-		{
-			var newUser = new User { Username = "martijn", FullName = "Martijn Boland" };
-			var newUserIdPrefix = newUser.Id;
+        [Fact]
+        public void StoreUserShouldCreateId()
+        {
+            var newUser = new User { Username = "martijn", FullName = "Martijn Boland" };
+            var newUserIdPrefix = newUser.Id;
 
-			using (var store = NewInMemoryStore())
-			{
-				using (var session = store.OpenSession())
-				{
-					session.Store(newUser);
-					session.SaveChanges();
-				}
-			}
+            using (var store = NewInMemoryStore())
+            {
+                using (var session = store.OpenSession())
+                {
+                    session.Store(newUser);
+                    session.SaveChanges();
+                }
+            }
 
-			Assert.Equal(newUserIdPrefix + "1", newUser.Id);
-		}
+            Assert.Equal(newUserIdPrefix + "1", newUser.Id);
+        }
 
-		[Fact]
-		public void CreateNewMembershipUserShouldCreateUserDocument()
-		{
-			using (var store = NewInMemoryStore())
-			{
-				var provider = new RavenDBMembershipProvider();
-				provider.DocumentStore = store;
-				MembershipCreateStatus status;
-				var membershipUser = provider.CreateUser("martijn", "1234ABCD", "martijn@boland.org", null, null, true, null, out status);
-				Assert.Equal(MembershipCreateStatus.Success, status);
-				Assert.NotNull(membershipUser);
-				Assert.NotNull(membershipUser.ProviderUserKey);
-				Assert.Equal("martijn", membershipUser.UserName);
-			}
-		}
+        [Fact]
+        public void CreateNewMembershipUserShouldCreateUserDocument()
+        {
+            using (var store = NewInMemoryStore())
+            {
+                var provider = new RavenDBMembershipProvider();
+                provider.DocumentStore = store;
+                MembershipCreateStatus status;
+                var membershipUser = provider.CreateUser("martijn", "1234ABCD", "martijn@boland.org", null, null, true, null, out status);
+                Assert.Equal(MembershipCreateStatus.Success, status);
+                Assert.NotNull(membershipUser);
+                Assert.NotNull(membershipUser.ProviderUserKey);
+                Assert.Equal("martijn", membershipUser.UserName);
+            }
+        }
+        [Fact]
+        public void CreateNewMembershipUserShouldFailIfUsernameAlreadyUsed()
+        {
+            using (var store = NewInMemoryStore())
+            {
+                var provider = new RavenDBMembershipProvider();
+                provider.DocumentStore = store;
+                MembershipCreateStatus status;
+                var membershipUser = provider.CreateUser("martijn", "1234ABCD", "martijn@boland.org", null, null, true,
+                                                         null, out status);
 
-		[Fact]
+                Assert.Throws<MembershipCreateUserException>(delegate
+                {
+                    provider.CreateUser("martijn", "1234ABCD", "martijn@boland.org", null, null, true, null, out status);
+                });
+
+                Assert.Equal(MembershipCreateStatus.DuplicateUserName, status);
+            }
+        }
+
+	    [Fact]
 		public void ChangePassword()
 		{
 			using (var store = NewInMemoryStore())
