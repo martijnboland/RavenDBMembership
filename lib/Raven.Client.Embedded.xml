@@ -192,7 +192,7 @@
             <param name="includes">The includes.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Client.EmbededDatabaseCommands.Batch(Raven.Database.Data.ICommandData[])">
+        <member name="M:Raven.Client.Client.EmbededDatabaseCommands.Batch(System.Collections.Generic.IEnumerable{Raven.Database.Data.ICommandData})">
             <summary>
             Executed the specified commands as a single batch
             </summary>
@@ -255,12 +255,26 @@
             with the specified database
             </summary>
         </member>
+        <member name="M:Raven.Client.Client.EmbededDatabaseCommands.GetRootDatabase">
+            <summary>
+            Create a new instance of <see cref="T:Raven.Client.Client.IDatabaseCommands"/> that will interact
+            with the root database. Useful if the database has works against a tenant database.
+            </summary>
+        </member>
         <member name="M:Raven.Client.Client.EmbededDatabaseCommands.Suggest(System.String,Raven.Abstractions.Data.SuggestionQuery)">
             <summary>
             Returns a list of suggestions based on the specified suggestion query.
             </summary>
             <param name="index">The index to query for suggestions</param>
             <param name="suggestionQuery">The suggestion query.</param>
+        </member>
+        <member name="M:Raven.Client.Client.EmbededDatabaseCommands.GetTerms(System.String,System.String,System.String,System.Int32)">
+            <summary>
+             Get the possible terms for the specified field in the index 
+             You can page through the results by use fromValue parameter as the 
+             starting point for the next query
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Raven.Client.Client.EmbededDatabaseCommands.SpinBackgroundWorkers">
             <summary>
