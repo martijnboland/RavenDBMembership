@@ -78,7 +78,7 @@ namespace RavenDBMembership.Web.Controllers
 
 		public ActionResult Register()
 		{
-			ViewModel.PasswordLength = MembershipService.MinPasswordLength;
+			ViewBag.PasswordLength = MembershipService.MinPasswordLength;
 			return View();
 		}
 
@@ -102,7 +102,7 @@ namespace RavenDBMembership.Web.Controllers
 			}
 
 			// If we got this far, something failed, redisplay form
-			ViewModel.PasswordLength = MembershipService.MinPasswordLength;
+			ViewBag.PasswordLength = MembershipService.MinPasswordLength;
 			return View(model);
 		}
 
@@ -113,7 +113,7 @@ namespace RavenDBMembership.Web.Controllers
 		[Authorize]
 		public ActionResult ChangePassword()
 		{
-			ViewModel.PasswordLength = MembershipService.MinPasswordLength;
+			ViewBag.PasswordLength = MembershipService.MinPasswordLength;
 			return View();
 		}
 
@@ -134,7 +134,7 @@ namespace RavenDBMembership.Web.Controllers
 			}
 
 			// If we got this far, something failed, redisplay form
-			ViewModel.PasswordLength = MembershipService.MinPasswordLength;
+			ViewBag.PasswordLength = MembershipService.MinPasswordLength;
 			return View(model);
 		}
 
