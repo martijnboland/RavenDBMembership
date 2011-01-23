@@ -47,6 +47,13 @@
             <param name="index">The index to query for suggestions</param>
             <param name="suggestionQuery">The suggestion query.</param>
         </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetIndexNamesAsync(System.Int32,System.Int32)">
+            <summary>
+            Gets the index names from the server asyncronously
+            </summary>
+            <param name="start">Paging start</param>
+            <param name="pageSize">Size of the page.</param>
+        </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.PutIndexAsync(System.String,Raven.Database.Indexing.IndexDefinition,System.Boolean)">
             <summary>
             Puts the index definition for the specified name asyncronously
@@ -100,6 +107,13 @@
             Returns a new <see cref="T:Raven.Client.Client.IDatabaseCommands"/> using the specified credentials
             </summary>
             <param name="credentialsForSession">The credentials for session.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetIndexNamesAsync(System.Int32,System.Int32)">
+            <summary>
+            Gets the index names from the server asyncronously
+            </summary>
+            <param name="start">Paging start</param>
+            <param name="pageSize">Size of the page.</param>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.PutIndexAsync(System.String,Raven.Database.Indexing.IndexDefinition,System.Boolean)">
             <summary>
@@ -1090,6 +1104,1253 @@
             </returns>
             <param name="value">The <see cref="T:System.Object"/> to convert. </param>
         </member>
+        <member name="T:Raven.Client.Document.AsyncDocumentQuery`1">
+            <summary>
+            A query against a Raven index
+            </summary>
+        </member>
+        <member name="T:Raven.Client.Document.AbstractDocumentQuery`2">
+            <summary>
+              A query against a Raven index
+            </summary>
+        </member>
+        <member name="T:Raven.Client.IDocumentQueryCustomization">
+            <summary>
+            Customize the document query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOfNow">
+            <summary>
+            Instructs the query to wait for non stale results as of now.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of now for the specified timeout.
+            </summary>
+            <param name="waitTimeout">The wait timeout.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOf(System.DateTime)">
+            <summary>
+            Instructs the query to wait for non stale results as of the cutoff date.
+            </summary>
+            <param name="cutOff">The cut off.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
+            </summary>
+            <param name="cutOff">The cut off.</param>
+            <param name="waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResults">
+            <summary>
+            EXPERT ONLY: Instructs the query to wait for non stale results.
+            This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.Include``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.Include(System.String)">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResults(System.TimeSpan)">
+            <summary>
+            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
+            This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+            <param name="waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.CreateQueryForSelectedFields``1(System.String[])">
+            <summary>
+            Selects the specified fields directly from the index
+            </summary>
+            <typeparam name="TProjection">The type of the projection.</typeparam>
+            <param name="fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+            Filter matches to be inside the specified radius
+            </summary>
+            <param name="radius">The radius.</param>
+            <param name="latitude">The latitude.</param>
+            <param name="longitude">The longitude.</param>
+        </member>
+        <member name="T:Raven.Client.Client.IRavenQueryInspector">
+            <summary>
+            Provide access to the underlying <see cref="T:Raven.Client.IDocumentQuery`1"/>
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Client.IRavenQueryInspector.GetLastEqualityTerm">
+            <summary>
+            The last term that we asked the query to use equals on
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Client.IRavenQueryInspector.IndexQueried">
+            <summary>
+            Get the name of the index being queried
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Client.IRavenQueryInspector.DatabaseCommands">
+            <summary>
+            Grant access to the database commands
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Client.IRavenQueryInspector.AsyncDatabaseCommands">
+            <summary>
+            Grant access to the async database commands
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.negate">
+            <summary>
+            Whatever to negate the next operation
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.theDatabaseCommands">
+            <summary>
+            The database commands to use
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.theAsyncDatabaseCommands">
+            <summary>
+            Async database commands to use
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.indexName">
+            <summary>
+            The index to query
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.projectionFields">
+            <summary>
+              The list of fields to project directly from the index
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.queryListeners">
+            <summary>
+            The query listeners for this query
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.theSession">
+            <summary>
+            The session for this query
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.cutoff">
+            <summary>
+              The cutoff date to use for detecting staleness in the index
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.orderByFields">
+            <summary>
+              The fields to order the results by
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.sortByHints">
+            <summary>
+              The types to sort the fields by (NULL if not specified)
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.pageSize">
+            <summary>
+              The page size to use when querying the index
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.theQueryText">
+            <summary>
+            The query to use
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.start">
+            <summary>
+              which record to start reading from
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.timeout">
+            <summary>
+            Timeout for this query
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.theWaitForNonStaleResults">
+            <summary>
+            Should we wait for non stale results
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.aggregationOp">
+            <summary>
+            What aggregated operation to execute
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.groupByFields">
+            <summary>
+            Fields to group on
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,System.String,System.String[],Raven.Client.IDocumentQueryListener[])">
+            <summary>
+              Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
+            </summary>
+            <param name="theSession">The session.</param>
+            <param name="databaseCommands">The database commands.</param>
+            <param name="indexName">Name of the index.</param>
+            <param name="projectionFields">The projection fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands,System.String,System.String[],Raven.Client.IDocumentQueryListener[])">
+            <param name = "indexName">Name of the index.</param>
+            <param name = "projectionFields">The projection fields.</param>
+            <param name = "theSession">The session.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.#ctor(Raven.Client.Document.AbstractDocumentQuery{`0,`1})">
+            <summary>
+              Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
+            </summary>
+            <param name="other">The other.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#Include(System.String)">
+            <summary>
+              Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name = "path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResults(System.TimeSpan)">
+            <summary>
+              EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
+              This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+            <param name = "waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#CreateQueryForSelectedFields``1(System.String[])">
+            <summary>
+            Selects the specified fields directly from the index
+            </summary>
+            <typeparam name="TProjection">The type of the projection.</typeparam>
+            <param name="fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.CreateQueryForSelectedFields``1(System.String[])">
+            <summary>
+            Selects the specified fields directly from the index
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+              Filter matches to be inside the specified radius
+            </summary>
+            <param name = "radius">The radius.</param>
+            <param name = "latitude">The latitude.</param>
+            <param name = "longitude">The longitude.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GenerateQueryWithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+              Filter matches to be inside the specified radius
+            </summary>
+            <param name = "radius">The radius.</param>
+            <param name = "latitude">The latitude.</param>
+            <param name = "longitude">The longitude.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResults">
+            <summary>
+              EXPERT ONLY: Instructs the query to wait for non stale results.
+              This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#Include``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+              Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name = "path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResults(System.TimeSpan)">
+            <summary>
+              Instruct the query to wait for non stale result for the specified wait timeout.
+            </summary>
+            <param name = "waitTimeout">The wait timeout.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GetProjectionFields">
+            <summary>
+              Gets the fields for projection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.AddOrder(System.String,System.Boolean)">
+            <summary>
+              Adds an ordering for a specific field to the query
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "descending">if set to <c>true</c> [descending].</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.AddOrder(System.String,System.Boolean,System.Type)">
+            <summary>
+              Adds an ordering for a specific field to the query and specifies the type of field for sorting purposes
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "descending">if set to <c>true</c> [descending].</param>
+            <param name = "fieldType">the type of the field to be sorted.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GetEnumerator">
+            <summary>
+              Gets the enumerator.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Include(System.String)">
+            <summary>
+              Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name = "path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Where(System.Func{`0,System.Boolean})">
+            <summary>
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+              Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name = "path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Take(System.Int32)">
+            <summary>
+              Takes the specified count.
+            </summary>
+            <param name = "count">The count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Skip(System.Int32)">
+            <summary>
+              Skips the specified count.
+            </summary>
+            <param name = "count">The count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Where(System.String)">
+            <summary>
+              Filter the results from the index using the specified where clause.
+            </summary>
+            <param name = "whereClause">The where clause.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEquals(System.String,System.Object)">
+            <summary>
+              Matches exact value
+            </summary>
+            <remarks>
+              Defaults to NotAnalyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEquals(System.String,System.Object,System.Boolean)">
+            <summary>
+              Matches exact value
+            </summary>
+            <remarks>
+              Defaults to allow wildcards only if analyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.OpenSubclause">
+            <summary>
+              Simplified method for opening a new clause within the query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GroupBy(Raven.Abstractions.Data.AggregationOperation,System.String[])">
+            <summary>
+              Instruct the index to group by the specified fields using the specified aggregation operation
+            </summary>
+            <remarks>
+              This is only valid on dynamic indexes queries
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.CloseSubclause">
+            <summary>
+              Simplified method for closing a clause within the query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+            <summary>
+              Matches exact value
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.NegateNext">
+            <summary>
+             Negate the next operation
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereContains(System.String,System.Object)">
+            <summary>
+              Matches substrings of the field
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereStartsWith(System.String,System.Object)">
+            <summary>
+              Matches fields which starts with the specified value.
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEndsWith(System.String,System.Object)">
+            <summary>
+              Matches fields which ends with the specified value.
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereBetween(System.String,System.Object,System.Object)">
+            <summary>
+              Matches fields where the value is between the specified start and end, exclusive
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "start">The start.</param>
+            <param name = "end">The end.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereBetweenOrEqual(System.String,System.Object,System.Object)">
+            <summary>
+              Matches fields where the value is between the specified start and end, inclusive
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "start">The start.</param>
+            <param name = "end">The end.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereGreaterThan(System.String,System.Object)">
+            <summary>
+              Matches fields where the value is greater than the specified value
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereGreaterThanOrEqual(System.String,System.Object)">
+            <summary>
+              Matches fields where the value is greater than or equal to the specified value
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereLessThan(System.String,System.Object)">
+            <summary>
+              Matches fields where the value is less than the specified value
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereLessThanOrEqual(System.String,System.Object)">
+            <summary>
+              Matches fields where the value is less than or equal to the specified value
+            </summary>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.AndAlso">
+            <summary>
+              Add an AND to the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.OrElse">
+            <summary>
+              Add an OR to the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Boost(System.Decimal)">
+            <summary>
+              Specifies a boost weight to the last where clause.
+              The higher the boost factor, the more relevant the term will be.
+            </summary>
+            <param name = "boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
+            <returns></returns>
+            <remarks>
+              http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Fuzzy(System.Decimal)">
+            <summary>
+              Specifies a fuzziness factor to the single word term in the last where clause
+            </summary>
+            <param name = "fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
+            <returns></returns>
+            <remarks>
+              http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Proximity(System.Int32)">
+            <summary>
+              Specifies a proximity distance for the phrase in the last where clause
+            </summary>
+            <param name = "proximity">number of words within</param>
+            <returns></returns>
+            <remarks>
+              http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.OrderBy(System.String[])">
+            <summary>
+              Order the results by the specified fields
+            </summary>
+            <remarks>
+              The fields are the names of the fields to sort, defaulting to sorting by ascending.
+              You can prefix a field name with '-' to indicate sorting by descending or '+' to sort by ascending
+            </remarks>
+            <param name = "fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResultsAsOfNow">
+            <summary>
+              Instructs the query to wait for non stale results as of now.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
+            <summary>
+              Instructs the query to wait for non stale results as of now for the specified timeout.
+            </summary>
+            <param name = "waitTimeout">The wait timeout.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOf(System.DateTime)">
+            <summary>
+              Instructs the query to wait for non stale results as of the cutoff date.
+            </summary>
+            <param name = "cutOff">The cut off.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
+            <summary>
+              Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
+            </summary>
+            <param name = "cutOff">The cut off.</param>
+            <param name = "waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOfNow">
+            <summary>
+              Instructs the query to wait for non stale results as of now.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
+            <summary>
+              Instructs the query to wait for non stale results as of now for the specified timeout.
+            </summary>
+            <param name = "waitTimeout">The wait timeout.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResultsAsOf(System.DateTime)">
+            <summary>
+              Instructs the query to wait for non stale results as of the cutoff date.
+            </summary>
+            <param name = "cutOff">The cut off.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
+            <summary>
+              Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
+            </summary>
+            <param name = "cutOff">The cut off.</param>
+            <param name = "waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResults">
+            <summary>
+              EXPERT ONLY: Instructs the query to wait for non stale results.
+              This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GetQueryResult">
+            <summary>
+              Gets the query result.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GenerateIndexQuery(System.String)">
+            <summary>
+              Generates the index query.
+            </summary>
+            <param name = "query">The query.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.ToString">
+            <summary>
+              Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+              A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GetLastEqualityTerm">
+            <summary>
+              The last term that we asked the query to use equals on
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.Includes">
+            <summary>
+              Gets the current includes on this query
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.IndexQueried">
+            <summary>
+              Get the name of the index being queried
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.DatabaseCommands">
+            <summary>
+              Grant access to the database commands
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.AsyncDatabaseCommands">
+            <summary>
+              Grant access to the async database commands
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.Session">
+            <summary>
+              Gets the session associated with this document query
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.QueryText">
+            <summary>
+              Gets the query text built so far
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.QueryResult">
+            <summary>
+              Gets the query result
+              Execute the query the first time that this is called.
+            </summary>
+            <value>The query result.</value>
+        </member>
+        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.QueryResultAsync">
+            <summary>
+              Gets the query result
+              Execute the query the first time that this is called.
+            </summary>
+            <value>The query result.</value>
+        </member>
+        <member name="T:Raven.Client.IAsyncDocumentQuery`1">
+            <summary>
+             Asyncronous query against a raven index
+            </summary>
+        </member>
+        <member name="T:Raven.Client.IDocumentQueryBase`2">
+            <summary>
+            A query against a Raven index
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Include(System.String)">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Where(System.Func{`0,System.Boolean})">
+            <summary>
+            This function exists solely to forbid in memory where clause on IDocumentQuery, because
+            that is nearly always a mistake.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Take(System.Int32)">
+            <summary>
+            Takes the specified count.
+            </summary>
+            <param name="count">The count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Skip(System.Int32)">
+            <summary>
+            Skips the specified count.
+            </summary>
+            <param name="count">The count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Where(System.String)">
+            <summary>
+            Filter the results from the index using the specified where clause.
+            </summary>
+            <param name="whereClause">The where clause.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(System.String,System.Object)">
+            <summary>
+            	Matches exact value
+            </summary>
+            <remarks>
+            	Defaults to NotAnalyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(System.String,System.Object,System.Boolean)">
+            <summary>
+            	Matches exact value
+            </summary>
+            <remarks>
+            	Defaults to allow wildcards only if analyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+            <summary>
+            	Matches exact value
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereContains(System.String,System.Object)">
+            <summary>
+            	Matches substrings of the field
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereStartsWith(System.String,System.Object)">
+            <summary>
+            Matches fields which starts with the specified value.
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEndsWith(System.String,System.Object)">
+            <summary>
+            Matches fields which ends with the specified value.
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereBetween(System.String,System.Object,System.Object)">
+            <summary>
+            Matches fields where the value is between the specified start and end, exclusive
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="start">The start.</param>
+            <param name="end">The end.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereBetweenOrEqual(System.String,System.Object,System.Object)">
+            <summary>
+            Matches fields where the value is between the specified start and end, inclusive
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="start">The start.</param>
+            <param name="end">The end.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereGreaterThan(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is greater than the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereGreaterThanOrEqual(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is greater than or equal to the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereLessThan(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is less than the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereLessThanOrEqual(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is less than or equal to the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.AndAlso">
+            <summary>
+            Add an AND to the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.OrElse">
+            <summary>
+            Add an OR to the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Boost(System.Decimal)">
+            <summary>
+            Specifies a boost weight to the last where clause.
+            The higher the boost factor, the more relevant the term will be.
+            </summary>
+            <param name="boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
+            <returns></returns>
+            <remarks>
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Fuzzy(System.Decimal)">
+            <summary>
+            Specifies a fuzziness factor to the single word term in the last where clause
+            </summary>
+            <param name="fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
+            <returns></returns>
+            <remarks>
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Proximity(System.Int32)">
+            <summary>
+            Specifies a proximity distance for the phrase in the last where clause
+            </summary>
+            <param name="proximity">number of words within</param>
+            <returns></returns>
+            <remarks>
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+            Filter matches to be inside the specified radius
+            </summary>
+            <param name="radius">The radius.</param>
+            <param name="latitude">The latitude.</param>
+            <param name="longitude">The longitude.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.SortByDistance">
+            <summary>
+            Sorts the query results by distance.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.OrderBy(System.String[])">
+            <summary>
+            Order the results by the specified fields
+            </summary>
+            <remarks>
+            The fields are the names of the fields to sort, defaulting to sorting by ascending.
+            You can prefix a field name with '-' to indicate sorting by descending or '+' to sort by ascending
+            </remarks>
+            <param name="fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOfNow">
+            <summary>
+            Instructs the query to wait for non stale results as of now.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of now for the specified timeout.
+            </summary>
+            <param name="waitTimeout">The wait timeout.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOf(System.DateTime)">
+            <summary>
+            Instructs the query to wait for non stale results as of the cutoff date.
+            </summary>
+            <param name="cutOff">The cut off.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
+            </summary>
+            <param name="cutOff">The cut off.</param>
+            <param name="waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResults">
+            <summary>
+            EXPERT ONLY: Instructs the query to wait for non stale results.
+            This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResults(System.TimeSpan)">
+            <summary>
+            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
+            This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+            <param name="waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.AddOrder(System.String,System.Boolean)">
+            <summary>
+            Adds an ordering for a specific field to the query
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="descending">if set to <c>true</c> [descending].</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.AddOrder(System.String,System.Boolean,System.Type)">
+            <summary>
+            Adds an ordering for a specific field to the query and specifies the type of field for sorting purposes
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="descending">if set to <c>true</c> [descending].</param>
+            <param name="fieldType">the type of the field to be sorted.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.OpenSubclause">
+            <summary>
+            Simplified method for opening a new clause within the query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.CloseSubclause">
+            <summary>
+            Simplified method for closing a clause within the query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.GroupBy(Raven.Abstractions.Data.AggregationOperation,System.String[])">
+            <summary>
+             Instruct the index to group by the specified fields using the specified aggregation operation
+            </summary>
+             <remarks>
+             This is only valid on dynamic indexes queries
+             </remarks>
+        </member>
+        <member name="P:Raven.Client.IDocumentQueryBase`2.Not">
+            <summary>
+            Negate the next operation
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IAsyncDocumentQuery`1.SelectFields``1(System.String[])">
+            <summary>
+            Selects the specified fields directly from the index
+            </summary>
+            <typeparam name="TProjection">The type of the projection.</typeparam>
+            <param name="fields">The fields.</param>
+        </member>
+        <member name="P:Raven.Client.IAsyncDocumentQuery`1.QueryResultAsync">
+            <summary>
+            Gets the query result
+            Execute the query the first time that this is called.
+            </summary>
+            <value>The query result.</value>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands,System.String,System.String[],Raven.Client.IDocumentQueryListener[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.#ctor(Raven.Client.Document.AsyncDocumentQuery{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Include(System.String)">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Take(System.Int32)">
+            <summary>
+            Takes the specified count.
+            </summary>
+            <param name="count">The count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Skip(System.Int32)">
+            <summary>
+            Skips the specified count.
+            </summary>
+            <param name="count">The count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Where(System.String)">
+            <summary>
+            Filter the results from the index using the specified where clause.
+            </summary>
+            <param name="whereClause">The where clause.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEquals(System.String,System.Object)">
+            <summary>
+            	Matches exact value
+            </summary>
+            <remarks>
+            	Defaults to NotAnalyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEquals(System.String,System.Object,System.Boolean)">
+            <summary>
+            	Matches exact value
+            </summary>
+            <remarks>
+            	Defaults to allow wildcards only if analyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+            <summary>
+            	Matches exact value
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereContains(System.String,System.Object)">
+            <summary>
+            	Matches substrings of the field
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereStartsWith(System.String,System.Object)">
+            <summary>
+            Matches fields which starts with the specified value.
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEndsWith(System.String,System.Object)">
+            <summary>
+            Matches fields which ends with the specified value.
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereBetween(System.String,System.Object,System.Object)">
+            <summary>
+            Matches fields where the value is between the specified start and end, exclusive
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="start">The start.</param>
+            <param name="end">The end.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereBetweenOrEqual(System.String,System.Object,System.Object)">
+            <summary>
+            Matches fields where the value is between the specified start and end, inclusive
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="start">The start.</param>
+            <param name="end">The end.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereGreaterThan(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is greater than the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereGreaterThanOrEqual(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is greater than or equal to the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereLessThan(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is less than the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereLessThanOrEqual(System.String,System.Object)">
+            <summary>
+            Matches fields where the value is less than or equal to the specified value
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#AndAlso">
+            <summary>
+            Add an AND to the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#OrElse">
+            <summary>
+            Add an OR to the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Boost(System.Decimal)">
+            <summary>
+            Specifies a boost weight to the last where clause.
+            The higher the boost factor, the more relevant the term will be.
+            </summary>
+            <param name="boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
+            <returns></returns>
+            <remarks>
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Fuzzy(System.Decimal)">
+            <summary>
+            Specifies a fuzziness factor to the single word term in the last where clause
+            </summary>
+            <param name="fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
+            <returns></returns>
+            <remarks>
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Proximity(System.Int32)">
+            <summary>
+            Specifies a proximity distance for the phrase in the last where clause
+            </summary>
+            <param name="proximity">number of words within</param>
+            <returns></returns>
+            <remarks>
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+            Filter matches to be inside the specified radius
+            </summary>
+            <param name="radius">The radius.</param>
+            <param name="latitude">The latitude.</param>
+            <param name="longitude">The longitude.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#SortByDistance">
+            <summary>
+            Sorts the query results by distance.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#OrderBy(System.String[])">
+            <summary>
+            Order the results by the specified fields
+            </summary>
+            <remarks>
+            The fields are the names of the fields to sort, defaulting to sorting by ascending.
+            You can prefix a field name with '-' to indicate sorting by descending or '+' to sort by ascending
+            </remarks>
+            <param name="fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResultsAsOfNow">
+            <summary>
+            Instructs the query to wait for non stale results as of now.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of now for the specified timeout.
+            </summary>
+            <param name="waitTimeout">The wait timeout.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResultsAsOf(System.DateTime)">
+            <summary>
+            Instructs the query to wait for non stale results as of the cutoff date.
+            </summary>
+            <param name="cutOff">The cut off.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
+            </summary>
+            <param name="cutOff">The cut off.</param>
+            <param name="waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResults">
+            <summary>
+            EXPERT ONLY: Instructs the query to wait for non stale results.
+            This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResults(System.TimeSpan)">
+            <summary>
+            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
+            This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+            <param name="waitTimeout">The wait timeout.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.SelectFields``1(System.String[])">
+            <summary>
+            Selects the specified fields directly from the index
+            </summary>
+            <typeparam name="TProjection">The type of the projection.</typeparam>
+            <param name="fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.CreateQueryForSelectedFields``1(System.String[])">
+            <summary>
+            Selects the specified fields directly from the index
+            </summary>
+            <typeparam name="TProjection">The type of the projection.</typeparam>
+            <param name="fields">The fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#AddOrder(System.String,System.Boolean)">
+            <summary>
+            Adds an ordering for a specific field to the query
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="descending">if set to <c>true</c> [descending].</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#AddOrder(System.String,System.Boolean,System.Type)">
+            <summary>
+            Adds an ordering for a specific field to the query and specifies the type of field for sorting purposes
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <param name="descending">if set to <c>true</c> [descending].</param>
+            <param name="fieldType">the type of the field to be sorted.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#OpenSubclause">
+            <summary>
+            Simplified method for opening a new clause within the query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#CloseSubclause">
+            <summary>
+            Simplified method for closing a clause within the query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#GroupBy(Raven.Abstractions.Data.AggregationOperation,System.String[])">
+            <summary>
+             Instruct the index to group by the specified fields using the specified aggregation operation
+            </summary>
+             <remarks>
+             This is only valid on dynamic indexes queries
+             </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.GenerateQueryWithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+            Filter matches to be inside the specified radius
+            </summary>
+            <param name="radius">The radius.</param>
+            <param name="latitude">The latitude.</param>
+            <param name="longitude">The longitude.</param>
+        </member>
+        <member name="P:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Not">
+            <summary>
+            Negate the next operation
+            </summary>
+        </member>
+        <member name="T:Raven.Client.Document.AsyncSpatialDocumentQuery`1">
+            <summary>
+            A spatial query allows to perform spatial filtering on the index
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncSpatialDocumentQuery`1.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands,System.String,System.String[],Raven.Client.IDocumentQueryListener[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Raven.Client.Document.SpatialDocumentQuery`1"/> class.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="databaseCommands">The database commands.</param>
+            <param name="indexName">Name of the index.</param>
+            <param name="projectionFields">The projection fields.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncSpatialDocumentQuery`1.#ctor(Raven.Client.Document.AsyncDocumentQuery{`0},System.Double,System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Raven.Client.Document.SpatialDocumentQuery`1"/> class.
+            </summary>
+            <param name="documentQuery">The document query.</param>
+            <param name="radius">The radius.</param>
+            <param name="latitude">The latitude.</param>
+            <param name="longitude">The longitude.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncSpatialDocumentQuery`1.#ctor(Raven.Client.Document.AsyncDocumentQuery{`0},System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Raven.Client.Document.SpatialDocumentQuery`1"/> class.
+            </summary>
+            <param name="documentQuery">The document query.</param>
+            <param name="sortByDistance">if set to <c>true</c> the query will be sorted by distance.</param>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncSpatialDocumentQuery`1.GenerateIndexQuery(System.String)">
+            <summary>
+            Generates the index query.
+            </summary>
+            <param name="query">The query.</param>
+            <returns></returns>
+        </member>
         <member name="T:Raven.Client.Document.Async.AsyncDocumentSession">
             <summary>
             Implementation for async document session 
@@ -1120,7 +2381,12 @@
             The document store associated with this session
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.#ctor(Raven.Client.Document.DocumentStore,Raven.Client.IDocumentStoreListener[],Raven.Client.IDocumentDeleteListener[])">
+        <member name="F:Raven.Client.Document.InMemoryDocumentSessionOperations.queryListeners">
+            <summary>
+            The query listeners allow to modify queries before it is executed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.#ctor(Raven.Client.Document.DocumentStore,Raven.Client.IDocumentQueryListener[],Raven.Client.IDocumentStoreListener[],Raven.Client.IDocumentDeleteListener[])">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.InMemoryDocumentSessionOperations"/> class.
             </summary>
@@ -1466,6 +2732,19 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.IAsyncDocumentSession.Query``1(System.String)">
+            <summary>
+            Queries the specified index using Linq.
+            </summary>
+            <typeparam name="T">The result of the query</typeparam>
+            <param name="indexName">Name of the index.</param>
+        </member>
+        <member name="M:Raven.Client.IAsyncDocumentSession.Query``1">
+            <summary>
+            Dynamically queries RavenDB using LINQ
+            </summary>
+            <typeparam name="T">The result of the query</typeparam>
+        </member>
         <member name="P:Raven.Client.IAsyncDocumentSession.Advanced">
             <summary>
             Get the accessor for advanced operations
@@ -1609,19 +2888,46 @@
             Gets a value indicating whether any of the entities tracked by the session has changes.
             </summary>
         </member>
+        <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.AsyncLuceneQuery``1(System.String)">
+            <summary>
+            Query the specified index using Lucene syntax
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IAsyncAdvancedSessionOperations.AsyncLuceneQuery``1">
+            <summary>
+            Dynamically query RavenDB using Lucene syntax
+            </summary>
+        </member>
         <member name="P:Raven.Client.IAsyncAdvancedSessionOperations.AsyncDatabaseCommands">
             <summary>
             Gets the async database commands.
             </summary>
             <value>The async database commands.</value>
         </member>
-        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.#ctor(Raven.Client.Document.DocumentStore,Raven.Client.IDocumentStoreListener[],Raven.Client.IDocumentDeleteListener[])">
+        <member name="T:Raven.Client.Linq.IDocumentQueryGenerator">
+            <summary>
+             Generate a new document query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.IDocumentQueryGenerator.Query``1(System.String)">
+            <summary>
+            Create a new query for <typeparam name="T"/>
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.#ctor(Raven.Client.Document.DocumentStore,Raven.Client.Client.Async.IAsyncDatabaseCommands,Raven.Client.IDocumentQueryListener[],Raven.Client.IDocumentStoreListener[],Raven.Client.IDocumentDeleteListener[])">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.Async.AsyncDocumentSession"/> class.
             </summary>
-            <param name="documentStore">The document store.</param>
-            <param name="storeListeners">The store listeners.</param>
-            <param name="deleteListeners">The delete listeners.</param>
+        </member>
+        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.AsyncLuceneQuery``1(System.String)">
+            <summary>
+            Query the specified index using Lucene syntax
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.AsyncLuceneQuery``1">
+            <summary>
+            Dynamically query RavenDB using Lucene syntax
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.LoadAsync``1(System.String)">
             <summary>
@@ -1666,6 +2972,12 @@
             </summary>
             <param name="fromTxId">From tx id.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.Query``1">
+            <summary>
+            Dynamically queries RavenDB using LINQ
+            </summary>
+            <typeparam name="T">The result of the query</typeparam>
         </member>
         <member name="P:Raven.Client.Document.Async.AsyncDocumentSession.AsyncDatabaseCommands">
             <summary>
@@ -1817,233 +3129,6 @@
             <summary>
             A query against a Raven index
             </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Include(System.String)">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Where(System.Func{`0,System.Boolean})">
-            <summary>
-            This function exists solely to forbid in memory where clause on IDocumentQuery, because
-            that is nearly always a mistake.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Take(System.Int32)">
-            <summary>
-            Takes the specified count.
-            </summary>
-            <param name="count">The count.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Skip(System.Int32)">
-            <summary>
-            Skips the specified count.
-            </summary>
-            <param name="count">The count.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Where(System.String)">
-            <summary>
-            Filter the results from the index using the specified where clause.
-            </summary>
-            <param name="whereClause">The where clause.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereEquals(System.String,System.Object)">
-            <summary>
-            	Matches exact value
-            </summary>
-            <remarks>
-            	Defaults to NotAnalyzed
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereEquals(System.String,System.Object,System.Boolean)">
-            <summary>
-            	Matches exact value
-            </summary>
-            <remarks>
-            	Defaults to allow wildcards only if analyzed
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
-            <summary>
-            	Matches exact value
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereContains(System.String,System.Object)">
-            <summary>
-            	Matches substrings of the field
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereStartsWith(System.String,System.Object)">
-            <summary>
-            Matches fields which starts with the specified value.
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereEndsWith(System.String,System.Object)">
-            <summary>
-            Matches fields which ends with the specified value.
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereBetween(System.String,System.Object,System.Object)">
-            <summary>
-            Matches fields where the value is between the specified start and end, exclusive
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="start">The start.</param>
-            <param name="end">The end.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereBetweenOrEqual(System.String,System.Object,System.Object)">
-            <summary>
-            Matches fields where the value is between the specified start and end, inclusive
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="start">The start.</param>
-            <param name="end">The end.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereGreaterThan(System.String,System.Object)">
-            <summary>
-            Matches fields where the value is greater than the specified value
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereGreaterThanOrEqual(System.String,System.Object)">
-            <summary>
-            Matches fields where the value is greater than or equal to the specified value
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereLessThan(System.String,System.Object)">
-            <summary>
-            Matches fields where the value is less than the specified value
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WhereLessThanOrEqual(System.String,System.Object)">
-            <summary>
-            Matches fields where the value is less than or equal to the specified value
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.AndAlso">
-            <summary>
-            Add an AND to the query
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.OrElse">
-            <summary>
-            Add an OR to the query
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Boost(System.Decimal)">
-            <summary>
-            Specifies a boost weight to the last where clause.
-            The higher the boost factor, the more relevant the term will be.
-            </summary>
-            <param name="boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
-            <returns></returns>
-            <remarks>
-            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Fuzzy(System.Decimal)">
-            <summary>
-            Specifies a fuzziness factor to the single word term in the last where clause
-            </summary>
-            <param name="fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
-            <returns></returns>
-            <remarks>
-            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.Proximity(System.Int32)">
-            <summary>
-            Specifies a proximity distance for the phrase in the last where clause
-            </summary>
-            <param name="proximity">number of words within</param>
-            <returns></returns>
-            <remarks>
-            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WithinRadiusOf(System.Double,System.Double,System.Double)">
-            <summary>
-            Filter matches to be inside the specified radius
-            </summary>
-            <param name="radius">The radius.</param>
-            <param name="latitude">The latitude.</param>
-            <param name="longitude">The longitude.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.SortByDistance">
-            <summary>
-            Sorts the query results by distance.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.OrderBy(System.String[])">
-            <summary>
-            Order the results by the specified fields
-            </summary>
-            <remarks>
-            The fields are the names of the fields to sort, defaulting to sorting by ascending.
-            You can prefix a field name with '-' to indicate sorting by descending or '+' to sort by ascending
-            </remarks>
-            <param name="fields">The fields.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WaitForNonStaleResultsAsOfNow">
-            <summary>
-            Instructs the query to wait for non stale results as of now.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
-            <summary>
-            Instructs the query to wait for non stale results as of now for the specified timeout.
-            </summary>
-            <param name="waitTimeout">The wait timeout.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WaitForNonStaleResultsAsOf(System.DateTime)">
-            <summary>
-            Instructs the query to wait for non stale results as of the cutoff date.
-            </summary>
-            <param name="cutOff">The cut off.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
-            <summary>
-            Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
-            </summary>
-            <param name="cutOff">The cut off.</param>
-            <param name="waitTimeout">The wait timeout.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WaitForNonStaleResults">
-            <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results.
-            This shouldn't be used outside of unit tests unless you are well aware of the implications
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.WaitForNonStaleResults(System.TimeSpan)">
-            <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
-            This shouldn't be used outside of unit tests unless you are well aware of the implications
-            </summary>
-            <param name="waitTimeout">The wait timeout.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQuery`1.SelectFields``1(System.String[])">
             <summary>
@@ -2051,46 +3136,6 @@
             </summary>
             <typeparam name="TProjection">The type of the projection.</typeparam>
             <param name="fields">The fields.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.AddOrder(System.String,System.Boolean)">
-            <summary>
-            Adds an ordering for a specific field to the query
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="descending">if set to <c>true</c> [descending].</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.AddOrder(System.String,System.Boolean,System.Type)">
-            <summary>
-            Adds an ordering for a specific field to the query and specifies the type of field for sorting purposes
-            </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="descending">if set to <c>true</c> [descending].</param>
-            <param name="fieldType">the type of the field to be sorted.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.OpenSubclause">
-            <summary>
-            Simplified method for opening a new clause within the query
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.CloseSubclause">
-            <summary>
-            Simplified method for closing a clause within the query
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQuery`1.GroupBy(Raven.Abstractions.Data.AggregationOperation,System.String[])">
-            <summary>
-             Instruct the index to group by the specified fields using the specified aggregation operation
-            </summary>
-             <remarks>
-             This is only valid on dynamic indexes queries
-             </remarks>
-        </member>
-        <member name="P:Raven.Client.IDocumentQuery`1.Not">
-            <summary>
-            Negate the next operation
-            </summary>
         </member>
         <member name="P:Raven.Client.IDocumentQuery`1.QueryResult">
             <summary>
@@ -2106,165 +3151,15 @@
             </summary>
             <value>The query result.</value>
         </member>
-        <member name="T:Raven.Client.IDocumentQueryCustomization">
-            <summary>
-            Customize the document query
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOfNow">
-            <summary>
-            Instructs the query to wait for non stale results as of now.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
-            <summary>
-            Instructs the query to wait for non stale results as of now for the specified timeout.
-            </summary>
-            <param name="waitTimeout">The wait timeout.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOf(System.DateTime)">
-            <summary>
-            Instructs the query to wait for non stale results as of the cutoff date.
-            </summary>
-            <param name="cutOff">The cut off.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
-            <summary>
-            Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
-            </summary>
-            <param name="cutOff">The cut off.</param>
-            <param name="waitTimeout">The wait timeout.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResults">
-            <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results.
-            This shouldn't be used outside of unit tests unless you are well aware of the implications
-            </summary>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.Include``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.Include(System.String)">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResults(System.TimeSpan)">
-            <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
-            This shouldn't be used outside of unit tests unless you are well aware of the implications
-            </summary>
-            <param name="waitTimeout">The wait timeout.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.SelectFields``1(System.String[])">
-            <summary>
-            Selects the specified fields directly from the index
-            </summary>
-            <typeparam name="TProjection">The type of the projection.</typeparam>
-            <param name="fields">The fields.</param>
-        </member>
-        <member name="M:Raven.Client.IDocumentQueryCustomization.WithinRadiusOf(System.Double,System.Double,System.Double)">
-            <summary>
-            Filter matches to be inside the specified radius
-            </summary>
-            <param name="radius">The radius.</param>
-            <param name="latitude">The latitude.</param>
-            <param name="longitude">The longitude.</param>
-        </member>
-        <member name="T:Raven.Client.Client.IRavenQueryInspector">
-            <summary>
-            Provide access to the underlying <see cref="T:Raven.Client.IDocumentQuery`1"/>
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Client.IRavenQueryInspector.GetLastEqualityTerm">
-            <summary>
-            The last term that we asked the query to use equals on
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Client.IRavenQueryInspector.IndexQueried">
-            <summary>
-            Get the name of the index being queried
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Client.IRavenQueryInspector.DatabaseCommands">
-            <summary>
-            Grant access to the database commands
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Client.IRavenQueryInspector.AsyncDatabaseCommands">
-            <summary>
-            Grant access to the async database commands
-            </summary>
-        </member>
-        <member name="F:Raven.Client.Document.DocumentQuery`1.projectionFields">
-            <summary>
-            The list of fields to project directly from the index
-            </summary>
-        </member>
-        <member name="F:Raven.Client.Document.DocumentQuery`1.cutoff">
-            <summary>
-            The cutoff date to use for detecting staleness in the index
-            </summary>
-        </member>
-        <member name="F:Raven.Client.Document.DocumentQuery`1.orderByFields">
-            <summary>
-            The fields to order the results by
-            </summary>
-        </member>
-        <member name="F:Raven.Client.Document.DocumentQuery`1.sortByHints">
-            <summary>
-            The types to sort the fields by (NULL if not specified)
-            </summary>
-        </member>
-        <member name="F:Raven.Client.Document.DocumentQuery`1.pageSize">
-            <summary>
-            The page size to use when querying the index
-            </summary>
-        </member>
-        <member name="F:Raven.Client.Document.DocumentQuery`1.start">
-            <summary>
-            which record to start reading from 
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,System.String,System.String[])">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands,System.String,System.String[],Raven.Client.IDocumentQueryListener[])">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
             </summary>
-            <param name="session">The session.</param>
-            <param name="databaseCommands">The database commands.</param>
-            <param name="indexName">Name of the index.</param>
-            <param name="projectionFields">The projection fields.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands,System.String,System.String[])">
-            <param name="indexName">Name of the index.</param>
-            <param name="projectionFields">The projection fields.</param>
-            <param name="session">The session.</param>
         </member>
         <member name="M:Raven.Client.Document.DocumentQuery`1.#ctor(Raven.Client.Document.DocumentQuery{`0})">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
             </summary>
-            <param name="other">The other.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#Include(System.String)">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResults(System.TimeSpan)">
-            <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
-            This shouldn't be used outside of unit tests unless you are well aware of the implications
-            </summary>
-            <param name="waitTimeout">The wait timeout.</param>
         </member>
         <member name="M:Raven.Client.Document.DocumentQuery`1.SelectFields``1(System.String[])">
             <summary>
@@ -2273,47 +3168,26 @@
             <typeparam name="TProjection">The type of the projection.</typeparam>
             <param name="fields">The fields.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WithinRadiusOf(System.Double,System.Double,System.Double)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResults(System.TimeSpan)">
             <summary>
-            Filter matches to be inside the specified radius
-            </summary>
-            <param name="radius">The radius.</param>
-            <param name="latitude">The latitude.</param>
-            <param name="longitude">The longitude.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResults">
-            <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results.
+            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
             This shouldn't be used outside of unit tests unless you are well aware of the implications
             </summary>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#Include``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WaitForNonStaleResults(System.TimeSpan)">
-            <summary>
-            Instruct the query to wait for non stale result for the specified wait timeout.
-            </summary>
             <param name="waitTimeout">The wait timeout.</param>
-            <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.GetProjectionFields">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.CreateQueryForSelectedFields``1(System.String[])">
             <summary>
-            Gets the fields for projection 
+            Selects the specified fields directly from the index
             </summary>
-            <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.AddOrder(System.String,System.Boolean)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#AddOrder(System.String,System.Boolean)">
             <summary>
             Adds an ordering for a specific field to the query
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="descending">if set to <c>true</c> [descending].</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.AddOrder(System.String,System.Boolean,System.Type)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#AddOrder(System.String,System.Boolean,System.Type)">
             <summary>
             Adds an ordering for a specific field to the query and specifies the type of field for sorting purposes
             </summary>
@@ -2321,80 +3195,19 @@
             <param name="descending">if set to <c>true</c> [descending].</param>
             <param name="fieldType">the type of the field to be sorted.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.GetEnumerator">
-            <summary>
-            Gets the enumerator.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.System#Collections#IEnumerable#GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through a collection.
-            </summary>
-            <returns>
-            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
-            </returns>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Include(System.String)">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Where(System.Func{`0,System.Boolean})">
-            <summary>
-            This function exists solely to forbid in memory where clause on IDocumentQuery, because
-            that is nearly always a mistake.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
-            <summary>
-            Includes the specified path in the query, loading the document specified in that path
-            </summary>
-            <param name="path">The path.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Take(System.Int32)">
-            <summary>
-            Takes the specified count.
-            </summary>
-            <param name="count">The count.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Skip(System.Int32)">
-            <summary>
-            Skips the specified count.
-            </summary>
-            <param name="count">The count.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Where(System.String)">
-            <summary>
-            Filter the results from the index using the specified where clause.
-            </summary>
-            <param name="whereClause">The where clause.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereEquals(System.String,System.Object)">
-            <summary>
-            	Matches exact value
-            </summary>
-            <remarks>
-            	Defaults to NotAnalyzed
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereEquals(System.String,System.Object,System.Boolean)">
-            <summary>
-            	Matches exact value
-            </summary>
-            <remarks>
-            	Defaults to allow wildcards only if analyzed
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.OpenSubclause">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#OpenSubclause">
             <summary>
             Simplified method for opening a new clause within the query
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.GroupBy(Raven.Abstractions.Data.AggregationOperation,System.String[])">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#CloseSubclause">
+            <summary>
+            Simplified method for closing a clause within the query
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#GroupBy(Raven.Abstractions.Data.AggregationOperation,System.String[])">
             <summary>
              Instruct the index to group by the specified fields using the specified aggregation operation
             </summary>
@@ -2402,121 +3215,161 @@
              This is only valid on dynamic indexes queries
              </remarks>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.CloseSubclause">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Include(System.String)">
             <summary>
-            Simplified method for closing a clause within the query
+            Includes the specified path in the query, loading the document specified in that path
             </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Take(System.Int32)">
+            <summary>
+            Takes the specified count.
+            </summary>
+            <param name="count">The count.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Skip(System.Int32)">
+            <summary>
+            Skips the specified count.
+            </summary>
+            <param name="count">The count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Where(System.String)">
+            <summary>
+            Filter the results from the index using the specified where clause.
+            </summary>
+            <param name="whereClause">The where clause.</param>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEquals(System.String,System.Object)">
+            <summary>
+            	Matches exact value
+            </summary>
+            <remarks>
+            	Defaults to NotAnalyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEquals(System.String,System.Object,System.Boolean)">
+            <summary>
+            	Matches exact value
+            </summary>
+            <remarks>
+            	Defaults to allow wildcards only if analyzed
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
             <summary>
             	Matches exact value
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereContains(System.String,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereContains(System.String,System.Object)">
             <summary>
             	Matches substrings of the field
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereStartsWith(System.String,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereStartsWith(System.String,System.Object)">
             <summary>
             Matches fields which starts with the specified value.
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereEndsWith(System.String,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEndsWith(System.String,System.Object)">
             <summary>
             Matches fields which ends with the specified value.
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereBetween(System.String,System.Object,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereBetween(System.String,System.Object,System.Object)">
             <summary>
             Matches fields where the value is between the specified start and end, exclusive
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="start">The start.</param>
             <param name="end">The end.</param>
-            <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereBetweenOrEqual(System.String,System.Object,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereBetweenOrEqual(System.String,System.Object,System.Object)">
             <summary>
             Matches fields where the value is between the specified start and end, inclusive
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="start">The start.</param>
             <param name="end">The end.</param>
-            <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereGreaterThan(System.String,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereGreaterThan(System.String,System.Object)">
             <summary>
             Matches fields where the value is greater than the specified value
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereGreaterThanOrEqual(System.String,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereGreaterThanOrEqual(System.String,System.Object)">
             <summary>
             Matches fields where the value is greater than or equal to the specified value
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereLessThan(System.String,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereLessThan(System.String,System.Object)">
             <summary>
             Matches fields where the value is less than the specified value
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WhereLessThanOrEqual(System.String,System.Object)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereLessThanOrEqual(System.String,System.Object)">
             <summary>
             Matches fields where the value is less than or equal to the specified value
             </summary>
             <param name="fieldName">Name of the field.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.AndAlso">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#AndAlso">
             <summary>
             Add an AND to the query
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.OrElse">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#OrElse">
             <summary>
             Add an OR to the query
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Boost(System.Decimal)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Boost(System.Decimal)">
             <summary>
-            	Specifies a boost weight to the last where clause.
-            	The higher the boost factor, the more relevant the term will be.
+            Specifies a boost weight to the last where clause.
+            The higher the boost factor, the more relevant the term will be.
             </summary>
-            <param name = "boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
+            <param name="boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
             <returns></returns>
             <remarks>
-            	http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Fuzzy(System.Decimal)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Fuzzy(System.Decimal)">
             <summary>
-            	Specifies a fuzziness factor to the single word term in the last where clause
+            Specifies a fuzziness factor to the single word term in the last where clause
             </summary>
-            <param name = "fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
+            <param name="fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
             <returns></returns>
             <remarks>
-            	http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Proximity(System.Int32)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Proximity(System.Int32)">
             <summary>
-            	Specifies a proximity distance for the phrase in the last where clause
+            Specifies a proximity distance for the phrase in the last where clause
             </summary>
-            <param name = "proximity">number of words within</param>
+            <param name="proximity">number of words within</param>
             <returns></returns>
             <remarks>
-            	http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
+            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
             </remarks>
         </member>
         <member name="M:Raven.Client.Document.DocumentQuery`1.WithinRadiusOf(System.Double,System.Double,System.Double)">
@@ -2527,12 +3380,20 @@
             <param name="latitude">The latitude.</param>
             <param name="longitude">The longitude.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.SortByDistance">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.GenerateQueryWithinRadiusOf(System.Double,System.Double,System.Double)">
+            <summary>
+              Filter matches to be inside the specified radius
+            </summary>
+            <param name = "radius">The radius.</param>
+            <param name = "latitude">The latitude.</param>
+            <param name = "longitude">The longitude.</param>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#SortByDistance">
             <summary>
             Sorts the query results by distance.
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.OrderBy(System.String[])">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#OrderBy(System.String[])">
             <summary>
             Order the results by the specified fields
             </summary>
@@ -2542,139 +3403,59 @@
             </remarks>
             <param name="fields">The fields.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WaitForNonStaleResultsAsOfNow">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResultsAsOfNow">
             <summary>
             Instructs the query to wait for non stale results as of now.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
             <summary>
             Instructs the query to wait for non stale results as of now for the specified timeout.
             </summary>
             <param name="waitTimeout">The wait timeout.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOf(System.DateTime)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResultsAsOf(System.DateTime)">
             <summary>
             Instructs the query to wait for non stale results as of the cutoff date.
             </summary>
             <param name="cutOff">The cut off.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
             <summary>
             Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
             </summary>
             <param name="cutOff">The cut off.</param>
             <param name="waitTimeout">The wait timeout.</param>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOfNow">
-            <summary>
-            Instructs the query to wait for non stale results as of now.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
-            <summary>
-            Instructs the query to wait for non stale results as of now for the specified timeout.
-            </summary>
-            <param name="waitTimeout">The wait timeout.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WaitForNonStaleResultsAsOf(System.DateTime)">
-            <summary>
-            Instructs the query to wait for non stale results as of the cutoff date.
-            </summary>
-            <param name="cutOff">The cut off.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
-            <summary>
-            Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
-            </summary>
-            <param name="cutOff">The cut off.</param>
-            <param name="waitTimeout">The wait timeout.</param>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.WaitForNonStaleResults">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResults">
             <summary>
             EXPERT ONLY: Instructs the query to wait for non stale results.
             This shouldn't be used outside of unit tests unless you are well aware of the implications
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.GetQueryResult">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.System#Collections#IEnumerable#GetEnumerator">
             <summary>
-            Gets the query result.
+            Returns an enumerator that iterates through a collection.
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.GenerateIndexQuery(System.String)">
-            <summary>
-            Generates the index query.
-            </summary>
-            <param name="query">The query.</param>
-            <returns></returns>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+            <filterpriority>2</filterpriority>
         </member>
         <member name="M:Raven.Client.Document.DocumentQuery`1.ToString">
             <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
+              Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
             <returns>
-            A <see cref="T:System.String"/> that represents this instance.
+              A <see cref="T:System.String"/> that represents this instance.
             </returns>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.GetLastEqualityTerm">
+        <member name="P:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Not">
             <summary>
-            The last term that we asked the query to use equals on
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.Includes">
-            <summary>
-            Gets the current includes on this query
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.IndexQueried">
-            <summary>
-            Get the name of the index being queried
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.DatabaseCommands">
-            <summary>
-            Grant access to the database commands
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.AsyncDatabaseCommands">
-            <summary>
-            Grant access to the async database commands
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.Session">
-            <summary>
-            Gets the session associated with this document query
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.QueryText">
-            <summary>
-            Gets the query text built so far
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.QueryResult">
-            <summary>
-            Gets the query result
-            Execute the query the first time that this is called.
-            </summary>
-            <value>The query result.</value>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.QueryResultAsync">
-            <summary>
-            Gets the query result
-            Execute the query the first time that this is called.
-            </summary>
-            <value>The query result.</value>
-        </member>
-        <member name="P:Raven.Client.Document.DocumentQuery`1.Not">
-            <summary>
-            Negates the next operation
+            Negate the next operation
             </summary>
         </member>
         <member name="T:Raven.Client.Document.DocumentSession">
@@ -2852,17 +3633,7 @@
             </summary>
             <value>The async database commands.</value>
         </member>
-        <member name="T:Raven.Client.Linq.IDocumentQueryGenerator">
-            <summary>
-             Generate a new document query
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Linq.IDocumentQueryGenerator.Query``1(System.String)">
-            <summary>
-            Create a new query for <typeparam name="T"/>
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Document.DocumentSession.#ctor(Raven.Client.Document.DocumentStore,Raven.Client.IDocumentStoreListener[],Raven.Client.IDocumentDeleteListener[],Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands)">
+        <member name="M:Raven.Client.Document.DocumentSession.#ctor(Raven.Client.Document.DocumentStore,Raven.Client.IDocumentQueryListener[],Raven.Client.IDocumentStoreListener[],Raven.Client.IDocumentDeleteListener[],Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands)">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentSession"/> class.
             </summary>
@@ -3183,12 +3954,23 @@
             <param name="deleteListener">The delete listener.</param>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Document.DocumentStore.RegisterListener(Raven.Client.IDocumentQueryListener)">
+            <summary>
+            Registers the query listener.
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.DocumentStore.RegisterListener(Raven.Client.IDocumentConversionListener)">
             <summary>
             Registers the convertion listener.
             </summary>
         </member>
         <member name="M:Raven.Client.Document.DocumentStore.OpenAsyncSession">
+            <summary>
+            Opens the async session.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentStore.OpenAsyncSession(System.String)">
             <summary>
             Opens the async session.
             </summary>
@@ -3404,11 +4186,10 @@
             An implementation of <see cref="T:System.Transactions.IPromotableSinglePhaseNotification"/> for RavenDB Client API
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.PromotableRavenClientEnlistment.#ctor(Raven.Client.ITransactionalDocumentSession)">
+        <member name="M:Raven.Client.Document.PromotableRavenClientEnlistment.#ctor(Raven.Client.ITransactionalDocumentSession,System.Action)">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.PromotableRavenClientEnlistment"/> class.
             </summary>
-            <param name="session">The session.</param>
         </member>
         <member name="M:Raven.Client.Document.PromotableRavenClientEnlistment.Promote">
             <summary>
@@ -3449,11 +4230,10 @@
             Client API to participate in Distributed Transactions
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.RavenClientEnlistment.#ctor(Raven.Client.ITransactionalDocumentSession)">
+        <member name="M:Raven.Client.Document.RavenClientEnlistment.#ctor(Raven.Client.ITransactionalDocumentSession,System.Action)">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.RavenClientEnlistment"/> class.
             </summary>
-            <param name="session">The session.</param>
         </member>
         <member name="M:Raven.Client.Document.RavenClientEnlistment.Prepare(System.Transactions.PreparingEnlistment)">
             <summary>
@@ -3834,15 +4614,6 @@
             A spatial query allows to perform spatial filtering on the index
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.SpatialDocumentQuery`1.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands,System.String,System.String[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:Raven.Client.Document.SpatialDocumentQuery`1"/> class.
-            </summary>
-            <param name="session">The session.</param>
-            <param name="databaseCommands">The database commands.</param>
-            <param name="indexName">Name of the index.</param>
-            <param name="projectionFields">The projection fields.</param>
-        </member>
         <member name="M:Raven.Client.Document.SpatialDocumentQuery`1.#ctor(Raven.Client.Document.DocumentQuery{`0},System.Double,System.Double,System.Double)">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.SpatialDocumentQuery`1"/> class.
@@ -4017,6 +4788,19 @@
             <exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is null. </exception>
             <exception cref="T:System.Runtime.Serialization.SerializationException">The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0). </exception>
         </member>
+        <member name="T:Raven.Client.Extensions.ExceptionExtensions">
+            <summary>
+             Extension methods to handle common scenarios
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Extensions.ExceptionExtensions.ExtractSingleInnerException(System.AggregateException)">
+            <summary>
+            Recursively examines the inner exceptions of an <see cref="T:System.AggregateException"/> and returns a single child exception.
+            </summary>
+            <returns>
+            If any of the aggregated exceptions have more than one inner exception, null is returned.
+            </returns>
+        </member>
         <member name="T:Raven.Client.Extensions.MultiTenancyExtensions">
             <summary>
              Extension methods to create mutli tenants databases
@@ -4029,6 +4813,11 @@
              <remarks>
              This operation happens _outside_ of any transaction
              </remarks>
+        </member>
+        <member name="M:Raven.Client.Extensions.MultiTenancyExtensions.EnsureDatabaseExistsAsync(Raven.Client.Client.Async.IAsyncDatabaseCommands,System.String)">
+            <summary>
+             Ensures that the database exists, creating it if needed
+            </summary>
         </member>
         <member name="T:Raven.Client.IDocumentConversionListener">
             <summary>
@@ -4058,6 +4847,16 @@
             <param name="key">The key.</param>
             <param name="entityInstance">The entity instance.</param>
             <param name="metadata">The metadata.</param>
+        </member>
+        <member name="T:Raven.Client.IDocumentQueryListener">
+            <summary>
+            Hook for users to modify all queries globally
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryListener.BeforeQueryExecuted(Raven.Client.IDocumentQueryCustomization)">
+            <summary>
+            Allow to customize a query globally
+            </summary>
         </member>
         <member name="T:Raven.Client.IDocumentStoreListener">
             <summary>
@@ -4607,6 +5406,11 @@
             Loading a document during result transformers
             </summary>
         </member>
+        <member name="M:Raven.Client.Indexes.IClientSideDatabase.Load``1(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Loading a document during result transformers
+            </summary>
+        </member>
         <member name="T:Raven.Client.Indexes.IndexCreation">
             <summary>
             Helper class for creating indexed from implementations of <see cref="T:Raven.Client.Indexes.AbstractIndexCreationTask"/>.
@@ -5087,6 +5891,11 @@
         <member name="M:Raven.Client.Linq.LinqExtensions.Hierarchy``1(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``0}})">
             <summary>
             Marker method for allowing hierarchical queries on the server.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.ToListAsync``1(Raven.Client.Linq.IRavenQueryable{``0})">
+            <summary>
+            Returns a list of results for a query asynchronously. 
             </summary>
         </member>
         <member name="T:Raven.Client.Linq.RavenQueryProvider`1">

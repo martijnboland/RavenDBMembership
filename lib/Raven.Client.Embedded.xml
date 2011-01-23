@@ -25,6 +25,11 @@
             Initialize the document store access method to RavenDB
             </summary>
         </member>
+        <member name="E:Raven.Client.Client.EmbeddableDocumentStore.Disposed">
+            <summary>
+            Raised after this instance has been disposed
+            </summary>
+        </member>
         <member name="P:Raven.Client.Client.EmbeddableDocumentStore.Identifier">
             <summary>
             Gets or sets the identifier for this store.
