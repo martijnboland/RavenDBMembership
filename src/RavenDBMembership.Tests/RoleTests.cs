@@ -114,7 +114,7 @@ namespace RavenDBMembership.Tests
 		public void AddUsersToRoles()
 		{
 			var roles = new Role[] { new Role("Role 1", null), new Role("Role 2", null), new Role("Role 3", null) };
-			var user = new User();
+			var user = UserTests.CreateDummyUser();
 			user.Username = "UserWithRole1AndRole2";
 
 			using (var store = NewInMemoryStore())
@@ -144,7 +144,7 @@ namespace RavenDBMembership.Tests
 		public void RemoveUsersFromRoles()
 		{
 			var roles = new Role[] { new Role("Role 1", null), new Role("Role 2", null), new Role("Role 3", null) };
-			var user = new User();
+		    var user = UserTests.CreateDummyUser();
 			user.Username = "UserWithRole1AndRole2";
 
 			using (var store = NewInMemoryStore())

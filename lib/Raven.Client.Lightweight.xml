@@ -1476,7 +1476,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEquals(Raven.Client.WhereEqualsParams)">
             <summary>
               Matches exact value
             </summary>
@@ -1796,7 +1796,7 @@
             	Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(Raven.Client.WhereEqualsParams)">
             <summary>
             	Matches exact value
             </summary>
@@ -2080,7 +2080,7 @@
             	Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEquals(Raven.Client.WhereEqualsParams)">
             <summary>
             	Matches exact value
             </summary>
@@ -3263,7 +3263,7 @@
             	Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEquals(Raven.Client.WhereEqualsParams)">
             <summary>
             	Matches exact value
             </summary>
@@ -4367,7 +4367,7 @@
             	Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.WhereEquals(System.String,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.WhereEquals(Raven.Client.WhereEqualsParams)">
             <summary>
             	Matches exact value
             </summary>
@@ -5531,13 +5531,15 @@
             Process a Linq expression to a Lucene query
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryProviderProcessor`1.#ctor(Raven.Client.Linq.IDocumentQueryGenerator,System.Action{Raven.Client.IDocumentQueryCustomization},System.Action{Raven.Database.Data.QueryResult},System.String)">
+        <member name="M:Raven.Client.Linq.RavenQueryProviderProcessor`1.#ctor(Raven.Client.Linq.IDocumentQueryGenerator,System.Action{Raven.Client.IDocumentQueryCustomization},System.Action{Raven.Database.Data.QueryResult},System.String,System.Collections.Generic.HashSet{System.String})">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Linq.RavenQueryProviderProcessor`1"/> class.
             </summary>
             <param name="queryGenerator">The document query generator.</param>
             <param name="customizeQuery">The customize query.</param>
             <param name="afterQueryExecuted">Executed after the query run, allow access to the query results</param>
+            <param name="indexName">The index name to query</param>
+            <param name="fieldsToFetch">The fields to fetch in this query</param>
         </member>
         <member name="M:Raven.Client.Linq.RavenQueryProviderProcessor`1.VisitExpression(System.Linq.Expressions.Expression)">
             <summary>
@@ -5632,7 +5634,7 @@
             Get only the first item (or throw if there are more than one) or null if empty
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.DynamicQueryProviderProcessor`1.#ctor(Raven.Client.Linq.IDocumentQueryGenerator,System.Action{Raven.Client.IDocumentQueryCustomization},System.Action{Raven.Database.Data.QueryResult},System.String)">
+        <member name="M:Raven.Client.Linq.DynamicQueryProviderProcessor`1.#ctor(Raven.Client.Linq.IDocumentQueryGenerator,System.Action{Raven.Client.IDocumentQueryCustomization},System.Action{Raven.Database.Data.QueryResult},System.String,System.Collections.Generic.HashSet{System.String})">
             <summary>
             Creates a dynamic query provider around the provided session
             </summary>
@@ -5705,6 +5707,12 @@
         </member>
         <member name="M:Raven.Client.Linq.RavenQueryInspector`1.GetLastEqualityTerm">
             <summary>
+             Get the last equality term for the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.RavenQueryInspector`1.FieldsToFetch(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Set the fields to fetch
             </summary>
         </member>
         <member name="P:Raven.Client.Linq.RavenQueryInspector`1.IndexQueried">
@@ -5762,6 +5770,11 @@
         <member name="P:Raven.Client.Linq.IRavenQueryProvider.QueryGenerator">
             <summary>
             Get the query generator
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Linq.IRavenQueryProvider.FieldsToFetch">
+            <summary>
+            Set the fields to fetch
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.#ctor(Raven.Client.Linq.IDocumentQueryGenerator,System.String,Raven.Client.Linq.RavenQueryStatistics,Raven.Client.Client.IDatabaseCommands,Raven.Client.Client.Async.IAsyncDatabaseCommands)">
@@ -5826,17 +5839,20 @@
             Gets the actions for customizing the generated lucene query
             </summary>
         </member>
+        <member name="P:Raven.Client.Linq.DynamicRavenQueryProvider`1.FieldsToFetch">
+            <summary>
+            Set the fields to fetch
+            </summary>
+        </member>
         <member name="T:Raven.Client.Linq.ExpressionInfo">
             <summary>
             This class represents a node in an expression, usually a member - but in the case of dynamic queries the path to a member
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.ExpressionInfo.#ctor(System.String,System.Type)">
+        <member name="M:Raven.Client.Linq.ExpressionInfo.#ctor(System.String,System.Type,System.Boolean)">
             <summary>
             Creates an ExpressionMemberInfo
             </summary>
-            <param name="path"></param>
-            <param name="type"></param>
         </member>
         <member name="P:Raven.Client.Linq.ExpressionInfo.Path">
             <summary>
@@ -5848,12 +5864,22 @@
             Gets the actual type being referred to
             </summary>
         </member>
+        <member name="P:Raven.Client.Linq.ExpressionInfo.IsNestedPath">
+            <summary>
+            Whatever the expression is of a nested path
+            </summary>
+        </member>
         <member name="T:Raven.Client.Linq.LinqExtensions">
             <summary>
              Extensions to the linq syntax
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.LinqExtensions.As``1(System.Linq.IQueryable)">
+            <summary>
+            Project using a different type
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.AsProjection``1(System.Linq.IQueryable)">
             <summary>
             Project using a different type
             </summary>
@@ -5964,6 +5990,11 @@
         <member name="P:Raven.Client.Linq.RavenQueryProvider`1.QueryGenerator">
             <summary>
             Get the query generator
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Linq.RavenQueryProvider`1.FieldsToFetch">
+            <summary>
+            Set the fields to fetch
             </summary>
         </member>
         <member name="T:Raven.Client.Linq.RavenQueryStatistics">
@@ -6637,6 +6668,41 @@
             A hash code for the specified object.
             </returns>
             <param name="obj">The object for which to get a hash code.</param><exception cref="T:System.ArgumentNullException">The type of <paramref name="obj"/> is a reference type and <paramref name="obj"/> is null.</exception>
+        </member>
+        <member name="T:Raven.Client.WhereEqualsParams">
+            <summary>
+            Parameters for the Where Equals call
+            </summary>
+        </member>
+        <member name="M:Raven.Client.WhereEqualsParams.#ctor">
+            <summary>
+            Create a new instance 
+            </summary>
+        </member>
+        <member name="P:Raven.Client.WhereEqualsParams.FieldName">
+            <summary>
+            The field name
+            </summary>
+        </member>
+        <member name="P:Raven.Client.WhereEqualsParams.Value">
+            <summary>
+            The field value
+            </summary>
+        </member>
+        <member name="P:Raven.Client.WhereEqualsParams.IsAnalyzed">
+            <summary>
+            Should the field be analyzed
+            </summary>
+        </member>
+        <member name="P:Raven.Client.WhereEqualsParams.AllowWildcards">
+            <summary>
+            Should the field allow wildcards
+            </summary>
+        </member>
+        <member name="P:Raven.Client.WhereEqualsParams.IsNestedPath">
+            <summary>
+            Is this a root property or not?
+            </summary>
         </member>
     </members>
 </doc>

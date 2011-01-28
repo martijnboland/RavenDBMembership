@@ -219,12 +219,20 @@ namespace RavenDBMembership.Tests
 			}
 		}
 
-		private IList<User> CreateDummyUsers(int numberOfUsers)
+        private static int PerProcessUnique = 0;
+
+        public static User CreateDummyUser()
+        {
+            int i = ++PerProcessUnique;
+            return new User {Username = String.Format("User{0}", i), Email = String.Format("User{0}@foo.bar", i)};
+        }
+
+		public static IList<User> CreateDummyUsers(int numberOfUsers)
 		{
 			var users = new List<User>(numberOfUsers);
 			for (int i = 0; i < numberOfUsers; i++)
 			{
-				users.Add(new User { Username = String.Format("User{0}", i), Email = String.Format("User{0}@foo.bar", i) });
+				users.Add(CreateDummyUser());
 			}
 			return users;
 		}
