@@ -55,7 +55,7 @@ namespace RavenDBMembership.Tests
                 Assert.Equal("martijn", membershipUser.UserName);
             }
         }
-        [Fact]
+        [Fact(Skip="Not supported")]
         public void CreateNewMembershipUserShouldFailIfUsernameAlreadyUsed()
         {
             using (var store = NewInMemoryStore())
