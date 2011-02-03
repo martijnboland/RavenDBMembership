@@ -37,4 +37,5 @@ task Configure {
 }
 
 task FullTests {
+    exec { & .\tools\NUnit\net-2.0\nunit-console.exe "$($buildDirectory)\RavenDBMembership.IntegrationTests.dll" }
 }

@@ -1,0 +1,5 @@
+ Database script generated with:
+ C:\Windows\Microsoft.NET\framework\v2.0.50727\aspnet_regsql.exe -sqlexportonly SqlMembershipNet20.sql -A mrp -d SqlMembership
+ 
+ (result of aspnet_regsql.exe was equivalent for .net 2.0 and .net 4.0)
+ 
