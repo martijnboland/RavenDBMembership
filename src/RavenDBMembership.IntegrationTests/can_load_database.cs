@@ -21,11 +21,6 @@ namespace RavenDBMembership.IntegrationTests
 
             arrange(delegate
             {
-                if (Directory.Exists(databasePath))
-                {
-                    Directory.Delete(databasePath, true);
-                }
-
                 if (Directory.Exists(secondPath))
                 {
                     Directory.Delete(secondPath, true);
@@ -42,7 +37,6 @@ namespace RavenDBMembership.IntegrationTests
                 cleanup(delegate
                 {
                     connection.Close();
-                    DetachDatabase("TestDatabase", connectionString);
                 });
 
                 var command = arrange(() => new SqlCommand("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", connection));
@@ -59,22 +53,47 @@ namespace RavenDBMembership.IntegrationTests
 
             then("the database can be generated", delegate
             {
-                File.Copy(databasePath, secondPath, true);
+                DetachDatabase("SqlMembership");
 
+                using (var masterConnection = new SqlConnection(GetConnectionStringForMaster()))
+                {
+                    masterConnection.Open();
+                    try
+                    {
+                        using (var createCommand = new SqlCommand(@"
+USE Master
+CREATE DATABASE SqlMembership ON (NAME=SqlMembershipFile1, FILENAME= '$filename')
+".Replace("$filename", secondPath), masterConnection))
+                        {
+                            createCommand.ExecuteNonQuery();
+                        }
+                    }
+                    finally 
+                    {
+                        masterConnection.Close();
+                    }
+                }
+                
                 string createScript = GetCreateScript();
 
-                string connectionString = GetConnectionStringForMdfFile("SqlMembership", secondPath);
+                string connectionString = GetConnectionStringFor("SqlMembership"); //GetConnectionStringForMdfFile("SqlMembership", secondPath); 
 
-                var connection = arrange(() => new SqlConnection(connectionString));
-                connection.Open();
-                cleanup(delegate
+                using (var connection = new SqlConnection(connectionString))
                 {
-                    Console.WriteLine("closing second connection");
-                    connection.Close();
-                });
-                var command = arrange(() => new SqlCommand(createScript, connection));
+                    connection.Open();
 
-                command.ExecuteNonQuery();
+                    try
+                    {
+                        using (var command = new SqlCommand(createScript, connection))
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    };
+                }
             });
         }
 
@@ -85,37 +104,46 @@ namespace RavenDBMembership.IntegrationTests
                     "RavenDBMembership.IntegrationTests.SqlMembershipDatabase.Create.sql")).ReadToEnd();
         }
 
+        string GetConnectionStringForMaster()
+        {
+            return GetConnectionStringFor("master");
+        }
+
+        string GetConnectionStringFor(string databaseName)
+        {
+            return @"Database='" + databaseName + @"';Data Source=.\SQLEXPRESS;Integrated Security=True";
+        }
+
         string GetConnectionStringForMdfFile(string databaseName, string databasePath)
         {
             var connectionString =
-                @"Database=$name;Data Source=.\SQLEXPRESS;AttachDbFileName=$path;Integrated Security=True;User Instance=True";
+                @"Database='$name';Data Source=.\SQLEXPRESS;AttachDbFileName='$path';Integrated Security=True;User Instance=True";
 
             connectionString = connectionString.Replace("$name", databaseName).Replace("$path", databasePath);
-
-            Console.WriteLine("Using connection string: " + databasePath);
 
             return connectionString;
         }
 
-        public void DetachDatabase(string databaseName, string connectionString)
+        public void DetachDatabase(string databaseName)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(GetConnectionStringForMaster()))
             {
                 connection.Open();
 
                 try
                 {
-                    using (var command = new SqlCommand(@"
-use [master]
-ALTER DATABASE $databaseName SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-".Replace("$databaseName", databaseName), connection))
-                    {
-                        command.ExecuteNonQuery();
-                    } 
-                    
-                    using (var command = new SqlCommand(@"
-EXEC sp_detach_db $databaseName;
-".Replace("$databaseName", databaseName), connection))
+                    string detachScript = @"
+USE [master]
+IF db_id('$databaseName') IS NOT NULL
+BEGIN
+    --EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'$databaseName'
+    --ALTER DATABASE $databaseName SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    --EXEC sp_detach_db [$databaseName];
+    DROP DATABASE [$databaseName]
+END
+".Replace("$databaseName", databaseName);
+
+                    using (var command = new SqlCommand(detachScript, connection))
                     {
                         command.ExecuteNonQuery();
                     }
