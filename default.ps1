@@ -8,8 +8,7 @@ properties {
 }
 
 
-#task default -depends Build,UnitTests,Configure,FullTests
-task default -depends Build,Configure,FullTests
+task default -depends Build,UnitTests,Configure,FullTests
 
 task Verify40 {
 	if( (ls "$env:windir\Microsoft.NET\Framework\v4.0*") -eq $null ) {
