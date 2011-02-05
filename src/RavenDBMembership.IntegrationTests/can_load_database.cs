@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using NJasmine;
 using NUnit.Framework;
 
@@ -17,14 +18,13 @@ namespace RavenDBMembership.IntegrationTests
             var databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                                             @"SqlMembershipDatabase\DatabaseFile.mdf");
 
-            var secondPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"SqlMembershipDatabase\Lol.mdf");
+            var databaseTempDirectory = Path.Combine("c:\\temp", "RavenDBMembershipTest");
+            var secondPath = Path.Combine(databaseTempDirectory, @"TestDatabase.mdf");
 
             arrange(delegate
             {
-                if (Directory.Exists(secondPath))
-                {
-                    Directory.Delete(secondPath, true);
-                }
+                if (!Directory.Exists(databaseTempDirectory))
+                    Directory.CreateDirectory(databaseTempDirectory);
             });
 
             then("the database can be reached", delegate
@@ -46,14 +46,22 @@ namespace RavenDBMembership.IntegrationTests
 
             then("the database scripts can be loaded", delegate
             {
-                string createScript = GetCreateScript();
+                var createScripts = GetCreateScript();
 
-                Assert.That(createScript, Is.StringContaining("TABLE"));
+                Assert.That(createScripts.Any(s => s.Contains("TABLE")), Is.True);
+                Assert.That(createScripts.Count(), Is.GreaterThan(5));
             });
 
             then("the database can be generated", delegate
             {
-                DetachDatabase("SqlMembership");
+                string databaseName = "SqlMembership";
+
+                DetachDatabase(databaseName);
+
+                if (Directory.Exists(secondPath))
+                {
+                    Directory.Delete(secondPath, true);
+                }
 
                 using (var masterConnection = new SqlConnection(GetConnectionStringForMaster()))
                 {
@@ -62,8 +70,8 @@ namespace RavenDBMembership.IntegrationTests
                     {
                         using (var createCommand = new SqlCommand(@"
 USE Master
-CREATE DATABASE SqlMembership ON (NAME=SqlMembershipFile1, FILENAME= '$filename')
-".Replace("$filename", secondPath), masterConnection))
+CREATE DATABASE $databaseName ON (NAME=SqlMembershipFile1, FILENAME= '$filename')
+".Replace("$databaseName", databaseName).Replace("$filename", secondPath), masterConnection))
                         {
                             createCommand.ExecuteNonQuery();
                         }
@@ -74,9 +82,9 @@ CREATE DATABASE SqlMembership ON (NAME=SqlMembershipFile1, FILENAME= '$filename'
                     }
                 }
                 
-                string createScript = GetCreateScript();
+                var createScripts = GetCreateScript();
 
-                string connectionString = GetConnectionStringFor("SqlMembership"); //GetConnectionStringForMdfFile("SqlMembership", secondPath); 
+                string connectionString = GetConnectionStringFor(databaseName); //GetConnectionStringForMdfFile("SqlMembership", secondPath); 
 
                 using (var connection = new SqlConnection(connectionString))
                 {
@@ -84,9 +92,22 @@ CREATE DATABASE SqlMembership ON (NAME=SqlMembershipFile1, FILENAME= '$filename'
 
                     try
                     {
-                        using (var command = new SqlCommand(createScript, connection))
+                        foreach (var createScript in createScripts)
                         {
-                            command.ExecuteNonQuery();
+                            try
+                            {
+                                using (var command = new SqlCommand(createScript, connection))
+                                {
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Failing during creation script segment:");
+                                Console.WriteLine(createScript);
+                                
+                                throw;
+                            }
                         }
                     }
                     finally
@@ -97,11 +118,35 @@ CREATE DATABASE SqlMembership ON (NAME=SqlMembershipFile1, FILENAME= '$filename'
             });
         }
 
-        string GetCreateScript()
+        IEnumerable<string> GetCreateScript()
         {
-            return new StreamReader(
+            using (var reader = new StreamReader(
                 this.GetType().Assembly.GetManifestResourceStream(
-                    "RavenDBMembership.IntegrationTests.SqlMembershipDatabase.Create.sql")).ReadToEnd();
+                    "RavenDBMembership.IntegrationTests.SqlMembershipDatabase.Create.sql")))
+            {
+
+                var allScripts = new List<string>();
+                StringBuilder currentScript = new StringBuilder();
+
+                string line = null;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (Regex.Match(line, @"^\s*GO\s*$").Success)
+                    {
+                        allScripts.Add(currentScript.ToString());
+                        currentScript = new StringBuilder();
+                    }
+                    else
+                    {
+                        currentScript.Append(line);
+                        currentScript.Append("\r\n");
+                    }
+                }
+
+                allScripts.Add(currentScript.ToString());
+
+                return allScripts;
+            }
         }
 
         string GetConnectionStringForMaster()
@@ -139,6 +184,7 @@ BEGIN
     --EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'$databaseName'
     --ALTER DATABASE $databaseName SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
     --EXEC sp_detach_db [$databaseName];
+    
     DROP DATABASE [$databaseName]
 END
 ".Replace("$databaseName", databaseName);
