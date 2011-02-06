@@ -9,15 +9,6 @@ namespace RavenDBMembership.IntegrationTests
     {
         public override void Specify()
         {
-            var databaseTempDirectory = Path.Combine(@"c:\temp", "RavenDBMembershipTest");
-            var secondPath = Path.Combine(databaseTempDirectory, @"TestSqlMembership.mdf");
-
-            arrange(delegate
-            {
-                if (!Directory.Exists(databaseTempDirectory))
-                    Directory.CreateDirectory(databaseTempDirectory);
-            });
-            
             then("the database scripts can be loaded", delegate
             {
                 var createScripts = DatabaseInitialization.GetCreateScript();
@@ -26,13 +17,26 @@ namespace RavenDBMembership.IntegrationTests
                 Assert.That(createScripts.Count(), Is.GreaterThan(5));
             });
 
-            then("the database can be generated", delegate
+            given("a path for the MDF file", delegate
             {
-                string databaseName = "SqlMembership";
+                var databaseMdfFilepath = arrange(delegate
+                {
+                    var databaseTempDirectory = Path.Combine(@"c:\temp", "RavenDBMembershipTest");
 
-                DatabaseInitialization.RecreateDatabase(databaseName, secondPath);
+                    if (!Directory.Exists(databaseTempDirectory))
+                        Directory.CreateDirectory(databaseTempDirectory);
 
-                DatabaseInitialization.RunSqlMembershipCreationScript(databaseName);
+                    return Path.Combine(databaseTempDirectory, @"TestSqlMembership.mdf");
+                });
+
+                then("the database can be generated", delegate
+                {
+                    string databaseName = "SqlMembership";
+
+                    DatabaseInitialization.RecreateDatabase(databaseName, databaseMdfFilepath);
+
+                    DatabaseInitialization.RunSqlMembershipCreationScript(databaseName);
+                });
             });
         }
     }
