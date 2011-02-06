@@ -19,6 +19,8 @@ namespace RavenDBMembership.IntegrationTests
         {
             when("using SqlMembershipProvider", delegate
             {
+                importNUnit<FixtureForSqlMembershipProvider>();
+
                 then_membership_provider_should_be<SqlMembershipProvider>();
 
                 var connectionStringField = typeof (SqlMembershipProvider).GetField("_sqlConnectionString", BindingFlags.NonPublic);
@@ -30,6 +32,8 @@ namespace RavenDBMembership.IntegrationTests
 
             when("using RavenDBMembershipProvider embedded in-memory", delegate
             {
+                importNUnit<FixtureForInMemoryRavenMembershipProvider>();
+
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
                 then("RavenDB store is configured to run in-memory", delegate
@@ -43,6 +47,8 @@ namespace RavenDBMembership.IntegrationTests
 
             when("using RavenDBMembershipProvider embedded w/ munin on disk", delegate
             {
+                importNUnit<FixtureForMuninRavenMembershipProvider>();
+
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
                 then("RavenDB store is configured to run on disk", delegate
@@ -60,6 +66,8 @@ namespace RavenDBMembership.IntegrationTests
 
             when("using RavenDBMembershipProvider embedded w/ munin on disk", delegate
             {
+                importNUnit<FixtureForEsentRavenMembershipProvider>();
+
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
                 expect(() => !GetMembershipDocumentConfiguration().RunInMemory);

@@ -79,6 +79,10 @@
     <Compile Include="can_load_database.cs" />
     <Compile Include="can_use_custom_membership_providers.cs" />
     <Compile Include="DatabaseInitialization.cs" />
+    <Compile Include="FixtureForEsentRavenMembershipProvider.cs" />
+    <Compile Include="FixtureForInMemoryRavenMembershipProvider.cs" />
+    <Compile Include="FixtureForMuninRavenMembershipProvider.cs" />
+    <Compile Include="FixtureForSqlMembershipProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
