@@ -62,19 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="can_load_database.cs" />
+    <Compile Include="DatabaseInitialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMembershipDatabase\Create.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SqlMembershipDatabase\DatabaseFile.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlMembershipDatabase\DatabaseFile_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>DatabaseFile.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
