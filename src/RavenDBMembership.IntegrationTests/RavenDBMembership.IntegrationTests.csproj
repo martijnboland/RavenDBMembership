@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\tools\NUnit\net-2.0\framework\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PowerAssert">
+      <HintPath>..\..\tools\PowerAssert\PowerAssert.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Client.Embedded">
       <HintPath>..\..\lib\Raven.Client.Embedded.dll</HintPath>
     </Reference>
@@ -83,7 +86,13 @@
     <Compile Include="FixtureForInMemoryRavenMembershipProvider.cs" />
     <Compile Include="FixtureForMuninRavenMembershipProvider.cs" />
     <Compile Include="FixtureForSqlMembershipProvider.cs" />
+    <Compile Include="MembershipProviderFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMembershipDatabase\Create.sql" />
@@ -120,6 +129,13 @@
       <Project>{07CCE5B6-9111-46DC-AAEC-00D80E19FE4A}</Project>
       <Name>RavenDBMembership</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -23,11 +23,16 @@ namespace RavenDBMembership.IntegrationTests
 
                 then_membership_provider_should_be<SqlMembershipProvider>();
 
-                var connectionStringField = typeof (SqlMembershipProvider).GetField("_sqlConnectionString", BindingFlags.NonPublic);
+                then("the connection string is set", delegate
+                {
+                    var connectionStringField = typeof(SqlMembershipProvider).GetField("_sqlConnectionString", BindingFlags.NonPublic | BindingFlags.Instance);
 
-                string connectionStringValue = (string)connectionStringField.GetValue(Membership.Provider);
+                    Assert.That(connectionStringField, Is.Not.Null);
 
-                expect(() => connectionStringValue == DatabaseInitialization.GetConnectionStringFor("TestSqlMembership"));
+                    string connectionStringValue = (string)connectionStringField.GetValue(Membership.Provider);
+
+                    expect(() => connectionStringValue == DatabaseInitialization.GetConnectionStringFor("TestSqlMembership"));
+                });
             });
 
             when("using RavenDBMembershipProvider embedded in-memory", delegate
@@ -36,7 +41,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
-                then("RavenDB store is configured to run in-memory", delegate
+                then("RavenDB store is configured to run munin in memory", delegate
                 {
                     Assert.That(GetMembershipDocumentStore(), Is.InstanceOf<EmbeddableDocumentStore>());
 
@@ -51,7 +56,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
-                then("RavenDB store is configured to run on disk", delegate
+                then("RavenDB store is configured to use munin stored in disk", delegate
                 {
                     Assert.That(GetMembershipDocumentStore(), Is.InstanceOf<EmbeddableDocumentStore>());
 
@@ -64,18 +69,21 @@ namespace RavenDBMembership.IntegrationTests
                 });
             });
 
-            when("using RavenDBMembershipProvider embedded w/ munin on disk", delegate
+            when("using RavenDBMembershipProvider embedded w/ esent on disk", delegate
             {
                 importNUnit<FixtureForEsentRavenMembershipProvider>();
 
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
-                expect(() => !GetMembershipDocumentConfiguration().RunInMemory);
-                expect(() => !String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
-                expect(() =>
-                    GetMembershipDocumentConfiguration().DefaultStorageTypeName.Contains(
-                        "Raven.Storage.Esent.TransactionalStorage"));
-                //  It would be preferable to check what database type was actually used
+                then("RavenDB store is configured to use esent", delegate()
+                {
+                    expect(() => !GetMembershipDocumentConfiguration().RunInMemory);
+                    expect(() => !String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
+                    expect(() =>
+                        GetMembershipDocumentConfiguration().DefaultStorageTypeName.Contains(
+                            "Raven.Storage.Esent.TransactionalStorage"));
+                    //  It would be preferable to check what database type was actually used
+                });
             });
         }
 

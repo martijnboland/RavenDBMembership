@@ -26,7 +26,7 @@ DECLARE @dbname nvarchar(128)
 DECLARE @dboptions nvarchar(1024)
 
 SET @dboptions = N'/**/'
-SET @dbname = N'SqlMembership'
+SET @dbname = N'RavenDBMembershipTestSqlDatabase'
 
 IF (NOT EXISTS (SELECT name
                 FROM master.dbo.sysdatabases
@@ -39,7 +39,7 @@ BEGIN
 END
 GO
 
-USE [SqlMembership]
+USE [RavenDBMembershipTestSqlDatabase]
 GO
 
 /*************************************************************/
@@ -790,7 +790,7 @@ GO
 
 DECLARE @dbname nvarchar(128)
 
-SET @dbname = N'SqlMembership'
+SET @dbname = N'RavenDBMembershipTestSqlDatabase'
 
 IF (NOT EXISTS (SELECT name
                 FROM master.dbo.sysdatabases
@@ -800,7 +800,7 @@ BEGIN
 END
 GO
 
-USE [SqlMembership]
+USE [RavenDBMembershipTestSqlDatabase]
 GO
 
 IF (NOT EXISTS (SELECT name
@@ -2370,7 +2370,7 @@ GO
 
 DECLARE @dbname nvarchar(128)
 
-SET @dbname = N'SqlMembership'
+SET @dbname = N'RavenDBMembershipTestSqlDatabase'
 
 IF (NOT EXISTS (SELECT name
                 FROM master.dbo.sysdatabases
@@ -2380,7 +2380,7 @@ BEGIN
 END
 GO
 
-USE [SqlMembership]
+USE [RavenDBMembershipTestSqlDatabase]
 GO
 
 IF (NOT EXISTS (SELECT name
@@ -2993,7 +2993,7 @@ GO
 
 DECLARE @dbname nvarchar(128)
 
-SET @dbname = N'SqlMembership'
+SET @dbname = N'RavenDBMembershipTestSqlDatabase'
 
 IF (NOT EXISTS (SELECT name
                 FROM master.dbo.sysdatabases
@@ -3003,7 +3003,7 @@ BEGIN
 END
 GO
 
-USE [SqlMembership]
+USE [RavenDBMembershipTestSqlDatabase]
 GO
 
 IF (NOT EXISTS (SELECT name
@@ -4050,3 +4050,4 @@ GO
 PRINT '---------------------------------------'
 PRINT 'Completed execution of InstallRoles.SQL'
 PRINT '---------------------------------------'
+

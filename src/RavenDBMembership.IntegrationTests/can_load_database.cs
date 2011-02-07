@@ -21,7 +21,9 @@ namespace RavenDBMembership.IntegrationTests
             {
                 var databaseMdfFilepath = arrange(delegate
                 {
-                    var databaseTempDirectory = Path.Combine(@"c:\temp", "RavenDBMembershipTest");
+                    string cTemp = Properties.Settings.Default.AccessibleTempPath;
+
+                    var databaseTempDirectory = Path.Combine(cTemp, "RavenDBMembershipTest");
 
                     if (!Directory.Exists(databaseTempDirectory))
                         Directory.CreateDirectory(databaseTempDirectory);
@@ -31,7 +33,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 then("the database can be generated", delegate
                 {
-                    string databaseName = "SqlMembership";
+                    string databaseName = "RavenDBMembershipTestSqlDatabase";
 
                     DatabaseInitialization.RecreateDatabase(databaseName, databaseMdfFilepath);
 
