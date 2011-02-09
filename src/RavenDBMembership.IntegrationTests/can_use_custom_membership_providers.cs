@@ -67,7 +67,7 @@ namespace RavenDBMembership.IntegrationTests
                     expect(() => !GetMembershipDocumentConfiguration().RunInMemory);
                     expect(() => !String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
                     
-                    expect_embedded_TransactionalStore_FriendlyName_is("Munin");
+                    expect_embedded_TransactionalStorage_FriendlyName_is("Munin");
                 });
             });
 
@@ -82,7 +82,7 @@ namespace RavenDBMembership.IntegrationTests
                     expect(() => !GetMembershipDocumentConfiguration().RunInMemory);
                     expect(() => !String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
 
-                    expect_embedded_TransactionalStore_FriendlyName_is("Esent");
+                    expect_embedded_TransactionalStorage_FriendlyName_is("Esent");
                 });
             });
         }
@@ -97,7 +97,7 @@ namespace RavenDBMembership.IntegrationTests
             return (GetMembershipDocumentStore() as EmbeddableDocumentStore).Configuration;
         }
 
-        void expect_embedded_TransactionalStore_FriendlyName_is(string value)
+        void expect_embedded_TransactionalStorage_FriendlyName_is(string value)
         {
             expect(() => value.Equals(
                 (GetMembershipDocumentStore() as EmbeddableDocumentStore).DocumentDatabase.TransactionalStorage.
