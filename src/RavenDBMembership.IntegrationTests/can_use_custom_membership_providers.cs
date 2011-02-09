@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -46,7 +47,9 @@ namespace RavenDBMembership.IntegrationTests
                     Assert.That(GetMembershipDocumentStore(), Is.InstanceOf<EmbeddableDocumentStore>());
 
                     expect(() => GetMembershipDocumentConfiguration().RunInMemory);
-                    expect(() => String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
+                     
+                    expect(() => String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory)
+                        || !Directory.Exists(GetMembershipDocumentConfiguration().DataDirectory));
                 });
             });
 
