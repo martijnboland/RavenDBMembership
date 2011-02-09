@@ -130,7 +130,7 @@ END
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Failing during creation script segment:");
+                            Console.WriteLine("Failing during creation script, at segment:");
                             Console.WriteLine(createScript);
                                 
                             throw;
