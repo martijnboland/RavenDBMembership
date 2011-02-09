@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace RavenDBMembership.IntegrationTests
+namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
     public class DatabaseInitialization
     {

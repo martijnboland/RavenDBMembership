@@ -2,6 +2,7 @@
 using System.Linq;
 using NJasmine;
 using NUnit.Framework;
+using RavenDBMembership.IntegrationTests.ProviderFixtures;
 
 namespace RavenDBMembership.IntegrationTests
 {

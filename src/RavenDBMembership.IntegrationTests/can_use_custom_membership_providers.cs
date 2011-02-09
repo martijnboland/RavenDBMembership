@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Client;
 using Raven.Database.Config;
+using RavenDBMembership.IntegrationTests.ProviderFixtures;
 using RavenDBMembership.Provider;
 
 namespace RavenDBMembership.IntegrationTests

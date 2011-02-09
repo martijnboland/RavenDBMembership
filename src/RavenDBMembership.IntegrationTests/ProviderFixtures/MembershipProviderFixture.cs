@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Web.Security;
 using NUnit.Framework;
 
-namespace RavenDBMembership.IntegrationTests
+namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
     public abstract class MembershipProviderFixture
     {

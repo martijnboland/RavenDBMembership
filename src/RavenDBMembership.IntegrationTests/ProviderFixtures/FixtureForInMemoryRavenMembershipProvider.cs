@@ -2,7 +2,7 @@
 using Raven.Client.Client;
 using RavenDBMembership.Provider;
 
-namespace RavenDBMembership.IntegrationTests
+namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
     public class FixtureForInMemoryRavenMembershipProvider : MembershipProviderFixture
     {
@@ -12,6 +12,7 @@ namespace RavenDBMembership.IntegrationTests
             {
                 RunInMemory = true
             };
+            store.Initialize();
 
             return new RavenDBMembershipProviderThatDisposesStore()
             {

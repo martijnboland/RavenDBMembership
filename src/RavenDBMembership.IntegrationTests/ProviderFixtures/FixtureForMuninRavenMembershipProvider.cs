@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Web.Security;
 using Raven.Client.Client;
 using RavenDBMembership.Provider;
 
-namespace RavenDBMembership.IntegrationTests
+namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
     public class FixtureForMuninRavenMembershipProvider : MembershipProviderFixture
     {
@@ -13,13 +12,14 @@ namespace RavenDBMembership.IntegrationTests
             string dataDirectory = Path.Combine(Properties.Settings.Default.AccessibleTempPath, "RavenDBMembershipTest.Munin");
 
             if (Directory.Exists(dataDirectory))
-                Directory.Delete(dataDirectory);
+                NJasmine.Extras.DirectoryUtil.DeleteDirectory(dataDirectory);
 
             var store = new EmbeddableDocumentStore()
             {
                 RunInMemory = false,
                 DataDirectory = dataDirectory
             };
+            store.Initialize();
 
             return new RavenDBMembershipProviderThatDisposesStore()
             {

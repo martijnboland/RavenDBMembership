@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.IO;
 using System.Reflection;
 using System.Web.Security;
 using NUnit.Framework;
 
-namespace RavenDBMembership.IntegrationTests
+namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
     public class FixtureForSqlMembershipProvider : MembershipProviderFixture
     {
