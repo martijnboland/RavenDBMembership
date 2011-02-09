@@ -23,15 +23,12 @@ namespace RavenDBMembership.IntegrationTests.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("c:\\temp")]
         public string AccessibleTempPath {
             get {
                 return ((string)(this["AccessibleTempPath"]));
-            }
-            set {
-                this["AccessibleTempPath"] = value;
             }
         }
     }

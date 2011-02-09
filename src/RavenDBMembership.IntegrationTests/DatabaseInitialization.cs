@@ -23,12 +23,6 @@ namespace RavenDBMembership.IntegrationTests
 
             DetachDatabase(databaseName);
 
-            if (File.Exists(databaseMdfPath))
-                File.Delete(databaseMdfPath);
-
-            if (File.Exists(logPath))
-                File.Decrypt(logPath);
-
             using (var masterConnection = new SqlConnection(GetConnectionStringFor("master")))
             {
                 masterConnection.Open();
@@ -93,9 +87,9 @@ USE [master]
 IF db_id('$databaseName') IS NOT NULL
 BEGIN
     --EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'$databaseName'
-    --ALTER DATABASE $databaseName SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
     --EXEC sp_detach_db [$databaseName];
     
+    ALTER DATABASE $databaseName SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
     DROP DATABASE [$databaseName]
 END
 ".Replace("$databaseName", databaseName);

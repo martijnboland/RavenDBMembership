@@ -9,13 +9,16 @@ namespace RavenDBMembership.IntegrationTests
     {
         public abstract MembershipProvider GetProvider();
 
+        MembershipProvider _originalProvider;
         MembershipProvider _injectedProvider;
 
         [TestFixtureSetUp]
         public void InjectProvider()
         {
-            Assert.That(MembershipIsInitialized, Is.False);
-            Assert.That(MembershipProvider, Is.Null);
+            if (MembershipIsInitialized)
+                _originalProvider = MembershipProvider;
+            else
+                _originalProvider = null;
 
             MembershipProvider = _injectedProvider = GetProvider();
             MembershipIsInitialized = true;
@@ -31,15 +34,16 @@ namespace RavenDBMembership.IntegrationTests
                 if (currentProviderDisposable != null)
                     currentProviderDisposable.Dispose();
 
-                MembershipIsInitialized = false;
-                MembershipProvider = null;
+                MembershipIsInitialized = _originalProvider != null;
+                MembershipProvider = _originalProvider;
+                _originalProvider = null;
             }
         }
 
         static bool MembershipIsInitialized
         {
             get { return (bool)MembershipInitializedField.GetValue(Membership.Provider); }
-            set { MembershipProviderField.SetValue(Membership.Provider, value); }
+            set { MembershipInitializedField.SetValue(Membership.Provider, value); }
         }
 
         static MembershipProvider MembershipProvider
