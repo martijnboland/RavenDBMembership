@@ -66,8 +66,8 @@ namespace RavenDBMembership.IntegrationTests
 
                     expect(() => !GetMembershipDocumentConfiguration().RunInMemory);
                     expect(() => !String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
-                    expect(() => GetMembershipDocumentConfiguration().DefaultStorageTypeName.Contains("munin"));
-                    //  It would be preferable to check what database type was actually used
+                    
+                    expect_embedded_TransactionalStore_FriendlyName_is("Munin");
                 });
             });
 
@@ -81,12 +81,15 @@ namespace RavenDBMembership.IntegrationTests
                 {
                     expect(() => !GetMembershipDocumentConfiguration().RunInMemory);
                     expect(() => !String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
-                    expect(() =>
-                        GetMembershipDocumentConfiguration().DefaultStorageTypeName.Contains(
-                            "Raven.Storage.Esent.TransactionalStorage"));
-                    //  It would be preferable to check what database type was actually used
+
+                    expect_embedded_TransactionalStore_FriendlyName_is("Esent");
                 });
             });
+        }
+
+        IDocumentStore GetMembershipDocumentStore()
+        {
+            return (Membership.Provider as RavenDBMembershipProvider).DocumentStore;
         }
 
         RavenConfiguration GetMembershipDocumentConfiguration()
@@ -94,9 +97,11 @@ namespace RavenDBMembership.IntegrationTests
             return (GetMembershipDocumentStore() as EmbeddableDocumentStore).Configuration;
         }
 
-        IDocumentStore GetMembershipDocumentStore()
+        void expect_embedded_TransactionalStore_FriendlyName_is(string value)
         {
-            return (Membership.Provider as RavenDBMembershipProvider).DocumentStore;
+            expect(() => value.Equals(
+                (GetMembershipDocumentStore() as EmbeddableDocumentStore).DocumentDatabase.TransactionalStorage.
+                    FriendlyName));
         }
 
         public void then_membership_provider_should_be<T>()
