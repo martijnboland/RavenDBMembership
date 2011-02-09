@@ -1,5 +1,7 @@
 ﻿using System.Collections.Specialized;
+using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Web.Security;
 using NUnit.Framework;
@@ -23,7 +25,11 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             var result = new SqlMembershipProvider();
 
-            NameValueCollection nameValueCollection = new NameValueCollection();
+            // Try to load the configuration values in the config file for this
+            // membership provider
+            NameValueCollection nameValueCollection = new NameValueCollection(
+                Membership.Providers.AsQueryable().OfType<ProviderSettings>().Where(p => p.Name == "RavenDBMembership").
+                    Single().Parameters);
 
             nameValueCollection["connectionStringName"] = "StubConnectionString";
 

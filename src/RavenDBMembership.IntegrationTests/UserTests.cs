@@ -19,9 +19,9 @@ namespace RavenDBMembership.IntegrationTests
                 {
                     var loadedUser = Membership.GetUser(username);
 
-                    expect(() => loadedUser.ProviderUserKey == user.ProviderUserKey);
-                    expect(() => loadedUser.UserName == username);
-                    expect(() => loadedUser.Email == email);
+                    expect(() => loadedUser.ProviderUserKey.Equals(user.ProviderUserKey));
+                    expect(() => loadedUser.UserName.Equals(username));
+                    expect(() => loadedUser.Email.Equals(email));
                 });
             });
         }
