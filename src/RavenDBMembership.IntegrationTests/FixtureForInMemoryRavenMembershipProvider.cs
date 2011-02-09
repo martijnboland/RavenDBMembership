@@ -1,6 +1,6 @@
-﻿using System;
-using System.Web.Security;
+﻿using System.Web.Security;
 using Raven.Client.Client;
+using RavenDBMembership.Provider;
 
 namespace RavenDBMembership.IntegrationTests
 {
@@ -17,17 +17,6 @@ namespace RavenDBMembership.IntegrationTests
             {
                 DocumentStore = store
             };
-        }
-
-        public class RavenDBMembershipProviderThatDisposesStore : Provider.RavenDBMembershipProvider, IDisposable
-        {
-            public void Dispose()
-            {
-                if (DocumentStore != null)
-                    DocumentStore.Dispose();
-
-                DocumentStore = null;
-            }
         }
     }
 }

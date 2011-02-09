@@ -65,9 +65,7 @@ namespace RavenDBMembership.IntegrationTests
 
                     expect(() => !GetMembershipDocumentConfiguration().RunInMemory);
                     expect(() => !String.IsNullOrEmpty(GetMembershipDocumentConfiguration().DataDirectory));
-                    expect(() =>
-                        GetMembershipDocumentConfiguration().DefaultStorageTypeName.Contains(
-                            "Raven.Storage.Esent.Managed"));
+                    expect(() => GetMembershipDocumentConfiguration().DefaultStorageTypeName.Contains("munin"));
                     //  It would be preferable to check what database type was actually used
                 });
             });
