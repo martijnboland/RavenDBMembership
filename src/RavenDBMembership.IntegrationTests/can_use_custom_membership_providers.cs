@@ -33,7 +33,7 @@ namespace RavenDBMembership.IntegrationTests
 
                     string connectionStringValue = (string)connectionStringField.GetValue(Membership.Provider);
 
-                    expect(() => connectionStringValue == DatabaseInitialization.GetConnectionStringFor(FixtureForSqlMembershipProvider.DatabaseName));
+                    expect(() => connectionStringValue == DatabaseInitialization.GetConnectionStringFor(FixtureConstants.DatabaseName));
                 });
             });
 

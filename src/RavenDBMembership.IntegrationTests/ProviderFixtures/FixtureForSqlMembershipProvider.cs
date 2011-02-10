@@ -12,8 +12,6 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
     public class FixtureForSqlMembershipProvider : MembershipProviderFixture
     {
-        public const string DatabaseName = "RavenDBMembershipTestSqlDatabase";
-
         public override MembershipProvider GetProvider()
         {
             string tempPath = Properties.Settings.Default.AccessibleTempPath;
@@ -22,8 +20,9 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
             if (!Directory.Exists(tempPath))
                 Directory.CreateDirectory(tempPath);
 
-            DatabaseInitialization.DetachDatabase(DatabaseName);
-            DatabaseInitialization.RecreateDatabase(DatabaseName, databaseMdfPath);
+            DatabaseInitialization.DetachDatabase(FixtureConstants.DatabaseName);
+            DatabaseInitialization.RecreateDatabase(FixtureConstants.DatabaseName, databaseMdfPath);
+            DatabaseInitialization.RunSqlMembershipCreationScript(FixtureConstants.DatabaseName);
 
             var result = new SqlMembershipProvider();
 
@@ -35,7 +34,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             foreach (ProviderSettings settings in membership.Providers)
             {
-                if (settings.Name == "RavenDBMembership")
+                if (settings.Name == FixtureConstants.NameOfConfiguredMembershipProvider)
                 {
                     nameValueCollection = new NameValueCollection(settings.Parameters);
                     break;
@@ -49,7 +48,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             nameValueCollection["connectionStringName"] = "StubConnectionString";
 
-            result.Initialize(null, nameValueCollection);
+            result.Initialize(FixtureConstants.NameOfConfiguredMembershipProvider, nameValueCollection);
 
             var connectionStringProperty = typeof (SqlMembershipProvider).GetField("_sqlConnectionString",
                                                                                    BindingFlags.NonPublic |
@@ -57,7 +56,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             Assert.That(connectionStringProperty, Is.Not.Null);
 
-            connectionStringProperty.SetValue(result, DatabaseInitialization.GetConnectionStringFor(DatabaseName));
+            connectionStringProperty.SetValue(result, DatabaseInitialization.GetConnectionStringFor(FixtureConstants.DatabaseName));
 
             return result;
         }

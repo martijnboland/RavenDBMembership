@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllProvidersSpecification.cs" />
+    <Compile Include="ProviderFixtures\FixtureConstants.cs" />
     <Compile Include="UserTests.cs" />
     <Compile Include="can_load_database.cs" />
     <Compile Include="can_use_custom_membership_providers.cs" />

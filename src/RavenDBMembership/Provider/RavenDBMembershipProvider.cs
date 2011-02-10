@@ -13,7 +13,7 @@ namespace RavenDBMembership.Provider
 {
 	public class RavenDBMembershipProvider : MembershipProvider
 	{
-		private const string ProviderName = "RavenDBMembership";
+		private readonly string ProviderName;
 		private IDocumentStore documentStore;
 		
 		public IDocumentStore DocumentStore
@@ -33,6 +33,17 @@ namespace RavenDBMembership.Provider
 		{
 			get; set;
 		}
+
+        public RavenDBMembershipProvider()
+            : this("RavenDBMembership")
+        {
+            
+        }
+
+        public RavenDBMembershipProvider(string providerName)
+        {
+            ProviderName = providerName;
+        }
 
 		public override void Initialize(string name, NameValueCollection config)
 		{

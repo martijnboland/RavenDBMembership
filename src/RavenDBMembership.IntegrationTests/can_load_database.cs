@@ -34,7 +34,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 then("the database can be generated", delegate
                 {
-                    string databaseName = FixtureForSqlMembershipProvider.DatabaseName;
+                    string databaseName = FixtureConstants.DatabaseName;
 
                     DatabaseInitialization.RecreateDatabase(databaseName, databaseMdfFilepath);
 
