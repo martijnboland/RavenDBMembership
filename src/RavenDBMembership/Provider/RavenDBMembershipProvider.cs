@@ -104,6 +104,7 @@ namespace RavenDBMembership.Provider
 
 			var user = new User();
 			user.Username = username;
+		    password = password.Trim();
 			user.PasswordSalt = PasswordUtil.CreateRandomSalt();
 			user.PasswordHash = PasswordUtil.HashPassword(password, user.PasswordSalt);
 			user.Email = email;
@@ -336,6 +337,9 @@ namespace RavenDBMembership.Provider
 
 		public override bool ValidateUser(string username, string password)
 		{
+		    username = username.Trim();
+		    password = password.Trim();
+
 			using (var session = this.DocumentStore.OpenSession())
 			{
 				var q = from u in session.Query<User>().Customize(c => c.WaitForNonStaleResultsAsOfNow())

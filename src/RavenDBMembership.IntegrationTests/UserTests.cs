@@ -7,41 +7,65 @@ namespace RavenDBMembership.IntegrationTests
     {
         public override void SpecifyForEachProvider()
         {
-            when("a user has been created", delegate
+            given("a user", delegate
             {
                 var username = "martijn" + Unique.Integer;
                 var password = "1Password0";
                 var email = "someemail" + Unique.Integer + "@someserver.com";
 
-                var user = arrange(() => Membership.CreateUser(username, password, email));
-
-                then("that user can be loaded", delegate
+                when("created", delegate
                 {
-                    var loadedUser = Membership.GetUser(username);
+                    var user = arrange(() => Membership.CreateUser(username, password, email));
 
-                    expect(() => loadedUser.ProviderUserKey.Equals(user.ProviderUserKey));
-                    expect(() => loadedUser.UserName.Equals(username));
-                    expect(() => loadedUser.Email.Equals(email));
+                    then("that user can be loaded", delegate
+                    {
+                        var loadedUser = Membership.GetUser(username);
+
+                        expect(() => loadedUser.ProviderUserKey.Equals(user.ProviderUserKey));
+                        expect(() => loadedUser.UserName.Equals(username));
+                        expect(() => loadedUser.Email.Equals(email));
+                    });
+
+                    then("the user can log in", delegate
+                    {
+                        expect(() => Membership.Provider.ValidateUser(username, password));
+                    });
+
+                    then("the user can log in if their username has extra whitespace (SqlMembershipProvider compatibility)", delegate
+                    {
+                        expect(() => Membership.Provider.ValidateUser(username + " ", password));
+                    });
+
+                    then("the user can log in if their password has extra whitespace (SqlMembershipProvider compatibility)", delegate
+                    {
+                        expect(() => Membership.Provider.ValidateUser(username, password + " "));
+                    });
+
+                    then("the user can't log in with the wrong password", delegate
+                    {
+                        expect(() => !Membership.Provider.ValidateUser(username, password + "P"));
+                    });
                 });
 
-                then("the user can log in", delegate
+                when("created with whitespace in the username and password", delegate
                 {
-                    expect(() => Membership.Provider.ValidateUser(username, password));
-                });
+                    username = username + " ";
+                    password = password + " ";
 
-                then("the user can log in if their username has extra whitespace (SqlMembershipProvider compatibility)", delegate
-                {
-                    expect(() => Membership.Provider.ValidateUser(username + " ", password));
-                });
+                    var user = arrange(() => Membership.CreateUser(username, password, email));
 
-                then("the user can log in if their password has extra whitespace (SqlMembershipProvider compatibility)", delegate
-                {
-                    expect(() => Membership.Provider.ValidateUser(username, password + " "));
-                });
+                    then("the username does not actually include the whitespace", delegate
+                    {
+                        var loadedUser = Membership.GetUser(username);
 
-                then("the user can't log in with the wrong password", delegate
-                {
-                    expect(() => !Membership.Provider.ValidateUser(username, password + "P"));
+                        expect(() => loadedUser.UserName == username.Trim());
+                        expect(() => loadedUser.UserName == user.UserName);
+                    });
+
+                    then("the password does not actually include the whitespace", delegate
+                    {
+                        expect(() => Membership.Provider.ValidateUser(username, password.Trim()));
+                    });
                 });
             });
         }
