@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Security;
 using NUnit.Framework;
+using RavenDBMembership.Provider;
 
 namespace RavenDBMembership.IntegrationTests
 {

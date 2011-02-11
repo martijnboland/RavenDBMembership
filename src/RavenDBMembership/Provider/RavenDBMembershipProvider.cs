@@ -8,6 +8,7 @@ using Microsoft.Practices.ServiceLocation;
 using System.Collections.Specialized;
 using Raven.Client.Client;
 using System.IO;
+using Raven.Http.Exceptions;
 
 namespace RavenDBMembership.Provider
 {
@@ -113,14 +114,22 @@ namespace RavenDBMembership.Provider
 
 			using (var session = this.DocumentStore.OpenSession())
 			{
+			    session.Advanced.UseOptimisticConcurrency = true;
+
 				try
 				{
 					session.Store(user);
+                    session.Store(new ReservationForUsername() { Id = "username/" + username });
+                    Console.WriteLine("adding username '" + username + "'");
 					session.SaveChanges();
 					status = MembershipCreateStatus.Success;
 					return new MembershipUser(ProviderName, username, user.Id, email, null, null, true, false, user.DateCreated,
 						new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), DateTime.Now, new DateTime(1900, 1, 1));
 				}
+                catch (ConcurrencyException e)
+                {
+                    status = MembershipCreateStatus.DuplicateUserName;
+                }
 				catch (Exception ex)
 				{
 					// TODO: log exception properly
