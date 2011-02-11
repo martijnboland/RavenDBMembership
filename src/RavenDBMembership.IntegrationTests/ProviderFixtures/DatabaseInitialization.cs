@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -23,24 +24,16 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             DetachDatabase(databaseName);
 
-            using (var masterConnection = new SqlConnection(GetConnectionStringFor("master")))
+            ApplyAndRetryForDatabase("master", masterConnection =>
             {
-                masterConnection.Open();
-                try
-                {
-                    using (var createCommand = new SqlCommand(@"
+                using (var createCommand = new SqlCommand(@"
 USE Master
 CREATE DATABASE $databaseName ON (NAME=DatabaseFile1, FILENAME= '$filename')
 ".Replace("$databaseName", databaseName).Replace("$filename", databaseMdfPath), masterConnection))
-                    {
-                        createCommand.ExecuteNonQuery();
-                    }
-                }
-                finally 
                 {
-                    masterConnection.Close();
+                    createCommand.ExecuteNonQuery();
                 }
-            }
+            });
         }
 
         static public IEnumerable<string> GetCreateScript()
@@ -76,13 +69,9 @@ CREATE DATABASE $databaseName ON (NAME=DatabaseFile1, FILENAME= '$filename')
 
         static public void DetachDatabase(string databaseName)
         {
-            using (var connection = new SqlConnection(GetConnectionStringFor("master")))
+            ApplyAndRetryForDatabase("master", connection =>
             {
-                connection.Open();
-
-                try
-                {
-                    string detachScript = @"
+                string detachScript1 = @"
 USE [master]
 IF db_id('$databaseName') IS NOT NULL
 BEGIN
@@ -94,53 +83,79 @@ BEGIN
 END
 ".Replace("$databaseName", databaseName);
 
-                    using (var command = new SqlCommand(detachScript, connection))
+                using (var command1 = new SqlCommand(detachScript1, connection))
+                {
+                    command1.ExecuteNonQuery();
+                }
+            });
+        }
+
+        public static void ApplyAndRetryForDatabase(string databaseName, Action<SqlConnection> task)
+        {
+            var retriesLeft = 3;
+
+            while(retriesLeft-- > 0)
+            {
+                try
+                {
+                    using (var connection = new SqlConnection(GetConnectionStringFor(databaseName)))
                     {
-                        command.ExecuteNonQuery();
+                        connection.Open();
+
+                        try
+                        {
+                            task(connection);
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
                     }
                 }
-                finally
+                catch(SqlException e)
                 {
-                    connection.Close();
+                    // trying to be selective about what exceptions we retry on...
+                    // In particular, retrying if the command failed due to a bad connection.
+                    if (e.Message.Contains("transport-level"))
+                        continue;
+
+                    throw;
                 }
+
+                return;
             }
-            
         }
 
         static public void RunSqlMembershipCreationScript(string databaseName)
         {
             var createScripts = GetCreateScript();
 
-            string connectionString = GetConnectionStringFor(databaseName);
+            ApplyAndRetryForDatabase(databaseName, connection =>
+            {
+                using (var command = new SqlCommand("PRINT('verifying SQL connection is not closed');", connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            });
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(GetConnectionStringFor(databaseName)))
             {
                 connection.Open();
 
                 try
                 {
-                    foreach (var createScript in createScripts)
+                    foreach(var createScript in createScripts)
                     {
-                        try
+                        using (var command = new SqlCommand(createScript, connection))
                         {
-                            using (var command = new SqlCommand(createScript, connection))
-                            {
-                                command.ExecuteNonQuery();
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            Console.WriteLine("Failing during creation script, at segment:");
-                            Console.WriteLine(createScript);
-                                
-                            throw;
+                            command.ExecuteNonQuery();
                         }
                     }
                 }
                 finally
                 {
                     connection.Close();
-                };
+                }
             }
         }
     }
