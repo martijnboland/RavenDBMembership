@@ -9,9 +9,9 @@ namespace RavenDBMembership.IntegrationTests
         {
             when("a user has been created", delegate
             {
-                var username = "martijn";
+                var username = "martijn" + Unique.Integer;
                 var password = "1Password0";
-                var email = "someemail@someserver.com";
+                var email = "someemail" + Unique.Integer + "@someserver.com";
 
                 var user = arrange(() => Membership.CreateUser(username, password, email));
 
@@ -22,6 +22,16 @@ namespace RavenDBMembership.IntegrationTests
                     expect(() => loadedUser.ProviderUserKey.Equals(user.ProviderUserKey));
                     expect(() => loadedUser.UserName.Equals(username));
                     expect(() => loadedUser.Email.Equals(email));
+                });
+
+                then("the user can log in", delegate
+                {
+                    expect(() => Membership.Provider.ValidateUser(username, password));
+                });
+
+                then("the user can't log in with the wrong password", delegate
+                {
+                    expect(() => Membership.Provider.ValidateUser(username, password + " "));
                 });
             });
         }
