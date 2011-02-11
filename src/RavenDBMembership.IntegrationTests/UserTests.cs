@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Security;
+using NUnit.Framework;
 
 namespace RavenDBMembership.IntegrationTests
 {
@@ -9,9 +10,9 @@ namespace RavenDBMembership.IntegrationTests
         {
             given("a user", delegate
             {
-                var username = "martijn" + Unique.Integer;
-                var password = "1Password0";
-                var email = "someemail" + Unique.Integer + "@someserver.com";
+                var username = Unique.String("username");
+                var password = Unique.String("password");
+                var email = Unique.String("email") + "@someserver.com";
 
                 when("created", delegate
                 {
@@ -44,6 +45,32 @@ namespace RavenDBMembership.IntegrationTests
                     then("the user can't log in with the wrong password", delegate
                     {
                         expect(() => !Membership.Provider.ValidateUser(username, password + "P"));
+                    });
+
+                    when("another user wants to register with the same username", delegate
+                    {
+                        string otherPassword = Unique.String("password");
+                        string otherEmail = Unique.String("password") + "@someserver.com";
+
+                        then("an excepton is thrown", delegate
+                        {
+                            var exception = Assert.Throws<MembershipCreateUserException>(() => Membership.CreateUser(username, otherPassword, otherEmail));
+
+                            expect(() => exception.StatusCode == MembershipCreateStatus.DuplicateUserName);
+                        });
+                    });
+
+                    when("another user wants to register with the same email", delegate
+                    {
+                        string otherUsername = Unique.String("username");
+                        string otherPassword = Unique.String("password");
+
+                        then("an excepton is thrown", delegate
+                        {
+                            var exception = Assert.Throws<MembershipCreateUserException>(() => Membership.CreateUser(otherUsername, otherPassword, email));
+
+                            expect(() => exception.StatusCode == MembershipCreateStatus.DuplicateEmail);
+                        });
                     });
                 });
 
