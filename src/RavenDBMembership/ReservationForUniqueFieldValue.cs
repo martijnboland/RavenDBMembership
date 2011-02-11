@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RavenDBMembership
 {
-    public class ReservationForUsername
+    public class ReservationForUniqueFieldValue
     {
         public string Id { get; set; }
     }

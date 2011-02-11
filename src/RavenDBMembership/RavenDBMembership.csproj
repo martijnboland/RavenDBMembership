@@ -58,7 +58,7 @@
     <Compile Include="Provider\RavenDBMembershipProvider.cs" />
     <Compile Include="Provider\RavenDBMembershipProviderThatDisposesStore.cs" />
     <Compile Include="Provider\RavenDBRoleProvider.cs" />
-    <Compile Include="ReservationForUsername.cs" />
+    <Compile Include="ReservationForUniqueFieldValue.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

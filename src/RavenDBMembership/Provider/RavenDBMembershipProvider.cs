@@ -119,8 +119,8 @@ namespace RavenDBMembership.Provider
 				try
 				{
 					session.Store(user);
-                    session.Store(new ReservationForUsername() { Id = "username/" + username });
-                    Console.WriteLine("adding username '" + username + "'");
+                    session.Store(new ReservationForUniqueFieldValue() { Id = "username/" + username });
+                    session.Store(new ReservationForUniqueFieldValue() { Id = "email/" + email });
 					session.SaveChanges();
 					status = MembershipCreateStatus.Success;
 					return new MembershipUser(ProviderName, username, user.Id, email, null, null, true, false, user.DateCreated,
@@ -128,7 +128,14 @@ namespace RavenDBMembership.Provider
 				}
                 catch (ConcurrencyException e)
                 {
-                    status = MembershipCreateStatus.DuplicateUserName;
+                    if (e.Message.Contains("/username"))
+                        status = MembershipCreateStatus.DuplicateUserName;
+                    else if (e.Message.Contains("/email"))
+                        status = MembershipCreateStatus.DuplicateEmail;
+                    else
+                    {
+                        status = MembershipCreateStatus.ProviderError;
+                    }
                 }
 				catch (Exception ex)
 				{
