@@ -196,7 +196,7 @@ namespace RavenDBMembership.Provider
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
-				var q = from u in session.Query<User>()
+				var q = from u in session.Query<User>().Customize(c => c.WaitForNonStaleResultsAsOfNow())
 						where u.Username == username && u.ApplicationName == this.ApplicationName
 						select u;
 				var user = q.SingleOrDefault();
@@ -338,7 +338,7 @@ namespace RavenDBMembership.Provider
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
-				var q = from u in session.Query<User>()
+				var q = from u in session.Query<User>().Customize(c => c.WaitForNonStaleResultsAsOfNow())
 						where u.Username == username && u.ApplicationName == this.ApplicationName
 						select u;
 				var user = q.SingleOrDefault();
