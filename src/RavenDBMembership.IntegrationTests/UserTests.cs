@@ -29,9 +29,19 @@ namespace RavenDBMembership.IntegrationTests
                     expect(() => Membership.Provider.ValidateUser(username, password));
                 });
 
-                then("the user can't log in with the wrong password", delegate
+                then("the user can log in if their username has extra whitespace (SqlMembershipProvider compatibility)", delegate
+                {
+                    expect(() => Membership.Provider.ValidateUser(username + " ", password));
+                });
+
+                then("the user can log in if their password has extra whitespace (SqlMembershipProvider compatibility)", delegate
                 {
                     expect(() => Membership.Provider.ValidateUser(username, password + " "));
+                });
+
+                then("the user can't log in with the wrong password", delegate
+                {
+                    expect(() => !Membership.Provider.ValidateUser(username, password + "P"));
                 });
             });
         }
