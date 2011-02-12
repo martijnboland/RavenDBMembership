@@ -163,6 +163,10 @@ namespace RavenDBMembership.Provider
 					{
 						throw new NullReferenceException("The user could not be deleted.");
 					}
+
+					session.Delete(session.Load<ReservationForUniqueFieldValue>("username/" + user.Username));
+					session.Delete(session.Load<ReservationForUniqueFieldValue>("email/" + user.Email));
+
 					session.Delete(user);
 					session.SaveChanges();
 					return true;
