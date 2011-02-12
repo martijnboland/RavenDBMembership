@@ -1,0 +1,5 @@
+This directory is being pulled in to let Visual Studio install web projects even when Visual Studio is not installed on the build machine.
+
+http://stackoverflow.com/questions/2726126/what-does-the-microsoft-webapplication-targets-import-do-in-vs-2010-web-applicati/4976787#4976787
+
+C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0

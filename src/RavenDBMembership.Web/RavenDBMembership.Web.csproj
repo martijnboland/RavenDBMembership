@@ -177,6 +177,9 @@
     <Content Include="Views\Account\ManageRoles.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <MSBuildExtensionsPath32>..\..\tools\MSBuild.MSVS\</MSBuildExtensionsPath32>
+  </PropertyGroup>  
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
