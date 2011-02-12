@@ -1,7 +1,7 @@
 In order to build this project, you need to execute the psake build script from the PowerShell console.  
 You do this using the following command from the root project directory:
 
-	.\psake.ps1 .\default.ps1 -properties @{
+    .\psake.ps1 .\default.ps1 -properties @{
         tempPath="c:\temp\RavenDBMembershipTemp";
         sqlConnectionStriong=Database='`$_';Data Source=.\SQLEXPRESS;Integrated Security=True"
     }
@@ -9,8 +9,8 @@ You do this using the following command from the root project directory:
 
 You may need to allow script execution by running the following command as adminstrator:
 
-	Set-ExecutionPolicy unrestricted
-	
+    Set-ExecutionPolicy unrestricted
+    
 
 The script requires a connection string, with a token for the database name.  
 The permissions of the connection need to allow the dbcreator permission.  A 
