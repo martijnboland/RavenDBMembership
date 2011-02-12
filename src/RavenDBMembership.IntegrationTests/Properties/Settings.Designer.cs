@@ -31,5 +31,14 @@ namespace RavenDBMembership.IntegrationTests.Properties {
                 return ((string)(this["AccessibleTempPath"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Database=\'$_\';Data Source=.\\SQLEXPRESS;Integrated Security=True")]
+        public string SqlConnectionString {
+            get {
+                return ((string)(this["SqlConnectionString"]));
+            }
+        }
     }
 }

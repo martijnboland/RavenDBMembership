@@ -12,8 +12,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
     {
         static public string GetConnectionStringFor(string databaseName)
         {
-            string host = @".\SQLEXPRESS";
-            return @"Database='" + databaseName + @"';Data Source=" + host + ";Integrated Security=True";
+            return Properties.Settings.Default.SqlConnectionString.Replace("$_", databaseName);
         }
 
         static public void RecreateDatabase(string databaseName, string databaseMdfPath)
