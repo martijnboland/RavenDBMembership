@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration.Provider;
 using System.Linq;
 using System.Text;
 using System.Web.Security;
@@ -109,24 +110,20 @@ namespace RavenDBMembership.Provider
 
 				try
 				{
-					session.Store(user);
+                    session.Store(user);
                     session.Store(new ReservationForUniqueFieldValue() { Id = "username/" + username });
                     session.Store(new ReservationForUniqueFieldValue() { Id = "email/" + email });
-					session.SaveChanges();
-					status = MembershipCreateStatus.Success;
+
+                    session.SaveChanges();
+
+                    status = MembershipCreateStatus.Success;
+
                     return new MembershipUser(_providerName, username, user.Id, email, null, null, true, false, user.DateCreated,
 						new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), DateTime.Now, new DateTime(1900, 1, 1));
 				}
                 catch (ConcurrencyException e)
                 {
-                    if (e.Message.Contains("/username"))
-                        status = MembershipCreateStatus.DuplicateUserName;
-                    else if (e.Message.Contains("/email"))
-                        status = MembershipCreateStatus.DuplicateEmail;
-                    else
-                    {
-                        status = MembershipCreateStatus.ProviderError;
-                    }
+                    status = InterpretConcurrencyException(username, email, e);
                 }
 				catch (Exception ex)
 				{
@@ -138,7 +135,21 @@ namespace RavenDBMembership.Provider
 			return null;
 		}
 
-		public override bool DeleteUser(string username, bool deleteAllRelatedData)
+        MembershipCreateStatus InterpretConcurrencyException(string username, string email, ConcurrencyException e)
+        {
+            MembershipCreateStatus status;
+            if (e.Message.Contains("username/" + username))
+                status = MembershipCreateStatus.DuplicateUserName;
+            else if (e.Message.Contains("email/" + email))
+                status = MembershipCreateStatus.DuplicateEmail;
+            else
+            {
+                status = MembershipCreateStatus.ProviderError;
+            }
+            return status;
+        }
+
+	    public override bool DeleteUser(string username, bool deleteAllRelatedData)
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
@@ -165,42 +176,42 @@ namespace RavenDBMembership.Provider
 			}
 		}
 
-		public override bool EnablePasswordReset
+	    public override bool EnablePasswordReset
 		{
 			get { return true; }
 		}
 
-		public override bool EnablePasswordRetrieval
+	    public override bool EnablePasswordRetrieval
 		{
 			get { return false; }
 		}
 
-		public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+	    public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
 		{
 			return FindUsers(u => u.Email.Contains(emailToMatch), pageIndex, pageSize, out totalRecords);
 		}
 
-		public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
+	    public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
 		{
 			return FindUsers(u => u.Username.Contains(usernameToMatch), pageIndex, pageSize, out totalRecords);
 		}
 
-		public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
+	    public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
 		{
 			return FindUsers(null, pageIndex, pageSize, out totalRecords);
 		}
 
-		public override int GetNumberOfUsersOnline()
+	    public override int GetNumberOfUsersOnline()
 		{
 			throw new NotImplementedException();
 		}
 
-		public override string GetPassword(string username, string answer)
+	    public override string GetPassword(string username, string answer)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override MembershipUser GetUser(string username, bool userIsOnline)
+	    public override MembershipUser GetUser(string username, bool userIsOnline)
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
@@ -216,7 +227,7 @@ namespace RavenDBMembership.Provider
 			}
 		}
 
-		public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
+	    public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
@@ -229,7 +240,7 @@ namespace RavenDBMembership.Provider
 			}
 		}
 
-		public override string GetUserNameByEmail(string email)
+	    public override string GetUserNameByEmail(string email)
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
@@ -240,47 +251,47 @@ namespace RavenDBMembership.Provider
 			}
 		}
 
-		public override int MaxInvalidPasswordAttempts
+	    public override int MaxInvalidPasswordAttempts
 		{
 			get { return 10; }
 		}
 
-		public override int MinRequiredNonAlphanumericCharacters
+	    public override int MinRequiredNonAlphanumericCharacters
 		{
 			get { return 0; }
 		}
 
-		public override int MinRequiredPasswordLength
+	    public override int MinRequiredPasswordLength
 		{
 			get { return 5; }
 		}
 
-		public override int PasswordAttemptWindow
+	    public override int PasswordAttemptWindow
 		{
 			get { return 5; }
 		}
 
-		public override MembershipPasswordFormat PasswordFormat
+	    public override MembershipPasswordFormat PasswordFormat
 		{
 			get { return MembershipPasswordFormat.Hashed; }
 		}
 
-		public override string PasswordStrengthRegularExpression
+	    public override string PasswordStrengthRegularExpression
 		{
 			get { return String.Empty; }
 		}
 
-		public override bool RequiresQuestionAndAnswer
+	    public override bool RequiresQuestionAndAnswer
 		{
 			get { return false; }
 		}
 
-		public override bool RequiresUniqueEmail
+	    public override bool RequiresUniqueEmail
 		{
 			get { return false; }
 		}
 
-		public override string ResetPassword(string username, string answer)
+	    public override string ResetPassword(string username, string answer)
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
@@ -308,12 +319,12 @@ namespace RavenDBMembership.Provider
 			}
 		}
 
-		public override bool UnlockUser(string userName)
+	    public override bool UnlockUser(string userName)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override void UpdateUser(MembershipUser user)
+	    public override void UpdateUser(MembershipUser user)
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
@@ -344,16 +355,19 @@ namespace RavenDBMembership.Provider
 					dbUser.DateLastLogin = user.LastLoginDate;
 					session.SaveChanges();
 				}
-				catch (Exception ex)
-				{
-					// TODO: log exception properly
-					Console.WriteLine(ex.ToString());
-					throw;
-				}
+                catch(ConcurrencyException ex)
+                {
+                    var status = InterpretConcurrencyException(user.UserName, user.Email, ex);
+
+                    if (status == MembershipCreateStatus.DuplicateEmail)
+                        throw new ProviderException("The E-mail supplied is invalid.");
+                    else
+                        throw;
+                }
 			}
 		}
 
-		public override bool ValidateUser(string username, string password)
+	    public override bool ValidateUser(string username, string password)
 		{
 		    username = username.Trim();
 		    password = password.Trim();
@@ -374,7 +388,7 @@ namespace RavenDBMembership.Provider
 			return false;
 		}
 
-		private MembershipUserCollection FindUsers(Func<User, bool> predicate, int pageIndex, int pageSize, out int totalRecords)
+	    private MembershipUserCollection FindUsers(Func<User, bool> predicate, int pageIndex, int pageSize, out int totalRecords)
 		{
 			var membershipUsers = new MembershipUserCollection();
 			using (var session = this.DocumentStore.OpenSession())
@@ -401,7 +415,7 @@ namespace RavenDBMembership.Provider
 			return membershipUsers;
 		}
 
-		private MembershipUser UserToMembershipUser(User user)
+	    private MembershipUser UserToMembershipUser(User user)
 		{
             return new MembershipUser(_providerName, user.Username, user.Id, user.Email, null, null, true, false
 				, user.DateCreated, user.DateLastLogin.HasValue ? user.DateLastLogin.Value : new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), new DateTime(1900, 1, 1));
