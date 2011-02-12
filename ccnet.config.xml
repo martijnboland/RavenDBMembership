@@ -33,7 +33,11 @@
             <script>psake.ps1</script>
             <scriptsDirectory>c:\src\RavenDBMembership</scriptsDirectory>
             <executable>powershell.exe</executable>
-            <buildArgs>.\default.ps1 -properties @{ buildDirectory = 'c:\build\RavenDBMembership.msbuild\' }</buildArgs>
+            <buildArgs>.\default.ps1 -properties @{ 
+                buildDirectory = 'c:\build\RavenDBMembership.msbuild\';
+                tempPath = 'c:\build\RavenDBMembership.TestDatabases';
+                sqlConnectionString = "Database='`$_';Data Source=.\;Integrated Security=True"
+            }</buildArgs>
             <successExitCodes>0</successExitCodes>  <!-- via powershell, $LastExitCode -->
             <description>Commit check</description>
         </powershell>
