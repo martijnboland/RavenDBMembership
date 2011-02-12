@@ -26,6 +26,16 @@
             </summary>
             <param name="keys">The keys.</param>
         </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetDocumentsAsync(System.Int32,System.Int32)">
+            <summary>
+            Begins an async get operation for documents
+            </summary>
+            <param name="start">Paging start</param>
+            <param name="pageSize">Size of the page.</param>
+            <remarks>
+            This is primarily useful for administration of a database
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.QueryAsync(System.String,Raven.Database.Data.IndexQuery,System.String[])">
             <summary>
             Begins the async query.
@@ -54,6 +64,13 @@
             <param name="start">Paging start</param>
             <param name="pageSize">Size of the page.</param>
         </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetIndexesAsync(System.Int32,System.Int32)">
+            <summary>
+            Gets the indexes from the server asyncronously
+            </summary>
+            <param name="start">Paging start</param>
+            <param name="pageSize">Size of the page.</param>
+        </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.PutIndexAsync(System.String,Raven.Database.Indexing.IndexDefinition,System.Boolean)">
             <summary>
             Puts the index definition for the specified name asyncronously
@@ -61,6 +78,12 @@
             <param name="name">The name.</param>
             <param name="indexDef">The index def.</param>
             <param name="overwrite">Should overwrite index</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.DeleteIndexAsync(System.String)">
+            <summary>
+            Deletes the index definition for the specified name asyncronously
+            </summary>
+            <param name="name">The name.</param>
         </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.PutAsync(System.String,System.Nullable{System.Guid},Newtonsoft.Json.Linq.JObject,Newtonsoft.Json.Linq.JObject)">
             <summary>
@@ -82,6 +105,46 @@
             Returns a new <see cref="T:Raven.Client.Client.IDatabaseCommands"/> using the specified credentials
             </summary>
             <param name="credentialsForSession">The credentials for session.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetStatisticsAsync">
+            <summary>
+            Retrieve the statistics for the database asynchronously
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetDatabaseNamesAsync">
+            <summary>
+            Gets the list of databases from the server asyncronously
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetCollectionsAsync(System.Int32,System.Int32)">
+            <summary>
+            Gets the list of collections from the server asyncronously
+            </summary>
+            <param name="start">Paging start</param>
+            <param name="pageSize">Size of the page.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.PutAttachmentAsync(System.String,System.Nullable{System.Guid},System.Byte[],Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Puts the attachment with the specified key asyncronously
+            </summary>
+            <param name="key">The key.</param>
+            <param name="etag">The etag.</param>
+            <param name="data">The data.</param>
+            <param name="metadata">The metadata.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetAttachmentAsync(System.String)">
+            <summary>
+            Gets the attachment by the specified key asyncronously
+            </summary>
+            <param name="key">The key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.DeleteAttachmentAsync(System.String,System.Nullable{System.Guid})">
+            <summary>
+            Deletes the attachment with the specified key asyncronously
+            </summary>
+            <param name="key">The key.</param>
+            <param name="etag">The etag.</param>
         </member>
         <member name="P:Raven.Client.Client.Async.IAsyncDatabaseCommands.OperationsHeaders">
             <summary>
@@ -115,6 +178,13 @@
             <param name="start">Paging start</param>
             <param name="pageSize">Size of the page.</param>
         </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetIndexesAsync(System.Int32,System.Int32)">
+            <summary>
+            Gets the indexes from the server asyncronously
+            </summary>
+            <param name="start">Paging start</param>
+            <param name="pageSize">Size of the page.</param>
+        </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.PutIndexAsync(System.String,Raven.Database.Indexing.IndexDefinition,System.Boolean)">
             <summary>
             Puts the index definition for the specified name asyncronously
@@ -122,6 +192,12 @@
             <param name="name">The name.</param>
             <param name="indexDef">The index def.</param>
             <param name="overwrite">Should overwrite index</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.DeleteIndexAsync(System.String)">
+            <summary>
+            Deletes the index definition for the specified name asyncronously
+            </summary>
+            <param name="name">The name.</param>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.PutAsync(System.String,System.Nullable{System.Guid},Newtonsoft.Json.Linq.JObject,Newtonsoft.Json.Linq.JObject)">
             <summary>
@@ -158,6 +234,14 @@
             <param name="keys">The keys.</param>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetDocumentsAsync(System.Int32,System.Int32)">
+            <summary>
+            Begins an async get operation for documents
+            </summary>
+            <remarks>
+            This is primarily useful for administration of a database
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.QueryAsync(System.String,Raven.Database.Data.IndexQuery,System.String[])">
             <summary>
             Begins the async query.
@@ -179,6 +263,47 @@
             </summary>
             <param name="commandDatas">The command data.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetStatisticsAsync">
+            <summary>
+            Begins retrieving the statistics for the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetDatabaseNamesAsync">
+            <summary>
+            Gets the list of databases from the server asyncronously
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetCollectionsAsync(System.Int32,System.Int32)">
+            <summary>
+            Gets the list of collections from the server asyncronously
+            </summary>
+            <param name="start">Paging start</param>
+            <param name="pageSize">Size of the page.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.PutAttachmentAsync(System.String,System.Nullable{System.Guid},System.Byte[],Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Puts the attachment with the specified key asyncronously
+            </summary>
+            <param name="key">The key.</param>
+            <param name="etag">The etag.</param>
+            <param name="data">The data.</param>
+            <param name="metadata">The metadata.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetAttachmentAsync(System.String)">
+            <summary>
+            Gets the attachment by the specified key asyncronously
+            </summary>
+            <param name="key">The key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.DeleteAttachmentAsync(System.String,System.Nullable{System.Guid})">
+            <summary>
+            Deletes the attachment with the specified key asyncronously
+            </summary>
+            <param name="key">The key.</param>
+            <param name="etag">The etag.</param>
         </member>
         <member name="P:Raven.Client.Client.Async.AsyncServerClient.OperationsHeaders">
             <summary>
@@ -1414,6 +1539,18 @@
               that is nearly always a mistake.
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Count(System.Func{`0,System.Boolean})">
+            <summary>
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Count">
+            <summary>
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
             <summary>
               Includes the specified path in the query, loading the document specified in that path
@@ -1688,6 +1825,11 @@
               The last term that we asked the query to use equals on
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.ToListAsync">
+            <summary>
+            Returns a list of results for a query asynchronously. 
+            </summary>
+        </member>
         <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.Includes">
             <summary>
               Gets the current includes on this query
@@ -1752,6 +1894,18 @@
             <summary>
             This function exists solely to forbid in memory where clause on IDocumentQuery, because
             that is nearly always a mistake.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Count(System.Func{`0,System.Boolean})">
+            <summary>
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Count">
+            <summary>
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
@@ -3137,14 +3291,13 @@
             <typeparam name="TProjection">The type of the projection.</typeparam>
             <param name="fields">The fields.</param>
         </member>
-        <member name="P:Raven.Client.IDocumentQuery`1.QueryResult">
+        <member name="M:Raven.Client.IDocumentQuery`1.ToListAsync">
             <summary>
             Gets the query result
-            Execute the query the first time that this is called.
             </summary>
             <value>The query result.</value>
         </member>
-        <member name="P:Raven.Client.IDocumentQuery`1.QueryResultAsync">
+        <member name="P:Raven.Client.IDocumentQuery`1.QueryResult">
             <summary>
             Gets the query result
             Execute the query the first time that this is called.
@@ -4549,6 +4702,11 @@
             <typeparam name="TProjection">The type of the projection.</typeparam>
             <param name="fields">The fields.</param>
         </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.ToListAsync">
+            <summary>
+            Returns a list of results for a query asynchronously. 
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.AddOrder(System.String,System.Boolean)">
             <summary>
             Adds an ordering for a specific field to the query
@@ -4568,6 +4726,18 @@
             <summary>
             This function exists solely to forbid in memory where clause on IDocumentQuery, because
             that is nearly always a mistake.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.Count(System.Func{`0,System.Boolean})">
+            <summary>
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.Count">
+            <summary>
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
             </summary>
         </member>
         <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.OpenSubclause">
@@ -4596,13 +4766,6 @@
             </summary>
         </member>
         <member name="P:Raven.Client.Document.ShardedDocumentQuery`1.QueryResult">
-            <summary>
-            Gets the query result
-            Execute the query the first time that this is called.
-            </summary>
-            <value>The query result.</value>
-        </member>
-        <member name="P:Raven.Client.Document.ShardedDocumentQuery`1.QueryResultAsync">
             <summary>
             Gets the query result
             Execute the query the first time that this is called.
@@ -4903,13 +5066,16 @@
             <summary>
             Executes the index creation against the specified document store.
             </summary>
-            <param name="documentStore">The document store.</param>
         </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.IDocumentStore)">
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.Client.IDatabaseCommands,Raven.Client.Document.DocumentConvention)">
+            <summary>
+            Executes the index creation against the specified document database using the specified conventions
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.Client.Async.IAsyncDatabaseCommands,Raven.Client.Document.DocumentConvention)">
             <summary>
             Executes the index creation against the specified document store.
             </summary>
-            <param name="documentStore">The document store.</param>
         </member>
         <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.IndexName">
             <summary>
@@ -4917,7 +5083,7 @@
             </summary>
             <value>The name of the index.</value>
         </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.DocumentStore">
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.Conventions">
             <summary>
             Gets or sets the document store.
             </summary>
@@ -5423,6 +5589,12 @@
             <param name="assemblyToScanForIndexingTasks">The assembly to scan for indexing tasks.</param>
             <param name="documentStore">The document store.</param>
         </member>
+        <member name="M:Raven.Client.Indexes.IndexCreation.CreateIndexes(System.ComponentModel.Composition.Hosting.ExportProvider,Raven.Client.Client.IDatabaseCommands,Raven.Client.Document.DocumentConvention)">
+            <summary>
+            Creates the indexes found in the specified catalog
+            </summary>
+            <param name="catalogToGetnIndexingTasksFrom">The catalog to get indexing tasks from.</param>
+        </member>
         <member name="M:Raven.Client.Indexes.IndexCreation.CreateIndexes(System.ComponentModel.Composition.Hosting.ExportProvider,Raven.Client.IDocumentStore)">
             <summary>
             Creates the indexes found in the specified catalog
@@ -5443,6 +5615,12 @@
             </summary>
             <param name="catalogToGetnIndexingTasksFrom">The catalog to getn indexing tasks from.</param>
             <param name="documentStore">The document store.</param>
+        </member>
+        <member name="M:Raven.Client.Indexes.IndexCreation.CreateIndexesAsync(System.ComponentModel.Composition.Hosting.ExportProvider,Raven.Client.Client.Async.IAsyncDatabaseCommands,Raven.Client.Document.DocumentConvention)">
+            <summary>
+            Creates the indexes found in the specified catalog
+            </summary>
+            <param name="catalogToGetnIndexingTasksFrom">The catalog to getn indexing tasks from.</param>
         </member>
         <member name="T:Raven.Client.Indexes.IndexDefinition`2">
             <summary>
@@ -5511,6 +5689,16 @@
             The recommended way is to define indexes outside your code, using the Web UI.
             </summary>
         </member>
+        <member name="T:Raven.Client.Indexes.IndexDefinitionHelper">
+            <summary>
+            Generate index defintion from linq expressions
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.IndexDefinitionHelper.PruneToFailureLinqQueryAsStringToWorkableCode(System.Linq.Expressions.LambdaExpression,Raven.Client.Document.DocumentConvention,System.String,System.Boolean)">
+            <summary>
+            Perform the actual generation
+            </summary>
+        </member>
         <member name="T:Raven.Client.Indexes.SpatialIndex">
             <summary>
             Accessor for generating spatial queries on the client side
@@ -5538,7 +5726,7 @@
             <param name="queryGenerator">The document query generator.</param>
             <param name="customizeQuery">The customize query.</param>
             <param name="afterQueryExecuted">Executed after the query run, allow access to the query results</param>
-            <param name="indexName">The index name to query</param>
+            <param name="indexName">The name of the index the query is executed against.</param>
             <param name="fieldsToFetch">The fields to fetch in this query</param>
         </member>
         <member name="M:Raven.Client.Linq.RavenQueryProviderProcessor`1.VisitExpression(System.Linq.Expressions.Expression)">
@@ -5559,11 +5747,11 @@
             Get the member expression from the expression
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryProviderProcessor`1.ProcessExpression(System.Linq.Expressions.Expression)">
+        <member name="M:Raven.Client.Linq.RavenQueryProviderProcessor`1.GetLuceneQueryFor(System.Linq.Expressions.Expression)">
             <summary>
-            Processes the expression.
+            Gets the lucene query.
             </summary>
-            <param name="expression">The expression.</param>
+            <value>The lucene query.</value>
         </member>
         <member name="M:Raven.Client.Linq.RavenQueryProviderProcessor`1.Execute(System.Linq.Expressions.Expression)">
             <summary>
@@ -5576,12 +5764,6 @@
             <summary>
             Gets the current path in the case of expressions within collections
             </summary>
-        </member>
-        <member name="P:Raven.Client.Linq.RavenQueryProviderProcessor`1.LuceneQuery">
-            <summary>
-            Gets the lucene query.
-            </summary>
-            <value>The lucene query.</value>
         </member>
         <member name="P:Raven.Client.Linq.RavenQueryProviderProcessor`1.FieldsToFetch">
             <summary>
@@ -5761,6 +5943,12 @@
             Change the result type for the query provider
             </summary>
         </member>
+        <member name="M:Raven.Client.Linq.IRavenQueryProvider.ToLuceneQuery``1(System.Linq.Expressions.Expression)">
+            <summary>
+            Convert the Linq query to a Lucene query
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Raven.Client.Linq.IRavenQueryProvider.IndexName">
             <summary>
             Gets the name of the index.
@@ -5785,6 +5973,11 @@
         <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.For``1">
             <summary>
             Change the result type for the query provider
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.ToLuceneQuery``1(System.Linq.Expressions.Expression)">
+            <summary>
+            Convert the expression to a Lucene query
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.Execute(System.Linq.Expressions.Expression)">
@@ -5873,6 +6066,9 @@
             <summary>
              Extensions to the linq syntax
             </summary>
+            <summary>
+             Extensions to the linq syntax
+            </summary>
         </member>
         <member name="M:Raven.Client.Linq.LinqExtensions.As``1(System.Linq.IQueryable)">
             <summary>
@@ -5922,6 +6118,52 @@
         <member name="M:Raven.Client.Linq.LinqExtensions.ToListAsync``1(Raven.Client.Linq.IRavenQueryable{``0})">
             <summary>
             Returns a list of results for a query asynchronously. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Include``1(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Includes the specified path in the query, loading the document specified in that path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Where``1(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            Filters a sequence of values based on a predicate.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Where``1(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int32,System.Boolean}})">
+            <summary>
+            Filters a sequence of values based on a predicate.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.OrderBy``2(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Sorts the elements of a sequence in ascending order according to a key.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.OrderBy``2(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IComparer{``1})">
+            <summary>
+            Sorts the elements of a sequence in ascending order according to a key.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.OrderByDescending``2(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Sorts the elements of a sequence in descending order according to a key.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.OrderByDescending``2(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IComparer{``1})">
+            <summary>
+            Sorts the elements of a sequence in descending order according to a key.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Select``2(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Projects each element of a sequence into a new form.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Select``2(Raven.Client.Linq.IRavenQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int32,``1}})">
+            <summary>
+            Projects each element of a sequence into a new form.
             </summary>
         </member>
         <member name="T:Raven.Client.Linq.RavenQueryProvider`1">
@@ -5975,6 +6217,11 @@
             Customizes the query using the specified action
             </summary>
             <param name="action">The action.</param>
+        </member>
+        <member name="M:Raven.Client.Linq.RavenQueryProvider`1.ToLuceneQuery``1(System.Linq.Expressions.Expression)">
+            <summary>
+            Convert the expression to a Lucene query
+            </summary>
         </member>
         <member name="P:Raven.Client.Linq.RavenQueryProvider`1.CustomizedQuery">
             <summary>
