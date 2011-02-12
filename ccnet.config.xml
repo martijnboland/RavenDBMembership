@@ -1,0 +1,42 @@
+<!-- 
+    This config file must be referenced by the CI server's config file.
+    See "Splitting the ccnet.config file to add this config: http://ccnetlive.thoughtworks.com/ccnet/doc/CCNET/Multiple%20Projects.html
+-->
+
+
+<!-- make sure cruisecontrol config defines git install location, something like:
+  <cb:define gitpath="C:\Program Files (x86)\Git\bin\git.exe"/>  
+-->
+
+
+<project name="RavenDBMembership">
+   
+    <sourcecontrol type="git">
+        <repository>git@github.com:fschwiet/RavenDBMembership.git</repository>
+        <branch>master</branch>
+        <autoGetSource>true</autoGetSource>
+        <executable>$(gitpath)</executable>
+        <tagOnSuccess>false</tagOnSuccess>
+        <commitBuildModifications>false</commitBuildModifications>
+        <commitUntrackedFiles>false</commitUntrackedFiles>
+        <workingDirectory>c:\build\RavenDBMembership.git</workingDirectory>
+        <timeout>60000</timeout>
+    </sourcecontrol>
+
+    <triggers>  
+        <intervalTrigger name="git" seconds="3600" buildCondition="IfModificationExists" />  
+    </triggers> 
+    
+    <tasks>
+        <powershell>
+            <!-- http://ccnetlive.thoughtworks.com/ccnet/doc/CCNET/PowerShell%20Task.html -->
+            <script>psake.ps1</script>
+            <scriptsDirectory>c:\src</scriptsDirectory>
+            <executable>powershell.exe</executable>
+            <buildArgs>.\default.ps1 -properties @{ buildDirectory = 'c:\build\RavenDBMembership.msbuild\' }</buildArgs>
+            <successExitCodes>0</successExitCodes>  <!-- via powershell, $LastExitCode -->
+            <description>Commit check</description>
+        </powershell>
+    </tasks>
+    
+</project>
