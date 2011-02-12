@@ -130,27 +130,40 @@ namespace RavenDBMembership.IntegrationTests
 
                     var otherUsername = Unique.String("username");
                     var otherPassword = Unique.String("password");
-                    var otherEmail = Unique.String("email");
+                    var otherEmail = Unique.String("email") + "@anotherServer.com";
 
-                    when("another user is created with the same username", delegate
+                    for (int i = 0; i < 20; i++)
                     {
-                        otherUsername = username;
-
-                        then("that new user can be created", delegate
+                        when("another user is created with the same username", delegate
                         {
-                            Membership.CreateUser(otherUsername, otherPassword, otherEmail);
+                            otherUsername = username;
+
+                            arrange(
+                                () =>
+                                Console.WriteLine("original: {0}, {1}, second: {2}, {3}", username, email, otherUsername,
+                                                  otherEmail));
+
+                            then("that new user can be created", delegate
+                            {
+                                Membership.CreateUser(otherUsername, otherPassword, otherEmail);
+                            });
                         });
-                    });
 
-                    when("another user is created with the same email", delegate
-                    {
-                        otherEmail = email;
-
-                        then("that new user can be created", delegate
+                        when("another user is created with the same email", delegate
                         {
-                            Membership.CreateUser(otherUsername, otherPassword, otherEmail);
+                            otherEmail = email;
+
+                            arrange(
+                                () =>
+                                Console.WriteLine("original: {0}, {1}, second: {2}, {3}", username, email, otherUsername,
+                                                  otherEmail));
+
+                            then("that new user can be created", delegate
+                            {
+                                Membership.CreateUser(otherUsername, otherPassword, otherEmail);
+                            });
                         });
-                    });
+                    }
                 });
             });
         }
