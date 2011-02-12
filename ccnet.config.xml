@@ -36,7 +36,7 @@
             <buildArgs>.\default.ps1 -properties @{ 
                 buildDirectory = 'c:\build\RavenDBMembership.msbuild\';
                 tempPath = 'c:\build\RavenDBMembership.TestDatabases';
-                sqlConnectionString = "Database='`$_';Data Source=.\;Integrated Security=True"
+                sqlConnectionString = 'Database=''$_'';Data Source=.\;Integrated Security=True'
             }</buildArgs>
             <successExitCodes>0</successExitCodes>  <!-- via powershell, $LastExitCode -->
             <description>Commit check</description>
