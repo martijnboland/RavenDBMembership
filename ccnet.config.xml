@@ -20,7 +20,7 @@
         <commitBuildModifications>false</commitBuildModifications>
         <commitUntrackedFiles>false</commitUntrackedFiles>
         <workingDirectory>c:\build\RavenDBMembership.git</workingDirectory>
-        <timeout>60000</timeout>
+        <timeout>600000</timeout>
     </sourcecontrol>
 
     <triggers>  
