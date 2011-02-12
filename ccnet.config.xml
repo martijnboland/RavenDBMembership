@@ -20,7 +20,7 @@
         <commitBuildModifications>false</commitBuildModifications>
         <commitUntrackedFiles>false</commitUntrackedFiles>
         <workingDirectory>c:\build\RavenDBMembership.git</workingDirectory>
-        <timeout>600000</timeout>
+        <timeout>60000</timeout>
     </sourcecontrol>
 
     <triggers>  
@@ -31,7 +31,7 @@
         <powershell>
             <!-- http://ccnetlive.thoughtworks.com/ccnet/doc/CCNET/PowerShell%20Task.html -->
             <script>psake.ps1</script>
-            <scriptsDirectory>c:\src</scriptsDirectory>
+            <scriptsDirectory>c:\src\RavenDBMembership</scriptsDirectory>
             <executable>powershell.exe</executable>
             <buildArgs>.\default.ps1 -properties @{ buildDirectory = 'c:\build\RavenDBMembership.msbuild\' }</buildArgs>
             <successExitCodes>0</successExitCodes>  <!-- via powershell, $LastExitCode -->
