@@ -17,7 +17,7 @@ namespace RavenDBMembership.IntegrationTests
                 var password = Unique.String("password");
                 var email = Unique.String("email") + "@someserver.com";
 
-                when("created", delegate
+                when("that user is created", delegate
                 {
                     var user = arrange(() => Membership.CreateUser(username, password, email));
 
@@ -120,6 +120,36 @@ namespace RavenDBMembership.IntegrationTests
                     then("the password does not actually include the whitespace", delegate
                     {
                         expect(() => Membership.Provider.ValidateUser(username, password.Trim()));
+                    });
+                });
+
+                given("a user that has been deleted", delegate
+                {
+                    var user = arrange(() => Membership.CreateUser(username, password, email));
+                    arrange(() => Membership.DeleteUser(username));
+
+                    var otherUsername = Unique.String("username");
+                    var otherPassword = Unique.String("password");
+                    var otherEmail = Unique.String("email");
+
+                    when("another user is created with the same username", delegate
+                    {
+                        otherUsername = username;
+
+                        then("that new user can be created", delegate
+                        {
+                            Membership.CreateUser(otherUsername, otherPassword, otherEmail);
+                        });
+                    });
+
+                    when("another user is created with the same email", delegate
+                    {
+                        otherEmail = email;
+
+                        then("that new user can be created", delegate
+                        {
+                            Membership.CreateUser(otherUsername, otherPassword, otherEmail);
+                        });
                     });
                 });
             });
