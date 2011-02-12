@@ -109,6 +109,7 @@ namespace RavenDBMembership.IntegrationTests
             then("then Membership.Provider has the expected type", delegate
             {
                 Assert.That(Membership.Provider, Is.InstanceOf<T>());
+                Assert.That(Membership.Providers[FixtureConstants.NameOfConfiguredMembershipProvider], Is.SameAs(Membership.Provider));
             });
         }
     }

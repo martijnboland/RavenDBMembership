@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration.Provider;
 using System.Linq;
 using System.Web.Security;
 using NUnit.Framework;
@@ -74,6 +75,31 @@ namespace RavenDBMembership.IntegrationTests
                             expect(() => exception.StatusCode == MembershipCreateStatus.DuplicateEmail);
                         });
                     });
+
+                    foreach(var similarEmail in new [] { email.ToLower(), email.ToUpper()})
+                    {
+                        when("another user tries to change their email to be similar", delegate
+                        {
+                            string otherUsername = Unique.String("username");
+                            string otherPassword = Unique.String("password");
+                            string otherEmail = Unique.String("email");
+
+                            arrange(() => Membership.CreateUser(otherUsername, otherPassword, otherEmail));
+
+                            then("an exception is thrown", delegate
+                            {
+                                var otherUser = Membership.GetUser(otherUsername);
+                                otherUser.Email = similarEmail;
+
+                                var exception = Assert.Throws<ProviderException>(delegate
+                                {
+                                    Membership.UpdateUser(otherUser);
+                                });
+
+                                expect(() => exception.Message.Equals("The E-mail supplied is invalid."));
+                            });
+                        });
+                    }
                 });
 
                 when("created with whitespace in the username and password", delegate

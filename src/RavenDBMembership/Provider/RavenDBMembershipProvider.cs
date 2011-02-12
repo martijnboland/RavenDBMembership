@@ -14,7 +14,7 @@ namespace RavenDBMembership.Provider
 {
 	public class RavenDBMembershipProvider : MembershipProvider
 	{
-		private readonly string ProviderName;
+        private string _providerName = "RavenDBMembership";
 		private IDocumentStore documentStore;
 		
 		public IDocumentStore DocumentStore
@@ -35,18 +35,7 @@ namespace RavenDBMembership.Provider
 			get; set;
 		}
 
-        public RavenDBMembershipProvider()
-            : this("RavenDBMembership")
-        {
-            
-        }
-
-        public RavenDBMembershipProvider(string providerName)
-        {
-            ProviderName = providerName;
-        }
-
-		public override void Initialize(string name, NameValueCollection config)
+        public override void Initialize(string name, NameValueCollection config)
 		{
 			// Try to find an IDocumentStore via Common Service Locator. 
 			try
@@ -60,6 +49,8 @@ namespace RavenDBMembership.Provider
 			catch (NullReferenceException) // Swallow Nullreference expection that occurs when there is no current service locator.
 			{
 			}
+
+            _providerName = name;
 			
 			base.Initialize(name, config);
 		}
@@ -123,7 +114,7 @@ namespace RavenDBMembership.Provider
                     session.Store(new ReservationForUniqueFieldValue() { Id = "email/" + email });
 					session.SaveChanges();
 					status = MembershipCreateStatus.Success;
-					return new MembershipUser(ProviderName, username, user.Id, email, null, null, true, false, user.DateCreated,
+                    return new MembershipUser(_providerName, username, user.Id, email, null, null, true, false, user.DateCreated,
 						new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), DateTime.Now, new DateTime(1900, 1, 1));
 				}
                 catch (ConcurrencyException e)
@@ -326,6 +317,8 @@ namespace RavenDBMembership.Provider
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
+			    session.Advanced.UseOptimisticConcurrency = true;
+
 				try
 				{
 					var q = from u in session.Query<User>()
@@ -336,6 +329,15 @@ namespace RavenDBMembership.Provider
 					{
 						throw new Exception("The user to update could not be found.");
 					}
+
+				    var originalEmail = dbUser.Email;
+
+                    if (originalEmail != user.Email)
+                    {
+                        session.Delete(session.Load<ReservationForUniqueFieldValue>("email/" + dbUser.Email));
+                        session.Store(new ReservationForUniqueFieldValue { Id = "email/" + user.Email});
+                    }
+
 					dbUser.Username = user.UserName;
 					dbUser.Email = user.Email;
 					dbUser.DateCreated = user.CreationDate;
@@ -401,7 +403,7 @@ namespace RavenDBMembership.Provider
 
 		private MembershipUser UserToMembershipUser(User user)
 		{
-			return new MembershipUser(ProviderName, user.Username, user.Id, user.Email, null, null, true, false
+            return new MembershipUser(_providerName, user.Username, user.Id, user.Email, null, null, true, false
 				, user.DateCreated, user.DateLastLogin.HasValue ? user.DateLastLogin.Value : new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), new DateTime(1900, 1, 1));
 		}
 	}

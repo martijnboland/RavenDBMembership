@@ -18,6 +18,9 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
         static public void RecreateDatabase(string databaseName, string databaseMdfPath)
         {
             var databaseMdfFileInfo = new FileInfo(databaseMdfPath);
+            if (!Directory.Exists(databaseMdfFileInfo.Directory.FullName))
+                Directory.CreateDirectory(databaseMdfFileInfo.Directory.FullName);
+
             string logPath = Path.Combine(databaseMdfFileInfo.Directory.FullName,
                                           databaseMdfFileInfo.Name.ToLower().Replace(".mdf", "_log.ldf"));
 

@@ -21,7 +21,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
             };
             store.Initialize();
 
-            return new RavenDBMembershipProviderThatDisposesStore(FixtureConstants.NameOfConfiguredMembershipProvider)
+            return new RavenDBMembershipProviderThatDisposesStore()
             {
                 DocumentStore = store
             };

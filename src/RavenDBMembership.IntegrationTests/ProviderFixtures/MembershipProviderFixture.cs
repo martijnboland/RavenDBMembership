@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Reflection;
+using System.Web.Configuration;
 using System.Web.Security;
 using NUnit.Framework;
 
@@ -8,6 +11,9 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
     public abstract class MembershipProviderFixture
     {
         public abstract MembershipProvider GetProvider();
+        public virtual void PostInitializeUpdate(MembershipProvider provider)
+        {
+        }
 
         MembershipProvider _originalProvider;
         MembershipProvider _injectedProvider;
@@ -20,8 +26,18 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
             else
                 _originalProvider = null;
 
-            MembershipProvider = _injectedProvider = GetProvider();
+            _injectedProvider = GetProvider();
+
+            InitializeMembershipProviderFromConfigEntry(_injectedProvider);
+
+            PostInitializeUpdate(_injectedProvider);
+
+            MembershipProvider = _injectedProvider;
             MembershipIsInitialized = true;
+
+            MembershipProviders = new MembershipProviderCollection();
+            MembershipProviders.Add(_injectedProvider);
+            MembershipProviders.SetReadOnly();
         }
 
         [TestFixtureTearDown]
@@ -48,8 +64,14 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
         static MembershipProvider MembershipProvider
         {
-            get { return MembershipProviderField.GetValue(Membership.Provider) as MembershipProvider; }
-            set { MembershipProviderField.SetValue(Membership.Provider, value); }
+            get { return MembershipProviderField.GetValue(null) as MembershipProvider; }
+            set { MembershipProviderField.SetValue(null, value); }
+        }
+
+        static MembershipProviderCollection MembershipProviders
+        {
+            get { return MembershipProvidersField.GetValue(null) as MembershipProviderCollection; }
+            set { MembershipProvidersField.SetValue(null, value); }
         }
 
         static FieldInfo MembershipInitializedField = typeof(Membership).GetField("s_Initialized",
@@ -60,5 +82,33 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
                                                                                 BindingFlags.Static |
                                                                                 BindingFlags.NonPublic);
 
+        static FieldInfo MembershipProvidersField = typeof (Membership).GetField("s_Providers",
+                                                                                 BindingFlags.Static |
+                                                                                 BindingFlags.NonPublic);
+
+        static public void InitializeMembershipProviderFromConfigEntry(MembershipProvider result)
+        {
+            NameValueCollection nameValueCollection = null;
+
+            MembershipSection membership = ConfigurationManager.GetSection("system.web/membership") as MembershipSection;
+
+            foreach (ProviderSettings settings in membership.Providers)
+            {
+                if (settings.Name == FixtureConstants.NameOfConfiguredMembershipProvider)
+                {
+                    nameValueCollection = new NameValueCollection(settings.Parameters);
+                    break;
+                }
+            }
+
+            if (nameValueCollection == null)
+            {
+                throw new Exception("Configuration not found for membership provider RavenDBMembership.");
+            }
+
+            nameValueCollection["connectionStringName"] = "StubConnectionString";
+
+            result.Initialize(FixtureConstants.NameOfConfiguredMembershipProvider, nameValueCollection);
+        }
     }
 }
