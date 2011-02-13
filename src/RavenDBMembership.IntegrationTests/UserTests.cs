@@ -133,28 +133,25 @@ namespace RavenDBMembership.IntegrationTests
                     var otherPassword = Unique.String("password");
                     var otherEmail = Unique.String("email") + "@anotherServer.com";
 
-                    for (int i = 0; i < 20; i++)
+                    when("another user is created with the same username", delegate
                     {
-                        when("another user is created with the same username", delegate
+                        otherUsername = username;
+
+                        then("that new user can be created", delegate
                         {
-                            otherUsername = username;
-
-                            then("that new user can be created", delegate
-                            {
-                                Membership.CreateUser(otherUsername, otherPassword, otherEmail);
-                            });
+                            Membership.CreateUser(otherUsername, otherPassword, otherEmail);
                         });
+                    });
 
-                        when("another user is created with the same email", delegate
+                    when("another user is created with the same email", delegate
+                    {
+                        otherEmail = email;
+
+                        then("that new user can be created", delegate
                         {
-                            otherEmail = email;
-
-                            then("that new user can be created", delegate
-                            {
-                                Membership.CreateUser(otherUsername, otherPassword, otherEmail);
-                            });
+                            Membership.CreateUser(otherUsername, otherPassword, otherEmail);
                         });
-                    }
+                    });
                 });
             });
         }
