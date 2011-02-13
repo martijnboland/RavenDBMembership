@@ -31,7 +31,7 @@
         <powershell>
             <!-- http://ccnetlive.thoughtworks.com/ccnet/doc/CCNET/PowerShell%20Task.html -->
             <script>psake.ps1</script>
-            <scriptsDirectory>c:\src\RavenDBMembership</scriptsDirectory>
+            <scriptsDirectory>c:\build\RavenDBMembership.git</scriptsDirectory>
             <executable>powershell.exe</executable>
             <buildArgs>.\default.ps1 -properties @{ 
                 buildDirectory = 'c:\build\RavenDBMembership.msbuild\';
