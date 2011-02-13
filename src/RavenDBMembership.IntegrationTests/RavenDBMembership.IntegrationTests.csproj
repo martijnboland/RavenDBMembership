@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllProvidersSpecification.cs" />
+    <Compile Include="enforces_password_length.cs" />
     <Compile Include="ProviderFixtures\FixtureConstants.cs" />
     <Compile Include="Unique.cs" />
     <Compile Include="UserTests.cs" />
