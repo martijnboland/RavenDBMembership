@@ -111,8 +111,8 @@ namespace RavenDBMembership.Provider
 				try
 				{
                     session.Store(user);
-                    session.Store(new ReservationForUniqueFieldValue() { Id = "username/" + username });
-                    session.Store(new ReservationForUniqueFieldValue() { Id = "email/" + email });
+                    session.Store(new ReservationForUniqueFieldValue() { Id = "username/" + user.Username });
+                    session.Store(new ReservationForUniqueFieldValue() { Id = "email/" + user.Email });
 
                     session.SaveChanges();
 
@@ -123,7 +123,7 @@ namespace RavenDBMembership.Provider
 				}
                 catch (ConcurrencyException e)
                 {
-                    status = InterpretConcurrencyException(username, email, e);
+                    status = InterpretConcurrencyException(user.Username, user.Email, e);
                 }
 				catch (Exception ex)
 				{
