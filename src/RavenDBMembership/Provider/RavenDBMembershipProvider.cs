@@ -155,7 +155,7 @@ namespace RavenDBMembership.Provider
 			{
 				try
 				{
-					var q = from u in session.Query<User>()
+					var q = from u in session.Query<User>().Customize(c => c.WaitForNonStaleResultsAsOfNow())
 							where u.Username == username && u.ApplicationName == this.ApplicationName
 							select u;
 					var user = q.SingleOrDefault();

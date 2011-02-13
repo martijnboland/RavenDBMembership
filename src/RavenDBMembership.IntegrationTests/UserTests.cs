@@ -126,7 +126,8 @@ namespace RavenDBMembership.IntegrationTests
                 given("a user that has been deleted", delegate
                 {
                     var user = arrange(() => Membership.CreateUser(username, password, email));
-                    arrange(() => Membership.DeleteUser(username));
+                    
+                    arrange(() => expect(() => Membership.DeleteUser(username)));
 
                     var otherUsername = Unique.String("username");
                     var otherPassword = Unique.String("password");
@@ -138,11 +139,6 @@ namespace RavenDBMembership.IntegrationTests
                         {
                             otherUsername = username;
 
-                            arrange(
-                                () =>
-                                Console.WriteLine("original: {0}, {1}, second: {2}, {3}", username, email, otherUsername,
-                                                  otherEmail));
-
                             then("that new user can be created", delegate
                             {
                                 Membership.CreateUser(otherUsername, otherPassword, otherEmail);
@@ -152,11 +148,6 @@ namespace RavenDBMembership.IntegrationTests
                         when("another user is created with the same email", delegate
                         {
                             otherEmail = email;
-
-                            arrange(
-                                () =>
-                                Console.WriteLine("original: {0}, {1}, second: {2}, {3}", username, email, otherUsername,
-                                                  otherEmail));
 
                             then("that new user can be created", delegate
                             {
