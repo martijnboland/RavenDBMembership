@@ -10,6 +10,16 @@ namespace RavenDBMembership.IntegrationTests
     [Explicit("test under construction")]
     public class enforces_password_length : AllProvidersSpecification
     {
+        public static readonly int MinPasswordSize = 8;
+
+        public override IEnumerable<KeyValuePair<string, string>> GetAdditionalConfiguration()
+        {
+            return new Dictionary<string,string>
+            {
+                {"minRequiredPasswordLength", MinPasswordSize.ToString()}
+            };
+        }
+
         public override void SpecifyForEachProvider()
         {
             given("the configuration file has a minimum password specified", delegate
