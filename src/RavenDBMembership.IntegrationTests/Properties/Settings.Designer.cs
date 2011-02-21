@@ -34,7 +34,8 @@ namespace RavenDBMembership.IntegrationTests.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Database=\'$_\';Data Source=.\\SQLEXPRESS;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Database=\'master\';Data Source=.;User Id=testusersdeletesyourdata;Password=1Passwo" +
+            "rd0;")]
         public string SqlConnectionString {
             get {
                 return ((string)(this["SqlConnectionString"]));

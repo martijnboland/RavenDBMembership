@@ -12,7 +12,14 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
     {
         static public string GetConnectionStringFor(string databaseName)
         {
-            return Properties.Settings.Default.SqlConnectionString.Replace("$_", databaseName);
+            var csb = new SqlConnectionStringBuilder(Properties.Settings.Default.SqlConnectionString);
+
+            csb.InitialCatalog = databaseName;
+
+            if (!csb.UserID.Equals("testusersdeletesyourdata"))
+                throw new Exception("Connection string must use user id 'testusersdeletesyourdata' to ensure this test code doesn't run againt production databases.");
+
+            return csb.ToString();
         }
 
         static public void RecreateDatabase(string databaseName, string databaseMdfPath)

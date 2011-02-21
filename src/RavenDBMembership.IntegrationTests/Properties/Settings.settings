@@ -6,7 +6,7 @@
       <Value Profile="(Default)">c:\temp</Value>
     </Setting>
     <Setting Name="SqlConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Database='$_';Data Source=.\SQLEXPRESS;Integrated Security=True</Value>
+      <Value Profile="(Default)">Database='master';Data Source=.;User Id=testusersdeletesyourdata;Password=1Password0;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
