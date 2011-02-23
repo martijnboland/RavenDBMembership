@@ -7,7 +7,7 @@ properties {
     $solutionFilepath = "$baseDirectory\src\RavenDBMembership.sln"
     
     $tempPath = "c:\temp\RavenDBMembershipTemp"
-    $sqlConnectionString = "Database='`$_';Data Source=.\SQLEXPRESS;Integrated Security=True"
+    $sqlConnectionString = "Database='master';Data Source=.;User Id=testusersdeletesyourdata;Password=1Password0;"
 }
 
 import-module .\tools\PSUpdateXML
