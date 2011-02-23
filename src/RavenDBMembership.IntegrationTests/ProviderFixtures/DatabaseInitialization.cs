@@ -16,7 +16,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             csb.InitialCatalog = databaseName;
 
-            if (!csb.UserID.Equals("testusersdeletesyourdata"))
+            if (!csb.UserID.Trim().Equals("testusersdeletesyourdata"))
                 throw new Exception("Connection string must use user id 'testusersdeletesyourdata' to ensure this test code doesn't run againt production databases.");
 
             return csb.ToString();

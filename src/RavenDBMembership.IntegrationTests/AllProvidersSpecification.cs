@@ -16,46 +16,49 @@ namespace RavenDBMembership.IntegrationTests
 
         public abstract void SpecifyForEachProvider();
 
-        public override void OnFixtureCreation(object fixture)
-        {
-            var membershipFixture = fixture as MembershipProviderFixture;
-
-            if (membershipFixture != null)
-            {
-                foreach(var kvp in GetAdditionalConfiguration())
-                    membershipFixture.AddConfigurationValue(kvp.Key, kvp.Value);
-            }
-        }
-
         public sealed override void Specify()
         {
             when("using RavenMembershipProvider in-memory", delegate
             {
-                importNUnit<ProviderFixtures.FixtureForInMemoryRavenMembershipProvider>();
+                var provider = new FixtureForInMemoryRavenMembershipProvider();
 
-                SpecifyForEachProvider();
+                arrange_provider_and_run_specification(provider);
             });
 
             when("using SQLMembershipProvider", delegate
             {
-                importNUnit<ProviderFixtures.FixtureForSqlMembershipProvider>();
+                var provider = new FixtureForSqlMembershipProvider();
 
-                SpecifyForEachProvider();
+                arrange_provider_and_run_specification(provider);
             });
 
             when("using raven with munin on disk", delegate
             {
-                importNUnit<ProviderFixtures.FixtureForMuninRavenMembershipProvider>();
+                var provider = new FixtureForMuninRavenMembershipProvider();
 
-                SpecifyForEachProvider();
+                arrange_provider_and_run_specification(provider);
             });
 
             when("using raven with esent on disk", delegate
             {
-                importNUnit<ProviderFixtures.FixtureForEsentRavenMembershipProvider>();
+                var provider = new FixtureForEsentRavenMembershipProvider();
 
-                SpecifyForEachProvider();
+                arrange_provider_and_run_specification(provider);
             });
+        }
+
+        private void arrange_provider_and_run_specification(MembershipProviderFixture provider)
+        {
+            arrange(delegate
+            {
+                foreach (var kvp in GetAdditionalConfiguration())
+                    provider.AddConfigurationValue(kvp.Key, kvp.Value);
+            });
+
+            beforeAll(() => provider.InjectProvider());
+            afterAll(() => provider.RestoreProvider());
+
+            SpecifyForEachProvider();
         }
     }
 }
