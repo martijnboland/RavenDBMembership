@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Linq;
 using System.Reflection;
 using System.Web.Configuration;
 using System.Web.Security;
@@ -11,10 +13,28 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
     public abstract class MembershipProviderFixture
     {
         public abstract MembershipProvider GetProvider();
-        public virtual void PostInitializeUpdate(MembershipProvider provider)
+        public virtual void PostInitializeUpdate(MembershipProvider provider) {}
+
+        public void AddConfigurationValue(string name, string value)
         {
+            // The name and type configuration values cannot be set this late.
+
+            string[] expectedConfigurationValues = new[]
+            {
+                "connectionStringName","enablePasswordRetrieval", "enablePasswordReset", "requiresQuestionAndAnswer", "requiresUniqueEmail",
+                "maxInvalidPasswordAttempts", "minRequiredPasswordLength", "minRequiredNonalphanumericCharacters", "passwordAttemptWindow=",
+                "applicationName"
+            };
+
+            if (!expectedConfigurationValues.Contains(name))
+            {
+                throw new ArgumentException(
+                    "MembershipProviderFixture was asked to configure unknown MembershipProvider setting '" +
+                    (name ?? "<null") + ".");
+            }
         }
 
+        Dictionary<string, string> _additionalConfiguration = new Dictionary<string, string>();
         MembershipProvider _originalProvider;
         MembershipProvider _injectedProvider;
 
@@ -86,7 +106,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
                                                                                  BindingFlags.Static |
                                                                                  BindingFlags.NonPublic);
 
-        static public void InitializeMembershipProviderFromConfigEntry(MembershipProvider result)
+        public void InitializeMembershipProviderFromConfigEntry(MembershipProvider result)
         {
             NameValueCollection nameValueCollection = null;
 
@@ -107,6 +127,11 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
             }
 
             nameValueCollection["connectionStringName"] = "StubConnectionString";
+
+            foreach(var kvp in _additionalConfiguration)
+            {
+                nameValueCollection.Add(kvp.Key, kvp.Value);
+            }
 
             result.Initialize(FixtureConstants.NameOfConfiguredMembershipProvider, nameValueCollection);
         }
