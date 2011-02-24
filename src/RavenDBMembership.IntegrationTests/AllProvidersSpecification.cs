@@ -49,13 +49,14 @@ namespace RavenDBMembership.IntegrationTests
 
         private void arrange_provider_and_run_specification(MembershipProviderFixture provider)
         {
-            arrange(delegate
+            beforeAll(delegate
             {
                 foreach (var kvp in GetAdditionalConfiguration())
                     provider.AddConfigurationValue(kvp.Key, kvp.Value);
+
+                provider.InjectProvider();
             });
 
-            beforeAll(() => provider.InjectProvider());
             afterAll(() => provider.RestoreProvider());
 
             SpecifyForEachProvider();
