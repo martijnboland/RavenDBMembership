@@ -51,10 +51,7 @@ namespace RavenDBMembership.IntegrationTests
         {
             beforeAll(delegate
             {
-                foreach (var kvp in GetAdditionalConfiguration())
-                    provider.AddConfigurationValue(kvp.Key, kvp.Value);
-
-                provider.InjectProvider();
+                provider.InjectProvider(GetAdditionalConfiguration());
             });
 
             afterAll(() => provider.RestoreProvider());

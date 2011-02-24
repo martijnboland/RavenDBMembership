@@ -25,7 +25,10 @@ namespace RavenDBMembership.IntegrationTests
             given("the configuration file has a minimum password specified", delegate
             {
                 // RavenDBMembershipProvider isn't picking up the ocnfig value currently
-                then("the provider loads the value");
+                then("the provider loads the value", delegate
+                {
+                    expect(() => Membership.Provider.MinRequiredPasswordLength == MinPasswordSize);
+                });
             });
 
             given("a user wants to create an account", delegate

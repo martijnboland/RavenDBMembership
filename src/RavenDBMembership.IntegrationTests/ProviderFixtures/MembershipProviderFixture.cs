@@ -15,31 +15,11 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
         public abstract MembershipProvider GetProvider();
         public virtual void PostInitializeUpdate(MembershipProvider provider) {}
 
-        public void AddConfigurationValue(string name, string value)
-        {
-            // The name and type configuration values cannot be set this late.
-
-            string[] expectedConfigurationValues = new[]
-            {
-                "connectionStringName","enablePasswordRetrieval", "enablePasswordReset", "requiresQuestionAndAnswer", "requiresUniqueEmail",
-                "maxInvalidPasswordAttempts", "minRequiredPasswordLength", "minRequiredNonalphanumericCharacters", "passwordAttemptWindow=",
-                "applicationName"
-            };
-
-            if (!expectedConfigurationValues.Contains(name))
-            {
-                throw new ArgumentException(
-                    "MembershipProviderFixture was asked to configure unknown MembershipProvider setting '" +
-                    (name ?? "<null") + ".");
-            }
-        }
-
-        Dictionary<string, string> _additionalConfiguration = new Dictionary<string, string>();
         MembershipProvider _originalProvider;
         MembershipProvider _injectedProvider;
 
         [TestFixtureSetUp]
-        public void InjectProvider()
+        public void InjectProvider(IEnumerable<KeyValuePair<string, string>> simulatedAppConfigSettings)
         {
             if (MembershipIsInitialized)
                 _originalProvider = MembershipProvider;
@@ -48,7 +28,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             _injectedProvider = GetProvider();
 
-            InitializeMembershipProviderFromConfigEntry(_injectedProvider);
+            InitializeMembershipProviderFromConfigEntry(_injectedProvider, simulatedAppConfigSettings);
 
             PostInitializeUpdate(_injectedProvider);
 
@@ -106,7 +86,8 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
                                                                                  BindingFlags.Static |
                                                                                  BindingFlags.NonPublic);
 
-        public void InitializeMembershipProviderFromConfigEntry(MembershipProvider result)
+        public void InitializeMembershipProviderFromConfigEntry(MembershipProvider result,
+            IEnumerable<KeyValuePair<string, string>> simulatedAppConfigSettings)
         {
             NameValueCollection nameValueCollection = null;
 
@@ -128,12 +109,35 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 
             nameValueCollection["connectionStringName"] = "StubConnectionString";
 
-            foreach(var kvp in _additionalConfiguration)
+            foreach (var kvp in simulatedAppConfigSettings)
             {
-                nameValueCollection.Add(kvp.Key, kvp.Value);
+                ValidateConfigurationValue(kvp.Key, kvp.Value);
+                nameValueCollection.Set(kvp.Key, kvp.Value);
             }
 
             result.Initialize(FixtureConstants.NameOfConfiguredMembershipProvider, nameValueCollection);
         }
+
+        public void ValidateConfigurationValue(string name, string value)
+        {
+            if (name.ToLower().Equals("name") || name.ToLower().Equals("type"))
+                throw new Exception("Tried to set a configuration property that is required by MembershipProvider.Initialize.");
+
+
+            string[] expectedConfigurationValues = new[]
+            {
+                "connectionStringName","enablePasswordRetrieval", "enablePasswordReset", "requiresQuestionAndAnswer", "requiresUniqueEmail",
+                "maxInvalidPasswordAttempts", "minRequiredPasswordLength", "minRequiredNonalphanumericCharacters", "passwordAttemptWindow=",
+                "applicationName"
+            };
+
+            if (!expectedConfigurationValues.Contains(name))
+            {
+                throw new ArgumentException(
+                    "MembershipProviderFixture was asked to configure unknown MembershipProvider setting '" +
+                    (name ?? "<null") + ".");
+            }
+        }
+
     }
 }
