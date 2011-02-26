@@ -7,16 +7,15 @@ using NUnit.Framework;
 
 namespace RavenDBMembership.IntegrationTests
 {
-    [Explicit("test under construction")]
-    public class enforces_password_length : SpecificationForAllMembershipProviders
+    public abstract class enforces_password_length : SpecificationForAllMembershipProviders
     {
-        public static readonly int MinPasswordSize = 23;
+        public abstract int GetMinimumPasswordLength();
 
         public override Dictionary<string, string> GetAdditionalConfiguration()
         {
             return new Dictionary<string,string>
             {
-                {"minRequiredPasswordLength", MinPasswordSize.ToString()}
+                {"minRequiredPasswordLength", GetMinimumPasswordLength().ToString()}
             };
         }
 
@@ -26,7 +25,7 @@ namespace RavenDBMembership.IntegrationTests
             {
                then("the provider loads the value", delegate
                 {
-                    expect(() => Membership.Provider.MinRequiredPasswordLength == MinPasswordSize);
+                    expect(() => Membership.Provider.MinRequiredPasswordLength == GetMinimumPasswordLength());
                 });
             });
 
@@ -39,9 +38,9 @@ namespace RavenDBMembership.IntegrationTests
                 {
                     var password = arrange(delegate
                     {
-                        var value = Unique.Integer.ToString() + "1234567890";
-                        //expect(() => value.Length > Membership.Provider.MinRequiredPasswordLength);
-                        value = value.Substring(0, Membership.Provider.MinRequiredPasswordLength - 1);
+                        var value = GetLongStringWithUniqueStart();
+                        expect(() => value.Length > GetMinimumPasswordLength());
+                        value = value.Substring(0, GetMinimumPasswordLength() - 1);
 
                         return value;
                     });
@@ -78,9 +77,9 @@ namespace RavenDBMembership.IntegrationTests
                 {
                     var password = arrange(delegate
                     {
-                        var value = Unique.Integer.ToString() + "1234567890";
-                        expect(() => value.Length > Membership.Provider.MinRequiredPasswordLength);
-                        value = value.Substring(0, Membership.Provider.MinRequiredPasswordLength);
+                        var value = GetLongStringWithUniqueStart();
+                        expect(() => value.Length > GetMinimumPasswordLength());
+                        value = value.Substring(0, GetMinimumPasswordLength());
 
                         return value;
                     });
@@ -93,6 +92,32 @@ namespace RavenDBMembership.IntegrationTests
                     });
                 });
             });
+
+            given("the user wants to change their password", delegate
+            {
+                                                                     
+            });
+        }
+
+        private string GetLongStringWithUniqueStart()
+        {
+            return Unique.Integer.ToString() + "_12345678901234567890123456789012345678901234567890";
+        }
+    }
+
+    public class enforces_password_length_of_16 : enforces_password_length
+    {
+        public override int GetMinimumPasswordLength()
+        {
+            return 16;
+        }
+    }
+
+    public class enforces_password_length_of_4 : enforces_password_length
+    {
+        public override int GetMinimumPasswordLength()
+        {
+            return 4;
         }
     }
 }

@@ -17,8 +17,9 @@ namespace RavenDBMembership.Provider
 	{
         private string _providerName = "RavenDBMembership";
 		private IDocumentStore documentStore;
-		
-		public IDocumentStore DocumentStore
+	    private int _minRequiredPasswordLength = 7;
+
+	    public IDocumentStore DocumentStore
 		{
 			get 
 			{
@@ -38,6 +39,11 @@ namespace RavenDBMembership.Provider
 
         public override void Initialize(string name, NameValueCollection config)
 		{
+            if (config.Keys.Cast<string>().Contains("minRequiredPasswordLength"))
+            {
+                _minRequiredPasswordLength = int.Parse(config["minRequiredPasswordLength"]);
+            }
+            
 			// Try to find an IDocumentStore via Common Service Locator. 
 			try
 			{
@@ -87,6 +93,9 @@ namespace RavenDBMembership.Provider
 
 		public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
 		{
+            if (password.Length < MinRequiredPasswordLength)
+                throw new MembershipCreateUserException(MembershipCreateStatus.InvalidPassword);
+
 			ValidatePasswordEventArgs args = new ValidatePasswordEventArgs(username, password, true);
 			OnValidatingPassword(args);
 			if (args.Cancel)
@@ -265,10 +274,7 @@ namespace RavenDBMembership.Provider
 			get { return 0; }
 		}
 
-	    public override int MinRequiredPasswordLength
-		{
-			get { return 5; }
-		}
+        public override int MinRequiredPasswordLength { get { return _minRequiredPasswordLength; } }
 
 	    public override int PasswordAttemptWindow
 		{
