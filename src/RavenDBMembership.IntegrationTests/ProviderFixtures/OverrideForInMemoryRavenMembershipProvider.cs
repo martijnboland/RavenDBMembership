@@ -4,7 +4,7 @@ using RavenDBMembership.Provider;
 
 namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
-    public class FixtureForInMemoryRavenMembershipProvider : MembershipProviderFixture
+    public class OverrideForInMemoryRavenMembershipProvider : MembershipProviderOverride
     {
         public override MembershipProvider GetProvider()
         {

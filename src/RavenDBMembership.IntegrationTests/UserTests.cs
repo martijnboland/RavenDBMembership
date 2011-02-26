@@ -7,9 +7,9 @@ using RavenDBMembership.Provider;
 
 namespace RavenDBMembership.IntegrationTests
 {
-    public class UserTests : AllProvidersSpecification
+    public class UserTests : SpecificationForAllMembershipProviders
     {
-        public override void SpecifyForEachProvider()
+        public override void SpecifyForEach()
         {
             given("a user", delegate
             {

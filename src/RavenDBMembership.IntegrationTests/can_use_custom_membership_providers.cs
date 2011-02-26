@@ -15,13 +15,15 @@ using RavenDBMembership.Provider;
 
 namespace RavenDBMembership.IntegrationTests
 {
-    public class can_use_custom_membership_providers : GivenWhenThenFixture
+    public class can_use_custom_membership_providers : MembershipSpecification
     {
         public override void Specify()
         {
             when("using SqlMembershipProvider", delegate
             {
-                importNUnit<FixtureForSqlMembershipProvider>();
+                var membershipOverride = new OverrideForSqlMembershipProvider();
+
+                arrange_membership_provider(membershipOverride);
 
                 then_membership_provider_should_be<SqlMembershipProvider>();
 
@@ -39,8 +41,10 @@ namespace RavenDBMembership.IntegrationTests
 
             when("using RavenDBMembershipProvider embedded in-memory", delegate
             {
-                importNUnit<FixtureForInMemoryRavenMembershipProvider>();
-
+                var membershipOverride = new OverrideForInMemoryRavenMembershipProvider();
+                
+                arrange_membership_provider(membershipOverride);
+                
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
                 then("RavenDB store is configured to run munin in memory", delegate
@@ -56,7 +60,9 @@ namespace RavenDBMembership.IntegrationTests
 
             when("using RavenDBMembershipProvider embedded w/ munin on disk", delegate
             {
-                importNUnit<FixtureForMuninRavenMembershipProvider>();
+                var membershipOverride = new OverrideForMuninRavenMembershipProvider();
+                
+                arrange_membership_provider(membershipOverride);
 
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 
@@ -73,7 +79,9 @@ namespace RavenDBMembership.IntegrationTests
 
             when("using RavenDBMembershipProvider embedded w/ esent on disk", delegate
             {
-                importNUnit<FixtureForEsentRavenMembershipProvider>();
+                var membershipOverride = new OverrideForEsentRavenMembershipProvider();
+
+                arrange_membership_provider(membershipOverride);
 
                 then_membership_provider_should_be<RavenDBMembershipProvider>();
 

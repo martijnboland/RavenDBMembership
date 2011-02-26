@@ -8,11 +8,11 @@ using NUnit.Framework;
 namespace RavenDBMembership.IntegrationTests
 {
     [Explicit("test under construction")]
-    public class enforces_password_length : AllProvidersSpecification
+    public class enforces_password_length : SpecificationForAllMembershipProviders
     {
-        public static readonly int MinPasswordSize = 8;
+        public static readonly int MinPasswordSize = 23;
 
-        public override IEnumerable<KeyValuePair<string, string>> GetAdditionalConfiguration()
+        public override Dictionary<string, string> GetAdditionalConfiguration()
         {
             return new Dictionary<string,string>
             {
@@ -20,12 +20,11 @@ namespace RavenDBMembership.IntegrationTests
             };
         }
 
-        public override void SpecifyForEachProvider()
+        public override void SpecifyForEach()
         {
             given("the configuration file has a minimum password specified", delegate
             {
-                // RavenDBMembershipProvider isn't picking up the ocnfig value currently
-                then("the provider loads the value", delegate
+               then("the provider loads the value", delegate
                 {
                     expect(() => Membership.Provider.MinRequiredPasswordLength == MinPasswordSize);
                 });
@@ -41,7 +40,7 @@ namespace RavenDBMembership.IntegrationTests
                     var password = arrange(delegate
                     {
                         var value = Unique.Integer.ToString() + "1234567890";
-                        expect(() => value.Length > Membership.Provider.MinRequiredPasswordLength);
+                        //expect(() => value.Length > Membership.Provider.MinRequiredPasswordLength);
                         value = value.Substring(0, Membership.Provider.MinRequiredPasswordLength - 1);
 
                         return value;

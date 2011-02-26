@@ -88,8 +88,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllProvidersSpecification.cs" />
+    <Compile Include="SpecificationForAllMembershipProviders.cs" />
     <Compile Include="enforces_password_length.cs" />
+    <Compile Include="MembershipSpecification.cs" />
     <Compile Include="ProviderFixtures\FixtureConstants.cs" />
     <Compile Include="Unique.cs" />
     <Compile Include="UserTests.cs" />
@@ -102,11 +103,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ProviderFixtures\DatabaseInitialization.cs" />
-    <Compile Include="ProviderFixtures\FixtureForEsentRavenMembershipProvider.cs" />
-    <Compile Include="ProviderFixtures\FixtureForInMemoryRavenMembershipProvider.cs" />
-    <Compile Include="ProviderFixtures\FixtureForMuninRavenMembershipProvider.cs" />
-    <Compile Include="ProviderFixtures\FixtureForSqlMembershipProvider.cs" />
-    <Compile Include="ProviderFixtures\MembershipProviderFixture.cs" />
+    <Compile Include="ProviderFixtures\OverrideForEsentRavenMembershipProvider.cs" />
+    <Compile Include="ProviderFixtures\OverrideForInMemoryRavenMembershipProvider.cs" />
+    <Compile Include="ProviderFixtures\OverrideForMuninRavenMembershipProvider.cs" />
+    <Compile Include="ProviderFixtures\OverrideForSqlMembershipProvider.cs" />
+    <Compile Include="ProviderFixtures\MembershipProviderOverride.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMembershipDatabase\Create.sql" />

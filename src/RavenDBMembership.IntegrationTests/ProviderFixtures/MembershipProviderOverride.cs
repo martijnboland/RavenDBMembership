@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
-    public abstract class MembershipProviderFixture
+    public abstract class MembershipProviderOverride
     {
         public abstract MembershipProvider GetProvider();
         public virtual void PostInitializeUpdate(MembershipProvider provider) {}
@@ -18,8 +18,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
         MembershipProvider _originalProvider;
         MembershipProvider _injectedProvider;
 
-        [TestFixtureSetUp]
-        public void InjectProvider(IEnumerable<KeyValuePair<string, string>> simulatedAppConfigSettings)
+        public void InjectMembershipImplementation(IEnumerable<KeyValuePair<string, string>> simulatedAppConfigSettings)
         {
             if (MembershipIsInitialized)
                 _originalProvider = MembershipProvider;
@@ -40,8 +39,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
             MembershipProviders.SetReadOnly();
         }
 
-        [TestFixtureTearDown]
-        public void RestoreProvider()
+        public void RestoreMembershipImplementation()
         {
             if (MembershipProvider == _injectedProvider)
             {
@@ -134,7 +132,7 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
             if (!expectedConfigurationValues.Contains(name))
             {
                 throw new ArgumentException(
-                    "MembershipProviderFixture was asked to configure unknown MembershipProvider setting '" +
+                    "MembershipProviderOverride was asked to configure unknown MembershipProvider setting '" +
                     (name ?? "<null") + ".");
             }
         }

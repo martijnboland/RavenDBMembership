@@ -5,7 +5,7 @@ using RavenDBMembership.Provider;
 
 namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
-    public class FixtureForMuninRavenMembershipProvider : MembershipProviderFixture
+    public class OverrideForEsentRavenMembershipProvider : MembershipProviderOverride
     {
         public override MembershipProvider GetProvider()
         {
@@ -19,6 +19,8 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
                 RunInMemory = false,
                 DataDirectory = dataDirectory
             };
+            store.Configuration.DefaultStorageTypeName = "Raven.Storage.Esent.TransactionalStorage, Raven.Storage.Esent";
+
             store.Initialize();
 
             return new RavenDBMembershipProviderThatDisposesStore()

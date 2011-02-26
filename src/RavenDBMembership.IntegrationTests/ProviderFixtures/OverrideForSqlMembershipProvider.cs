@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace RavenDBMembership.IntegrationTests.ProviderFixtures
 {
-    public class FixtureForSqlMembershipProvider : MembershipProviderFixture
+    public class OverrideForSqlMembershipProvider : MembershipProviderOverride
     {
         public override MembershipProvider GetProvider()
         {
