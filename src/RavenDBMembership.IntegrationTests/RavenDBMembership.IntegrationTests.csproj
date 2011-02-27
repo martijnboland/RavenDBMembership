@@ -92,6 +92,7 @@
     <Compile Include="enforces_password_length.cs" />
     <Compile Include="MembershipSpecification.cs" />
     <Compile Include="ProviderFixtures\FixtureConstants.cs" />
+    <Compile Include="SRTests.cs" />
     <Compile Include="Unique.cs" />
     <Compile Include="UserTests.cs" />
     <Compile Include="can_load_database.cs" />

@@ -13,8 +13,8 @@ using Raven.Http.Exceptions;
 
 namespace RavenDBMembership.Provider
 {
-	public class RavenDBMembershipProvider : MembershipProvider
-	{
+    public class RavenDBMembershipProvider : MembershipProvider, IPasswordChecker
+    {
         private string _providerName = "RavenDBMembership";
 		private IDocumentStore documentStore;
 	    private int _minRequiredPasswordLength = 7;
@@ -378,25 +378,35 @@ namespace RavenDBMembership.Provider
 		}
 
 	    public override bool ValidateUser(string username, string password)
-		{
-		    username = username.Trim();
-		    password = password.Trim();
+	    {
+	        var updateLastLogin = true;
 
-			using (var session = this.DocumentStore.OpenSession())
-			{
-				var q = from u in session.Query<User>().Customize(c => c.WaitForNonStaleResultsAsOfNow())
-						where u.Username == username && u.ApplicationName == this.ApplicationName
-						select u;
-				var user = q.SingleOrDefault();
-				if (user != null && user.PasswordHash == PasswordUtil.HashPassword(password, user.PasswordSalt))
-				{
-					user.DateLastLogin = DateTime.Now;
-					session.SaveChanges();
-					return true;
-				}
-			}
-			return false;
-		}
+	        return CheckPassword(username, password, updateLastLogin);
+	    }
+
+        public bool CheckPassword(string username, string password, bool updateLastLogin)
+	    {
+	        username = username.Trim();
+	        password = password.Trim();
+
+	        using (var session = this.DocumentStore.OpenSession())
+	        {
+	            var q = from u in session.Query<User>().Customize(c => c.WaitForNonStaleResultsAsOfNow())
+	                    where u.Username == username && u.ApplicationName == this.ApplicationName
+	                    select u;
+	            var user = q.SingleOrDefault();
+	            if (user != null && user.PasswordHash == PasswordUtil.HashPassword(password, user.PasswordSalt))
+	            {
+	                if (updateLastLogin)
+	                {
+	                    user.DateLastLogin = DateTime.Now;
+	                }
+	                session.SaveChanges();
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
 
 	    private MembershipUserCollection FindUsers(Func<User, bool> predicate, int pageIndex, int pageSize, out int totalRecords)
 		{
