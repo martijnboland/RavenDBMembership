@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Security;
+using RavenDBMembership.UserStrings;
 
 namespace RavenDBMembership.Provider
 {
@@ -87,9 +88,7 @@ namespace RavenDBMembership.Provider
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            /*
             int num;
-            bool flag;
             SecUtility.CheckParameter(ref username, true, true, true, 0x100, "username");
             SecUtility.CheckParameter(ref oldPassword, true, true, false, 0x80, "oldPassword");
             SecUtility.CheckParameter(ref newPassword, true, true, false, 0x80, "newPassword");
@@ -112,16 +111,14 @@ namespace RavenDBMembership.Provider
             }
             if (num3 < this.MinRequiredNonAlphanumericCharacters)
             {
-                throw new ArgumentException(SR.GetString("Password_need_more_non_alpha_numeric_chars", new object[] { "newPassword", this.MinRequiredNonAlphanumericCharacters.ToString(CultureInfo.InvariantCulture) }));
+                throw new ArgumentException(
+                    SR.Password_need_more_non_alpha_numeric_chars_1.WithParameters(MinRequiredNonAlphanumericCharacters),
+                    "newPassword");
             }
             if ((this.PasswordStrengthRegularExpression.Length > 0) && !Regex.IsMatch(newPassword, this.PasswordStrengthRegularExpression))
             {
-                throw new ArgumentException(SR.GetString("Password_does_not_match_regular_expression", new object[] { "newPassword" }));
-            }
-            string objValue = base.EncodePassword(newPassword, num, salt);
-            if (objValue.Length > 0x80)
-            {
-                throw new ArgumentException(SR.GetString("Membership_password_too_long"), "newPassword");
+                throw new ArgumentException(SR.Password_does_not_match_regular_expression.WithParameters(),
+                    "newPassword");
             }
             ValidatePasswordEventArgs e = new ValidatePasswordEventArgs(username, newPassword, false);
             this.OnValidatingPassword(e);
@@ -131,9 +128,9 @@ namespace RavenDBMembership.Provider
                 {
                     throw e.FailureInformation;
                 }
-                throw new ArgumentException(SR.GetString("Membership_Custom_Password_Validation_Failure"), "newPassword");
+                throw new ArgumentException(SR.Membership_Custom_Password_Validation_Failure.WithParameters(), "newPassword");
             }
-            */
+
             return _original.ChangePassword(username, oldPassword, newPassword);
         }
 

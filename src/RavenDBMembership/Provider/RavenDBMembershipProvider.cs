@@ -64,12 +64,6 @@ namespace RavenDBMembership.Provider
 
 		public override bool ChangePassword(string username, string oldPassword, string newPassword)
 		{
-			ValidatePasswordEventArgs args = new ValidatePasswordEventArgs(username, newPassword, false);
-			OnValidatingPassword(args);
-			if (args.Cancel)
-			{
-				throw new MembershipPasswordException("Apparently, the new password doesn't seem to be valid.");
-			}
 			using (var session = this.DocumentStore.OpenSession())
 			{
 				var q = from u in session.Query<User>()

@@ -17,7 +17,16 @@ namespace RavenDBMembership.UserStrings
         Parameter_too_long_2,
 
         [SRValue("{0} cannot include a comma.")]
-        Parameter_can_not_contain_comma_1
+        Parameter_can_not_contain_comma_1,
+
+        [SRValue("Password needs at least {0} nonalphanumeric characters.")]
+        Password_need_more_non_alpha_numeric_chars_1,
+
+        [SRValue("Password does not meet minimum complexity requirements.")]
+        Password_does_not_match_regular_expression,
+
+        [SRValue("Password was not allowed.")]
+        Membership_Custom_Password_Validation_Failure
     }
 
     public static class SRExtensions
