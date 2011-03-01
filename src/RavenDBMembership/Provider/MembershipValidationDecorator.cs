@@ -9,7 +9,7 @@ using RavenDBMembership.UserStrings;
 
 namespace RavenDBMembership.Provider
 {
-    public abstract class MembershipValidationDecorator : MembershipProvider
+    public class MembershipValidationDecorator : MembershipProvider, IDisposable
     {
         private readonly MembershipProvider _original;
         private readonly IPasswordChecker _passwordChecker;
@@ -20,7 +20,17 @@ namespace RavenDBMembership.Provider
             _passwordChecker = passwordChecker;
         }
 
-        public new void Initialize(string name, NameValueCollection config)
+        public override string Name
+        {
+            get { return _original.Name; }
+        }
+
+        public override string Description
+        {
+            get { return _original.Description; }
+        }
+
+        public override void Initialize(string name, NameValueCollection config)
         {
             _original.Initialize(name, config);
         }
@@ -76,6 +86,11 @@ namespace RavenDBMembership.Provider
             return _original.CreateUser(username, password, email, passwordQuestion, passwordAnswer, isApproved, providerUserKey, out status);
         }
 
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
+        {
+            return _original.ChangePasswordQuestionAndAnswer(username, password, newPasswordQuestion, newPasswordAnswer);
+        }
+
         public override string GetPassword(string username, string answer)
         {
             if (!this.EnablePasswordRetrieval)
@@ -88,11 +103,10 @@ namespace RavenDBMembership.Provider
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            int num;
             SecUtility.CheckParameter(ref username, true, true, true, 0x100, "username");
             SecUtility.CheckParameter(ref oldPassword, true, true, false, 0x80, "oldPassword");
             SecUtility.CheckParameter(ref newPassword, true, true, false, 0x80, "newPassword");
-            string salt = null;
+
             if (!_passwordChecker.CheckPassword(username, oldPassword, false))
             {
                 return false;
@@ -133,16 +147,6 @@ namespace RavenDBMembership.Provider
 
             return _original.ChangePassword(username, oldPassword, newPassword);
         }
-
-        /*
-        private bool CheckPassword(string username, string password, bool updateLastLoginActivityDate, bool failIfNotApproved)
-        {
-            string str;
-            int num;
-            return this.CheckPassword(username, password, updateLastLoginActivityDate, failIfNotApproved, out str, out num);
-        }
-         * */
-
 
         public override string ResetPassword(string username, string answer)
         {
@@ -258,6 +262,14 @@ namespace RavenDBMembership.Provider
         public override string PasswordStrengthRegularExpression
         {
             get { return _original.PasswordStrengthRegularExpression; }
+        }
+
+        public void Dispose()
+        {
+            if (_original is IDisposable)
+            {
+                (_original as IDisposable).Dispose();
+            }
         }
     }
 }

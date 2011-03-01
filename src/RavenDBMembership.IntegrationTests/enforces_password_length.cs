@@ -29,7 +29,7 @@ namespace RavenDBMembership.IntegrationTests
                 });
             });
 
-            given("a user wants to create an account", delegate
+            given("a user", delegate
             {
                 var username = Unique.String("username");
                 var email = Unique.String("email") + "@someserver.com";
@@ -60,7 +60,7 @@ namespace RavenDBMembership.IntegrationTests
                 {
                     var password = arrange(delegate
                     {
-                        var value = Unique.String("supertoolongpassword123supertoolongpassword123supertoolongpassword");
+                        var value = GetLongStringWithUniqueStart();
 
                         return value;
                     });
@@ -91,17 +91,62 @@ namespace RavenDBMembership.IntegrationTests
                         expect(() => user != null);
                     });
                 });
-            });
 
-            given("the user wants to change their password", delegate
-            {
-                                                                     
+                given("the user already has an account", delegate
+                {
+                    var password =
+                        GetLongStringWithUniqueStart().Substring(
+                            Membership.Provider.MinRequiredPasswordLength);
+
+                    var existingUser = Membership.CreateUser(username, password, email);
+
+                    when("the user tries to change their password to something too short", delegate
+                    {
+                        var newPassword =
+                            GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength - 1);
+
+                        then("an exception is thrown", delegate
+                        {
+                            var exception = Assert.Throws<ArgumentException>(delegate
+                            {
+                                bool result = existingUser.ChangePassword(password, newPassword);
+                            });
+
+                            expect(() => exception.ParamName.Equals("newPassword"));
+                            expect(() => exception.Message.Contains("too long"));
+                        });
+                    });
+
+                    when("the user changes their password to something reasonable", delegate
+                    {
+                        var newPassword =
+                            GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength);
+
+                        bool result = arrange(() => existingUser.ChangePassword(password, newPassword));
+
+                        then("the save succeeds", delegate
+                        {
+                            expect(() => result == true);
+                        });
+
+                        then("the user can log in with their new password", delegate
+                        {
+                            
+                        });
+
+                        then("the user cannot log in with their old password", delegate
+                        {
+                            
+                        });
+                    });
+                });
             });
         }
 
         private string GetLongStringWithUniqueStart()
         {
-            return Unique.Integer.ToString() + "_12345678901234567890123456789012345678901234567890";
+            return Unique.Integer.ToString() + "_12345678901234567890123456789012345678901234567890"
++ "_12345678901234567890123456789012345678901234567890_12345678901234567890123456789012345678901234567890";
         }
     }
 
