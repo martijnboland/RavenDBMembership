@@ -136,7 +136,7 @@ namespace RavenDBMembership.IntegrationTests
 
                         then("the user cannot log in with their old password", delegate
                         {
-                            expect(() => Membership.ValidateUser(username, password));
+                            expect(() => !Membership.ValidateUser(username, password));
                         });
                     });
                 });
