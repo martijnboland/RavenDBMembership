@@ -131,12 +131,12 @@ namespace RavenDBMembership.IntegrationTests
 
                         then("the user can log in with their new password", delegate
                         {
-                            
+                            expect(() => Membership.ValidateUser(username, newPassword));
                         });
 
                         then("the user cannot log in with their old password", delegate
                         {
-                            
+                            expect(() => Membership.ValidateUser(username, password));
                         });
                     });
                 });
