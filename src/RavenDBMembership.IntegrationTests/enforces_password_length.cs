@@ -11,14 +11,6 @@ namespace RavenDBMembership.IntegrationTests
     {
         public abstract int GetMinimumPasswordLength();
 
-        public override Dictionary<string, string> GetAdditionalConfiguration()
-        {
-            return new Dictionary<string,string>
-            {
-                {"minRequiredPasswordLength", GetMinimumPasswordLength().ToString()}
-            };
-        }
-
         public override void SpecifyForEach()
         {
             given("the configuration file has a minimum password specified", delegate
@@ -56,7 +48,7 @@ namespace RavenDBMembership.IntegrationTests
                     });
                 });
 
-                when("the user chooses a password that is very long (is there a configurable limit?)", delegate
+                when("the user chooses a password that is very long (SQLMembershipProvider has a limit at about ~0x80)", delegate
                 {
                     var password = arrange(delegate
                     {
@@ -68,7 +60,7 @@ namespace RavenDBMembership.IntegrationTests
                     then("the user can be created", delegate
                     {
                         var user = Membership.CreateUser(username, password, email);
-
+                        
                         expect(() => user != null);
                     });
                 });
@@ -94,16 +86,15 @@ namespace RavenDBMembership.IntegrationTests
 
                 given("the user already has an account", delegate
                 {
-                    var password =
-                        GetLongStringWithUniqueStart().Substring(
-                            Membership.Provider.MinRequiredPasswordLength);
+                    var password = arrange(() => GetLongStringWithUniqueStart().Substring(
+                        Membership.Provider.MinRequiredPasswordLength));
 
-                    var existingUser = Membership.CreateUser(username, password, email);
+                    var existingUser = arrange(() => Membership.CreateUser(username, password, email));
 
                     when("the user tries to change their password to something too short", delegate
                     {
-                        var newPassword =
-                            GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength - 1);
+                        var newPassword = arrange(() =>
+                            GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength - 1));
 
                         then("an exception is thrown", delegate
                         {
@@ -119,8 +110,10 @@ namespace RavenDBMembership.IntegrationTests
 
                     when("the user changes their password to something reasonable", delegate
                     {
-                        var newPassword =
-                            GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength);
+                        var newPassword = arrange(delegate
+                        {
+                            return GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength);
+                        });
 
                         bool result = arrange(() => existingUser.ChangePassword(password, newPassword));
 
@@ -143,10 +136,17 @@ namespace RavenDBMembership.IntegrationTests
             });
         }
 
+        public override Dictionary<string, string> GetAdditionalConfiguration()
+        {
+            return new Dictionary<string, string>
+            {
+                {"minRequiredPasswordLength", GetMinimumPasswordLength().ToString()}
+            };
+        }
+
         private string GetLongStringWithUniqueStart()
         {
-            return Unique.Integer.ToString() + "_12345678901234567890123456789012345678901234567890"
-+ "_12345678901234567890123456789012345678901234567890_12345678901234567890123456789012345678901234567890";
+            return Unique.Integer + "_12345678901234567890123456789012345678901234567890";
         }
     }
 
