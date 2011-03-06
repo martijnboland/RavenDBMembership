@@ -73,55 +73,75 @@ namespace RavenDBMembership.IntegrationTests
 
                     when("the user tries to change their password via MembershipProvider.ChangePassword()", delegate
                     {
+                        Func<MembershipUser, string, string, Func<bool>> changePasswordAction = delegate(MembershipUser user, string op, string np)
+                        {
+                            return () => Membership.Provider.ChangePassword(user.UserName, op, np);
+                        };
+
+                        then_changing_password_behaves_correctly(usingOriginalMembershipProvider, changePasswordAction, existingUser, password, username);
                     });
 
                     when("the user tries to change their password via MembershipUser.ChangePassword()", delegate
                     {
-                        when("the user tries to change their password to something too short", delegate
+                        Func<MembershipUser, string, string, Func<bool>> changePasswordAction = delegate(MembershipUser user, string op, string np)
                         {
-                            if (usingOriginalMembershipProvider)
-                            {
-                                ignoreBecause("The original SqlMembershipProvider does not check password length on update.");
-                            }
+                            return () => user.ChangePassword(op, np);
+                        };
 
-                            var newPassword = arrange(() => GetUniqueishStringWithLength(Membership.Provider.MinRequiredPasswordLength - 1));
-
-                            then("an exception is thrown", delegate
-                            {
-                                var exception = Assert.Throws<ArgumentException>(delegate
-                                {
-                                    bool result = existingUser.ChangePassword(password, newPassword);
-                                });
-
-                                expect(() => exception.ParamName == "newPassword");
-                                expect(() => exception.Message.Contains("Password is shorter than the minimum"));
-                            });
-                        });
-
-                        when("the user changes their password to something reasonable", delegate
-                        {
-                            var newPassword = arrange(() => GetUniqueishStringWithLength(Membership.Provider.MinRequiredPasswordLength));
-
-                            bool result = arrange(() => existingUser.ChangePassword(password, newPassword));
-
-                            then("the save succeeds", delegate
-                            {
-                                expect(() => result == true);
-                            });
-
-                            then("the user can log in with their new password", delegate
-                            {
-                                expect(() => Membership.ValidateUser(username, newPassword));
-                            });
-
-                            then("the user cannot log in with their old password", delegate
-                            {
-                                expect(() => newPassword != password);
-                                expect(() => !Membership.ValidateUser(username, password));
-                            });
-                        });
-
+                        then_changing_password_behaves_correctly(usingOriginalMembershipProvider, changePasswordAction, existingUser, password, username);
                     });
+                });
+            });
+        }
+
+        private void then_changing_password_behaves_correctly(bool usingOriginalMembershipProvider, Func<MembershipUser, string, string, Func<bool>> changePasswordAction, MembershipUser existingUser, string password, string username)
+        {
+            when("the user tries to change their password to something too short", delegate
+            {
+                var newPassword = arrange(() => GetUniqueishStringWithLength(Membership.Provider.MinRequiredPasswordLength - 1));
+
+                then("an exception is thrown", delegate
+                {
+                    var testDelegate = changePasswordAction(existingUser, password, newPassword);
+
+                    var exception = Assert.Throws<ArgumentException>(() => testDelegate());
+                });
+
+                if (usingOriginalMembershipProvider)
+                {
+                    ignoreBecause("The original SqlMembershipProvider does not check password length on update with MembershipUser.ChangePassword, but it does for MembershipProvider.ChangePassword.");
+                } 
+                then("an exception is thrown that has friendly user string and debug info", delegate
+                {
+                    var testDelegate = changePasswordAction(existingUser, password, newPassword);
+
+                    var exception = Assert.Throws<ArgumentException>(() => testDelegate());
+
+                    expect(() => exception.ParamName == "newPassword"); 
+                    Assert.That(exception.Message, Is.StringContaining("Password is shorter than the minimum"));
+                });
+            });
+
+            when("the user changes their password to something reasonable", delegate
+            {
+                var newPassword = arrange(() => GetUniqueishStringWithLength(Membership.Provider.MinRequiredPasswordLength));
+
+                bool result = arrange(changePasswordAction(existingUser, password, newPassword));
+
+                then("the save succeeds", delegate
+                {
+                    expect(() => result == true);
+                });
+
+                then("the user can log in with their new password", delegate
+                {
+                    expect(() => Membership.ValidateUser(username, newPassword));
+                });
+
+                then("the user cannot log in with their old password", delegate
+                {
+                    expect(() => newPassword != password);
+                    expect(() => !Membership.ValidateUser(username, password));
                 });
             });
         }
