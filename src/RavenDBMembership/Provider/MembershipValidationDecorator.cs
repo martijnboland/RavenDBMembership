@@ -113,7 +113,7 @@ namespace RavenDBMembership.Provider
             }
             if (newPassword.Length < this.MinRequiredPasswordLength)
             {
-                throw new ArgumentException("Password is shorter than the minimum " + this.MinRequiredPasswordLength);
+                throw new ArgumentException("Password is shorter than the minimum " + this.MinRequiredPasswordLength, "newPassword");
             }
             int num3 = 0;
             for (int i = 0; i < newPassword.Length; i++)

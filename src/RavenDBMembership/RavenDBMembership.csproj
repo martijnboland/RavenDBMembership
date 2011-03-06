@@ -59,6 +59,7 @@
     <Compile Include="Provider\MembershipValidationDecorator.cs" />
     <Compile Include="Provider\RavenDBMembershipProvider.cs" />
     <Compile Include="Provider\RavenDBMembershipProviderThatDisposesStore.cs" />
+    <Compile Include="Provider\RavenDBMembershipUser.cs" />
     <Compile Include="Provider\RavenDBRoleProvider.cs" />
     <Compile Include="Provider\SecUtility.cs" />
     <Compile Include="ReservationForUniqueFieldValue.cs" />

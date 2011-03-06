@@ -64,7 +64,7 @@ namespace RavenDBMembership.Provider
 
 		public override bool ChangePassword(string username, string oldPassword, string newPassword)
 		{
-			using (var session = this.DocumentStore.OpenSession())
+		    using (var session = this.DocumentStore.OpenSession())
 			{
 				var q = from u in session.Query<User>()
 						where u.Username == username && u.ApplicationName == this.ApplicationName
@@ -448,7 +448,7 @@ namespace RavenDBMembership.Provider
 
 	    private MembershipUser UserToMembershipUser(User user)
 		{
-            return new MembershipUser(_providerName, user.Username, user.Id, user.Email, null, null, true, false
+            return new RavenDBMembershipUser(_providerName, user.Username, user.Id, user.Email, null, null, true, false
 				, user.DateCreated, user.DateLastLogin.HasValue ? user.DateLastLogin.Value : new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), new DateTime(1900, 1, 1), new DateTime(1900, 1, 1));
 		}
 	}

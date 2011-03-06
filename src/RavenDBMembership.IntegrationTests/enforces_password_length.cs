@@ -28,14 +28,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 when("the user chooses a password that is too short", delegate
                 {
-                    var password = arrange(delegate
-                    {
-                        var value = GetLongStringWithUniqueStart();
-                        expect(() => value.Length > GetMinimumPasswordLength());
-                        value = value.Substring(0, GetMinimumPasswordLength() - 1);
-
-                        return value;
-                    });
+                    var password = arrange(() => GetUniqueishStringWithLength(GetMinimumPasswordLength() - 1));
 
                     then("an exception is thrown", delegate
                     {
@@ -50,12 +43,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 when("the user chooses a password that is very long (SQLMembershipProvider has a limit at about ~0x80)", delegate
                 {
-                    var password = arrange(delegate
-                    {
-                        var value = GetLongStringWithUniqueStart();
-
-                        return value;
-                    });
+                    var password = arrange(() => GetUniqueishStringWithLength(0x70));
 
                     then("the user can be created", delegate
                     {
@@ -67,14 +55,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 when("the user chooses a password that is long enough", delegate
                 {
-                    var password = arrange(delegate
-                    {
-                        var value = GetLongStringWithUniqueStart();
-                        expect(() => value.Length > GetMinimumPasswordLength());
-                        value = value.Substring(0, GetMinimumPasswordLength());
-
-                        return value;
-                    });
+                    var password = arrange(() => GetUniqueishStringWithLength(GetMinimumPasswordLength()));
 
                     then("the user can be created", delegate
                     {
@@ -86,56 +67,60 @@ namespace RavenDBMembership.IntegrationTests
 
                 given("the user already has an account", delegate
                 {
-                    var password = arrange(() => GetLongStringWithUniqueStart().Substring(
-                        Membership.Provider.MinRequiredPasswordLength));
+                    var password = arrange(() => GetUniqueishStringWithLength(Membership.Provider.MinRequiredPasswordLength));
 
                     var existingUser = arrange(() => Membership.CreateUser(username, password, email));
 
-                    when("the user tries to change their password to something too short", delegate
+                    when("the user tries to change their password via MembershipProvider.ChangePassword()", delegate
                     {
-                        if (usingOriginalMembershipProvider)
-                        {
-                            ignoreBecause("The original SqlMembershipProvider does not check password length on update.");
-                        }
-
-                        var newPassword = arrange(() =>
-                            GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength - 1));
-
-                        then("an exception is thrown", delegate
-                        {
-                            var exception = Assert.Throws<ArgumentException>(delegate
-                            {
-                                bool result = existingUser.ChangePassword(password, newPassword);
-                            });
-
-                            expect(() => exception.ParamName.Equals("newPassword"));
-                            expect(() => exception.Message.Contains("too long"));
-                        });
                     });
 
-                    when("the user changes their password to something reasonable", delegate
+                    when("the user tries to change their password via MembershipUser.ChangePassword()", delegate
                     {
-                        var newPassword = arrange(delegate
+                        when("the user tries to change their password to something too short", delegate
                         {
-                            return GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength);
+                            if (usingOriginalMembershipProvider)
+                            {
+                                ignoreBecause("The original SqlMembershipProvider does not check password length on update.");
+                            }
+
+                            var newPassword = arrange(() => GetUniqueishStringWithLength(Membership.Provider.MinRequiredPasswordLength - 1));
+
+                            then("an exception is thrown", delegate
+                            {
+                                var exception = Assert.Throws<ArgumentException>(delegate
+                                {
+                                    bool result = existingUser.ChangePassword(password, newPassword);
+                                });
+
+                                expect(() => exception.ParamName == "newPassword");
+                                expect(() => exception.Message.Contains("Password is shorter than the minimum"));
+                            });
                         });
 
-                        bool result = arrange(() => existingUser.ChangePassword(password, newPassword));
-
-                        then("the save succeeds", delegate
+                        when("the user changes their password to something reasonable", delegate
                         {
-                            expect(() => result == true);
+                            var newPassword = arrange(() => GetUniqueishStringWithLength(Membership.Provider.MinRequiredPasswordLength));
+
+                            bool result = arrange(() => existingUser.ChangePassword(password, newPassword));
+
+                            then("the save succeeds", delegate
+                            {
+                                expect(() => result == true);
+                            });
+
+                            then("the user can log in with their new password", delegate
+                            {
+                                expect(() => Membership.ValidateUser(username, newPassword));
+                            });
+
+                            then("the user cannot log in with their old password", delegate
+                            {
+                                expect(() => newPassword != password);
+                                expect(() => !Membership.ValidateUser(username, password));
+                            });
                         });
 
-                        then("the user can log in with their new password", delegate
-                        {
-                            expect(() => Membership.ValidateUser(username, newPassword));
-                        });
-
-                        then("the user cannot log in with their old password", delegate
-                        {
-                            expect(() => !Membership.ValidateUser(username, password));
-                        });
                     });
                 });
             });
@@ -149,9 +134,14 @@ namespace RavenDBMembership.IntegrationTests
             };
         }
 
-        private string GetLongStringWithUniqueStart()
+        private string GetUniqueishStringWithLength(int length)
         {
-            return Unique.Integer + "_12345678901234567890123456789012345678901234567890";
+            string longStringWithUniqueStart = Unique.Integer.ToString();
+
+            while (longStringWithUniqueStart.Length < length)
+                longStringWithUniqueStart += "_12345678901234567890123456789012345678901234567890";
+
+            return longStringWithUniqueStart.Substring(0, length);
         }
     }
 
