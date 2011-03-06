@@ -11,7 +11,7 @@ namespace RavenDBMembership.IntegrationTests
     {
         public abstract int GetMinimumPasswordLength();
 
-        public override void SpecifyForEach()
+        public override void SpecifyForEach(bool usingOriginalMembershipProvider)
         {
             given("the configuration file has a minimum password specified", delegate
             {
@@ -93,6 +93,11 @@ namespace RavenDBMembership.IntegrationTests
 
                     when("the user tries to change their password to something too short", delegate
                     {
+                        if (usingOriginalMembershipProvider)
+                        {
+                            ignoreBecause("The original SqlMembershipProvider does not check password length on update.");
+                        }
+
                         var newPassword = arrange(() =>
                             GetLongStringWithUniqueStart().Substring(Membership.Provider.MinRequiredPasswordLength - 1));
 

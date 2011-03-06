@@ -74,8 +74,11 @@ namespace RavenDBMembership.Provider
 				{
 					throw new MembershipPasswordException("Invalid username or old password.");
 				}
-				user.PasswordHash = PasswordUtil.HashPassword(newPassword, user.PasswordSalt);
-				session.SaveChanges();
+
+                user.PasswordSalt = PasswordUtil.CreateRandomSalt();
+                user.PasswordHash = PasswordUtil.HashPassword(newPassword, user.PasswordSalt);
+
+                session.SaveChanges();
 			}
 			return true;
 		}
@@ -310,7 +313,9 @@ namespace RavenDBMembership.Provider
 						throw new Exception("The user to reset the password for could not be found.");
 					}
 					var newPassword = Membership.GeneratePassword(8, 2);
-					user.PasswordHash = PasswordUtil.HashPassword(newPassword, user.PasswordSalt);
+                    user.PasswordSalt = PasswordUtil.CreateRandomSalt();
+                    user.PasswordHash = PasswordUtil.HashPassword(newPassword, user.PasswordSalt);
+
 					session.SaveChanges();
 					return newPassword;
 				}
@@ -330,6 +335,17 @@ namespace RavenDBMembership.Provider
 
 	    public override void UpdateUser(MembershipUser user)
 		{
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+	        string username = user.UserName;
+            SecUtility.CheckParameter(ref username, true, true, true, 0x100, "UserName");
+	        
+            string email = user.Email;
+            SecUtility.CheckParameter(ref email, this.RequiresUniqueEmail, this.RequiresUniqueEmail, false, 0x100, "Email");
+            user.Email = email;
+
 			using (var session = this.DocumentStore.OpenSession())
 			{
 			    session.Advanced.UseOptimisticConcurrency = true;
@@ -357,6 +373,7 @@ namespace RavenDBMembership.Provider
 					dbUser.Email = user.Email;
 					dbUser.DateCreated = user.CreationDate;
 					dbUser.DateLastLogin = user.LastLoginDate;
+
 					session.SaveChanges();
 				}
                 catch(ConcurrencyException ex)

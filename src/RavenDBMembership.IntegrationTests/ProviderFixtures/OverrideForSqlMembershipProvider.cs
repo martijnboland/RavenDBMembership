@@ -29,6 +29,11 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
             return result;
         }
 
+        public override bool IsSqlMembershipProvider()
+        {
+            return true;
+        }
+
         public override void PostInitializeUpdate(MembershipProvider provider)
         {
             var connectionStringProperty = typeof(SqlMembershipProvider).GetField("_sqlConnectionString",

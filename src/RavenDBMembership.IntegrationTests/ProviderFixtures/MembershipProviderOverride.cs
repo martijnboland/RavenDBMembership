@@ -13,7 +13,11 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
     public abstract class MembershipProviderOverride
     {
         public abstract MembershipProvider GetProvider();
-        public virtual void PostInitializeUpdate(MembershipProvider provider) {}
+        public virtual bool IsSqlMembershipProvider()
+        {
+            return false; 
+        }
+        public virtual void PostInitializeUpdate(MembershipProvider provider) { }
 
         MembershipProvider _originalProvider;
         MembershipProvider _injectedProvider;

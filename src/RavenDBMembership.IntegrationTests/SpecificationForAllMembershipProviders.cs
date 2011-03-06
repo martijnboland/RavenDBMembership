@@ -7,7 +7,7 @@ namespace RavenDBMembership.IntegrationTests
 {
     public abstract class SpecificationForAllMembershipProviders : MembershipSpecification
     {
-        public abstract void SpecifyForEach();
+        public abstract void SpecifyForEach(bool usingOriginalMembershipProvider);
 
         public sealed override void Specify()
         {
@@ -17,7 +17,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 arrange_membership_provider(provider);
 
-                SpecifyForEach();
+                SpecifyForEach(false);
             });
 
             when("using SQLMembershipProvider", delegate
@@ -26,7 +26,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 arrange_membership_provider(provider);
 
-                SpecifyForEach();
+                SpecifyForEach(true);
             });
 
             when("using raven with munin on disk", delegate
@@ -35,7 +35,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 arrange_membership_provider(provider);
 
-                SpecifyForEach();
+                SpecifyForEach(false);
             });
 
             when("using raven with esent on disk", delegate
@@ -44,7 +44,7 @@ namespace RavenDBMembership.IntegrationTests
 
                 arrange_membership_provider(provider);
 
-                SpecifyForEach();
+                SpecifyForEach(false);
             });
         }
     }
