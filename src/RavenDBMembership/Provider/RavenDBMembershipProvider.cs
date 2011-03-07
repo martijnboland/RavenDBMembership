@@ -155,7 +155,7 @@ namespace RavenDBMembership.Provider
             return status;
         }
 
-	    public override bool DeleteUser(string username, bool deleteAllRelatedData)
+	    public override bool CheckedDeleteUser(string username, bool deleteAllRelatedData)
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{

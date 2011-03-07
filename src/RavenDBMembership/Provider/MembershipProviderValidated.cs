@@ -16,6 +16,7 @@ namespace RavenDBMembership.Provider
                                                          object providerUserKey, out MembershipCreateStatus status);
         public abstract bool CheckPassword(string username, string password, bool updateLastLogin);
         public abstract bool CheckedChangePassword(string username, string oldPassword, string newPassword);
+        public abstract bool CheckedDeleteUser(string username, bool deleteAllRelatedData);
 
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
@@ -113,6 +114,13 @@ namespace RavenDBMembership.Provider
             }
 
             return CheckedChangePassword(username, oldPassword, newPassword);
+        }
+
+        public override bool DeleteUser(string username, bool deleteAllRelatedData)
+        {
+            SecUtility.CheckParameter(ref username, true, true, true, 0x100, "username");
+
+            return CheckedDeleteUser(username, deleteAllRelatedData);
         }
     }
 }
