@@ -36,6 +36,17 @@
             This is primarily useful for administration of a database
             </remarks>
         </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetDocumentsStartingWithAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Begins an async get operation for documents whose id starts with the specified prefix
+            </summary>
+            <param name="prefix">Prefix that the ids begin with.</param>
+            <param name="start">Paging start.</param>
+            <param name="pageSize">Size of the page.</param>
+            <remarks>
+            This is primarily useful for administration of a database
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.QueryAsync(System.String,Raven.Database.Data.IndexQuery,System.String[])">
             <summary>
             Begins the async query.
@@ -43,6 +54,12 @@
             <param name="index">The index.</param>
             <param name="query">The query.</param>
             <param name="includes">The include paths</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.LinearQueryAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Begins the async query.
+            </summary>
+            <param name="query">A string representation of a Linq query</param>
         </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.BatchAsync(Raven.Database.Data.ICommandData[])">
             <summary>
@@ -71,6 +88,18 @@
             <param name="start">Paging start</param>
             <param name="pageSize">Size of the page.</param>
         </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.ResetIndexAsync(System.String)">
+            <summary>
+            Resets the specified index asyncronously
+            </summary>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.GetIndexAsync(System.String)">
+            <summary>
+            Gets the index definition for the specified name asyncronously
+            </summary>
+            <param name="name">The name.</param>
+        </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.PutIndexAsync(System.String,Raven.Database.Indexing.IndexDefinition,System.Boolean)">
             <summary>
             Puts the index definition for the specified name asyncronously
@@ -84,6 +113,12 @@
             Deletes the index definition for the specified name asyncronously
             </summary>
             <param name="name">The name.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.DeleteDocumentAsync(System.String)">
+            <summary>
+            Deletes the document for the specified id asyncronously
+            </summary>
+            <param name="id">The id.</param>
         </member>
         <member name="M:Raven.Client.Client.Async.IAsyncDatabaseCommands.PutAsync(System.String,System.Nullable{System.Guid},Newtonsoft.Json.Linq.JObject,Newtonsoft.Json.Linq.JObject)">
             <summary>
@@ -185,6 +220,18 @@
             <param name="start">Paging start</param>
             <param name="pageSize">Size of the page.</param>
         </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.ResetIndexAsync(System.String)">
+            <summary>
+            Resets the specified index asyncronously
+            </summary>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetIndexAsync(System.String)">
+            <summary>
+            Gets the index definition for the specified name asyncronously
+            </summary>
+            <param name="name">The name.</param>
+        </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.PutIndexAsync(System.String,Raven.Database.Indexing.IndexDefinition,System.Boolean)">
             <summary>
             Puts the index definition for the specified name asyncronously
@@ -198,6 +245,12 @@
             Deletes the index definition for the specified name asyncronously
             </summary>
             <param name="name">The name.</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.DeleteDocumentAsync(System.String)">
+            <summary>
+            Deletes the document for the specified id asyncronously
+            </summary>
+            <param name="id">The id.</param>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.PutAsync(System.String,System.Nullable{System.Guid},Newtonsoft.Json.Linq.JObject,Newtonsoft.Json.Linq.JObject)">
             <summary>
@@ -242,6 +295,17 @@
             This is primarily useful for administration of a database
             </remarks>
         </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.GetDocumentsStartingWithAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Begins an async get operation for documents whose id starts with the specified prefix
+            </summary>
+            <param name="prefix">Prefix that the ids begin with.</param>
+            <param name="start">Paging start.</param>
+            <param name="pageSize">Size of the page.</param>
+            <remarks>
+            This is primarily useful for administration of a database
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.QueryAsync(System.String,Raven.Database.Data.IndexQuery,System.String[])">
             <summary>
             Begins the async query.
@@ -249,6 +313,12 @@
             <param name="index">The index.</param>
             <param name="query">The query.</param>
             <param name="includes">The include paths</param>
+        </member>
+        <member name="M:Raven.Client.Client.Async.AsyncServerClient.LinearQueryAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Begins the async query.
+            </summary>
+            <param name="query">A string representation of a Linq query</param>
         </member>
         <member name="M:Raven.Client.Client.Async.AsyncServerClient.SuggestAsync(System.String,Raven.Abstractions.Data.SuggestionQuery)">
             <summary>
@@ -759,19 +829,21 @@
             Replication and failover management on the client side
             </summary>
         </member>
+        <member name="M:Raven.Client.Client.ReplicationInformer.#ctor(Raven.Client.Document.DocumentConvention)">
+            <summary>
+             Create a new instance of this class
+            </summary>
+        </member>
         <member name="M:Raven.Client.Client.ReplicationInformer.UpdateReplicationInformationIfNeeded(Raven.Client.Client.ServerClient)">
             <summary>
             Updates the replication information if needed.
             </summary>
             <param name="serverClient">The server client.</param>
         </member>
-        <member name="M:Raven.Client.Client.ReplicationInformer.ShouldExecuteUsing(System.String,System.Int32)">
+        <member name="M:Raven.Client.Client.ReplicationInformer.ShouldExecuteUsing(System.String,System.Int32,System.String,System.Boolean)">
             <summary>
             Should execute the operation using the specified operation URL
             </summary>
-            <param name="operationUrl">The operation URL.</param>
-            <param name="currentRequest">The current request.</param>
-            <returns></returns>
         </member>
         <member name="M:Raven.Client.Client.ReplicationInformer.IsFirstFailure(System.String)">
             <summary>
@@ -823,6 +895,16 @@
             </summary>
             <param name="key">The key.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Client.ServerClient.ExecuteGetRequest(System.String)">
+            <summary>
+            Execute a GET request against the provided url
+            and return the result as a string
+            </summary>
+            <param name="requestUrl">The relative url to the server</param>
+            <remarks>
+            This method respects the replication semantics against the database.
+            </remarks>
         </member>
         <member name="M:Raven.Client.Client.ServerClient.DirectGet(System.String,System.String)">
             <summary>
@@ -1048,6 +1130,11 @@
              starting point for the next query
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:Raven.Client.Client.ServerClient.ReplicationInformer">
+            <summary>
+            Allow access to the replication informer used to determine how we replicate requests
+            </summary>
         </member>
         <member name="P:Raven.Client.Client.ServerClient.OperationsHeaders">
             <summary>
@@ -1409,6 +1496,11 @@
         <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.theWaitForNonStaleResults">
             <summary>
             Should we wait for non stale results
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.includes">
+            <summary>
+            The paths to include when loading the query
             </summary>
         </member>
         <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.aggregationOp">
@@ -1830,11 +1922,6 @@
             Returns a list of results for a query asynchronously. 
             </summary>
         </member>
-        <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.Includes">
-            <summary>
-              Gets the current includes on this query
-            </summary>
-        </member>
         <member name="P:Raven.Client.Document.AbstractDocumentQuery`2.IndexQueried">
             <summary>
               Get the name of the index being queried
@@ -1881,19 +1968,19 @@
         </member>
         <member name="T:Raven.Client.IDocumentQueryBase`2">
             <summary>
-            A query against a Raven index
+              A query against a Raven index
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Include(System.String)">
             <summary>
-            Includes the specified path in the query, loading the document specified in that path
+              Includes the specified path in the query, loading the document specified in that path
             </summary>
-            <param name="path">The path.</param>
+            <param name = "path">The path.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Where(System.Func{`0,System.Boolean})">
             <summary>
-            This function exists solely to forbid in memory where clause on IDocumentQuery, because
-            that is nearly always a mistake.
+              This function exists solely to forbid in memory where clause on IDocumentQuery, because
+              that is nearly always a mistake.
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Count(System.Func{`0,System.Boolean})">
@@ -1910,256 +1997,256 @@
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Include(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
             <summary>
-            Includes the specified path in the query, loading the document specified in that path
+              Includes the specified path in the query, loading the document specified in that path
             </summary>
-            <param name="path">The path.</param>
+            <param name = "path">The path.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Take(System.Int32)">
             <summary>
-            Takes the specified count.
+              Takes the specified count.
             </summary>
-            <param name="count">The count.</param>
+            <param name = "count">The count.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Skip(System.Int32)">
             <summary>
-            Skips the specified count.
+              Skips the specified count.
             </summary>
-            <param name="count">The count.</param>
+            <param name = "count">The count.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Where(System.String)">
             <summary>
-            Filter the results from the index using the specified where clause.
+              Filter the results from the index using the specified where clause.
             </summary>
-            <param name="whereClause">The where clause.</param>
+            <param name = "whereClause">The where clause.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(System.String,System.Object)">
             <summary>
-            	Matches exact value
+              Matches exact value
             </summary>
             <remarks>
-            	Defaults to NotAnalyzed
+              Defaults to NotAnalyzed
             </remarks>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(System.String,System.Object,System.Boolean)">
             <summary>
-            	Matches exact value
+              Matches exact value
             </summary>
             <remarks>
-            	Defaults to allow wildcards only if analyzed
+              Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(Raven.Client.WhereEqualsParams)">
             <summary>
-            	Matches exact value
+              Matches exact value
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereContains(System.String,System.Object)">
             <summary>
-            	Matches substrings of the field
+              Matches substrings of the field
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereStartsWith(System.String,System.Object)">
             <summary>
-            Matches fields which starts with the specified value.
+              Matches fields which starts with the specified value.
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEndsWith(System.String,System.Object)">
             <summary>
-            Matches fields which ends with the specified value.
+              Matches fields which ends with the specified value.
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereBetween(System.String,System.Object,System.Object)">
             <summary>
-            Matches fields where the value is between the specified start and end, exclusive
+              Matches fields where the value is between the specified start and end, exclusive
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="start">The start.</param>
-            <param name="end">The end.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "start">The start.</param>
+            <param name = "end">The end.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereBetweenOrEqual(System.String,System.Object,System.Object)">
             <summary>
-            Matches fields where the value is between the specified start and end, inclusive
+              Matches fields where the value is between the specified start and end, inclusive
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="start">The start.</param>
-            <param name="end">The end.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "start">The start.</param>
+            <param name = "end">The end.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereGreaterThan(System.String,System.Object)">
             <summary>
-            Matches fields where the value is greater than the specified value
+              Matches fields where the value is greater than the specified value
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereGreaterThanOrEqual(System.String,System.Object)">
             <summary>
-            Matches fields where the value is greater than or equal to the specified value
+              Matches fields where the value is greater than or equal to the specified value
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereLessThan(System.String,System.Object)">
             <summary>
-            Matches fields where the value is less than the specified value
+              Matches fields where the value is less than the specified value
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WhereLessThanOrEqual(System.String,System.Object)">
             <summary>
-            Matches fields where the value is less than or equal to the specified value
+              Matches fields where the value is less than or equal to the specified value
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="value">The value.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "value">The value.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.AndAlso">
             <summary>
-            Add an AND to the query
+              Add an AND to the query
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.OrElse">
             <summary>
-            Add an OR to the query
+              Add an OR to the query
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Boost(System.Decimal)">
             <summary>
-            Specifies a boost weight to the last where clause.
-            The higher the boost factor, the more relevant the term will be.
+              Specifies a boost weight to the last where clause.
+              The higher the boost factor, the more relevant the term will be.
             </summary>
-            <param name="boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
+            <param name = "boost">boosting factor where 1.0 is default, less than 1.0 is lower weight, greater than 1.0 is higher weight</param>
             <returns></returns>
             <remarks>
-            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
+              http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Boosting%20a%20Term
             </remarks>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Fuzzy(System.Decimal)">
             <summary>
-            Specifies a fuzziness factor to the single word term in the last where clause
+              Specifies a fuzziness factor to the single word term in the last where clause
             </summary>
-            <param name="fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
+            <param name = "fuzzy">0.0 to 1.0 where 1.0 means closer match</param>
             <returns></returns>
             <remarks>
-            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
+              http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Fuzzy%20Searches
             </remarks>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.Proximity(System.Int32)">
             <summary>
-            Specifies a proximity distance for the phrase in the last where clause
+              Specifies a proximity distance for the phrase in the last where clause
             </summary>
-            <param name="proximity">number of words within</param>
+            <param name = "proximity">number of words within</param>
             <returns></returns>
             <remarks>
-            http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
+              http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Proximity%20Searches
             </remarks>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WithinRadiusOf(System.Double,System.Double,System.Double)">
             <summary>
-            Filter matches to be inside the specified radius
+              Filter matches to be inside the specified radius
             </summary>
-            <param name="radius">The radius.</param>
-            <param name="latitude">The latitude.</param>
-            <param name="longitude">The longitude.</param>
+            <param name = "radius">The radius.</param>
+            <param name = "latitude">The latitude.</param>
+            <param name = "longitude">The longitude.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.SortByDistance">
             <summary>
-            Sorts the query results by distance.
+              Sorts the query results by distance.
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.OrderBy(System.String[])">
             <summary>
-            Order the results by the specified fields
+              Order the results by the specified fields
             </summary>
             <remarks>
-            The fields are the names of the fields to sort, defaulting to sorting by ascending.
-            You can prefix a field name with '-' to indicate sorting by descending or '+' to sort by ascending
+              The fields are the names of the fields to sort, defaulting to sorting by ascending.
+              You can prefix a field name with '-' to indicate sorting by descending or '+' to sort by ascending
             </remarks>
-            <param name="fields">The fields.</param>
+            <param name = "fields">The fields.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOfNow">
             <summary>
-            Instructs the query to wait for non stale results as of now.
+              Instructs the query to wait for non stale results as of now.
             </summary>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
             <summary>
-            Instructs the query to wait for non stale results as of now for the specified timeout.
+              Instructs the query to wait for non stale results as of now for the specified timeout.
             </summary>
-            <param name="waitTimeout">The wait timeout.</param>
+            <param name = "waitTimeout">The wait timeout.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOf(System.DateTime)">
             <summary>
-            Instructs the query to wait for non stale results as of the cutoff date.
+              Instructs the query to wait for non stale results as of the cutoff date.
             </summary>
-            <param name="cutOff">The cut off.</param>
+            <param name = "cutOff">The cut off.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
             <summary>
-            Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
+              Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
             </summary>
-            <param name="cutOff">The cut off.</param>
-            <param name="waitTimeout">The wait timeout.</param>
+            <param name = "cutOff">The cut off.</param>
+            <param name = "waitTimeout">The wait timeout.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResults">
             <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results.
-            This shouldn't be used outside of unit tests unless you are well aware of the implications
+              EXPERT ONLY: Instructs the query to wait for non stale results.
+              This shouldn't be used outside of unit tests unless you are well aware of the implications
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResults(System.TimeSpan)">
             <summary>
-            EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
-            This shouldn't be used outside of unit tests unless you are well aware of the implications
+              EXPERT ONLY: Instructs the query to wait for non stale results for the specified wait timeout.
+              This shouldn't be used outside of unit tests unless you are well aware of the implications
             </summary>
-            <param name="waitTimeout">The wait timeout.</param>
+            <param name = "waitTimeout">The wait timeout.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.AddOrder(System.String,System.Boolean)">
             <summary>
-            Adds an ordering for a specific field to the query
+              Adds an ordering for a specific field to the query
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="descending">if set to <c>true</c> [descending].</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "descending">if set to <c>true</c> [descending].</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.AddOrder(System.String,System.Boolean,System.Type)">
             <summary>
-            Adds an ordering for a specific field to the query and specifies the type of field for sorting purposes
+              Adds an ordering for a specific field to the query and specifies the type of field for sorting purposes
             </summary>
-            <param name="fieldName">Name of the field.</param>
-            <param name="descending">if set to <c>true</c> [descending].</param>
-            <param name="fieldType">the type of the field to be sorted.</param>
+            <param name = "fieldName">Name of the field.</param>
+            <param name = "descending">if set to <c>true</c> [descending].</param>
+            <param name = "fieldType">the type of the field to be sorted.</param>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.OpenSubclause">
             <summary>
-            Simplified method for opening a new clause within the query
+              Simplified method for opening a new clause within the query
             </summary>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.CloseSubclause">
             <summary>
-            Simplified method for closing a clause within the query
+              Simplified method for closing a clause within the query
             </summary>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.GroupBy(Raven.Abstractions.Data.AggregationOperation,System.String[])">
             <summary>
-             Instruct the index to group by the specified fields using the specified aggregation operation
+              Instruct the index to group by the specified fields using the specified aggregation operation
             </summary>
-             <remarks>
-             This is only valid on dynamic indexes queries
-             </remarks>
+            <remarks>
+              This is only valid on dynamic indexes queries
+            </remarks>
         </member>
         <member name="P:Raven.Client.IDocumentQueryBase`2.Not">
             <summary>
-            Negate the next operation
+              Negate the next operation
             </summary>
         </member>
         <member name="M:Raven.Client.IAsyncDocumentQuery`1.SelectFields``1(System.String[])">
@@ -2638,6 +2725,11 @@
             </summary>
             <param name="entity">The entity.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.TryGetIdFromInstance(System.Object,System.String@)">
+            <summary>
+            Attempts to get the document key from an instance 
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.CreatePutEntityCommand(System.Object,Raven.Client.Document.InMemoryDocumentSessionOperations.DocumentMetadata)">
             <summary>
@@ -3192,8 +3284,6 @@
             <summary>
             Get the default tag name for the specified type.
             </summary>
-            <param name="t">The t.</param>
-            <returns></returns>
         </member>
         <member name="M:Raven.Client.Document.DocumentConvention.GetTypeTagName(System.Type)">
             <summary>
@@ -3221,6 +3311,12 @@
             Creates the serializer.
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:Raven.Client.Document.DocumentConvention.FailoverBehavior">
+            <summary>
+            How should we behave in a replicated environment when we can't 
+            reach the primary node and need to failover to secondary node(s).
+            </summary>
         </member>
         <member name="P:Raven.Client.Document.DocumentConvention.CustomizeJsonSerializer">
             <summary>
@@ -4193,6 +4289,48 @@
             IMPORTANT: Using Guid.NewGuid() to set this value is almost certainly a mistake, you should set
             it to a value that remains consistent between restart of the system.
             </summary>
+        </member>
+        <member name="T:Raven.Client.Document.FailoverBehavior">
+            <summary>
+            Options for handling failover scenarios in replication environment
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.FailoverBehavior.AllowReadsFromSecondaries">
+            <summary>
+            Allow to read from the secondary server(s), but immediately fail writes
+            to the secondary server(s).
+            </summary>
+            <remarks>
+            This is usually the safest approach, because it means that you can still serve
+            read requests when the primary node is down, but don't have to deal with replication
+            conflicts if there are writes to the secondary when the primary node is down.
+            </remarks>
+        </member>
+        <member name="F:Raven.Client.Document.FailoverBehavior.AllowReadsFromSecondariesAndWritesToSecondaries">
+            <summary>
+            Allow to read from the secondary server(s), but immediately fail writes
+            to the secondary server(s).
+            </summary>
+            <remarks>
+            Choosing this option requires that you'll have some way of propogating changes
+            made to the secondary server(s) to the primary node when the primary goes back
+            up. 
+            A typical strategy to handle this is to make sure that the replication is setup
+            in a master/master relationship, so any writes to the secondary server will be 
+            replicated to the master server.
+            Please note, however, that this means that your code must be prepared to handle
+            conflicts in case of different writes to the same document across nodes.
+            </remarks>
+        </member>
+        <member name="F:Raven.Client.Document.FailoverBehavior.FailImmediately">
+            <summary>
+            Immediately fail the request, without attempting any failover. This is true for both 
+            reads and writes
+            </summary>
+            <remarks>
+            This is mostly useful when your replication setup is meant to be used for backups / external
+            needs, and is not meant to be a failover storage
+            </remarks>
         </member>
         <member name="T:Raven.Client.Document.HiLoKeyGenerator">
             <summary>
@@ -5699,6 +5837,36 @@
             Perform the actual generation
             </summary>
         </member>
+        <member name="T:Raven.Client.Indexes.RavenCollections">
+            <summary>
+            Create an index that aggregate all the document collections in the database
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.RavenCollections.CreateIndexDefinition">
+            <summary>
+            Returns the index definition
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.RavenCollections.IndexName">
+            <summary>
+            Returns the index name
+            </summary>
+        </member>
+        <member name="T:Raven.Client.Indexes.RavenDocumentsByEntityName">
+            <summary>
+             Create an index that allows to tag entities by their entity name
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.RavenDocumentsByEntityName.CreateIndexDefinition">
+            <summary>
+            Creates the Raven/DocumentsByEntityName index
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.RavenDocumentsByEntityName.IndexName">
+            <summary>
+            Return the actual index name
+            </summary>
+        </member>
         <member name="T:Raven.Client.Indexes.SpatialIndex">
             <summary>
             Accessor for generating spatial queries on the client side
@@ -6269,24 +6437,6 @@
             <summary>
             The time when the query results were unstale.
             </summary>
-        </member>
-        <member name="T:Raven.Client.RavenExtensions">
-            <summary>
-            Extensions that provide nicer API for using Raven Client API
-            </summary>
-        </member>
-        <member name="F:Raven.Client.RavenExtensions.RavenDocumentByEntityName">
-            <summary>
-            Constant for the built-in index 
-            </summary>
-        </member>
-        <member name="M:Raven.Client.RavenExtensions.LuceneQuery``1(Raven.Client.ISyncAdvancedSessionOperation)">
-            <summary>
-            Query the "Raven/DocumentsByEntityName" index for all instances of a specified tag.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="session">The session.</param>
-            <returns></returns>
         </member>
         <member name="T:Raven.Client.Shard.ShardedDocumentSession">
             <summary>

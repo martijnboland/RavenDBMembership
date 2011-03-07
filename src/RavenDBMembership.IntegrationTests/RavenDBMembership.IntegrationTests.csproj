@@ -58,25 +58,25 @@
       <HintPath>..\..\tools\PowerAssert\PowerAssert.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Embedded">
-      <HintPath>..\..\lib\Raven.Client.Embedded.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Client.Embedded.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\..\lib\Raven.Client.Lightweight.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Database">
-      <HintPath>..\..\lib\Raven.Database.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Database.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Http">
-      <HintPath>..\..\lib\Raven.Http.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Http.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Munin">
-      <HintPath>..\..\lib\Raven.Munin.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Munin.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Storage.Esent">
-      <HintPath>..\..\lib\Raven.Storage.Esent.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Storage.Esent.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Storage.Managed">
-      <HintPath>..\..\lib\Raven.Storage.Managed.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Storage.Managed.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
