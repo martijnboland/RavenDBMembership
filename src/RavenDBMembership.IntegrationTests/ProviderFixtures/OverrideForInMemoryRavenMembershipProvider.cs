@@ -1,4 +1,5 @@
-﻿using System.Web.Security;
+﻿using System.ComponentModel;
+using System.Web.Security;
 using Raven.Client.Client;
 using RavenDBMembership.Provider;
 

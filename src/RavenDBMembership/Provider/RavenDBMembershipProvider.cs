@@ -13,13 +13,13 @@ using Raven.Http.Exceptions;
 
 namespace RavenDBMembership.Provider
 {
-    public class RavenDBMembershipProvider : MembershipProvider, IPasswordChecker
+    public class RavenDBMembershipProvider : MembershipProviderValidated
     {
         private string _providerName = "RavenDBMembership";
 		private IDocumentStore documentStore;
 	    private int _minRequiredPasswordLength = 7;
 
-	    public IDocumentStore DocumentStore
+        public IDocumentStore DocumentStore
 		{
 			get 
 			{
@@ -62,7 +62,7 @@ namespace RavenDBMembership.Provider
 			base.Initialize(name, config);
 		}
 
-		public override bool ChangePassword(string username, string oldPassword, string newPassword)
+		public override bool CheckedChangePassword(string username, string oldPassword, string newPassword)
 		{
 		    using (var session = this.DocumentStore.OpenSession())
 			{
@@ -88,7 +88,7 @@ namespace RavenDBMembership.Provider
 			throw new NotImplementedException();
 		}
 
-		public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
+		public override MembershipUser CheckedCreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
 		{
             if (password.Length < MinRequiredPasswordLength)
                 throw new MembershipCreateUserException(MembershipCreateStatus.InvalidPassword);
@@ -395,7 +395,7 @@ namespace RavenDBMembership.Provider
 	        return CheckPassword(username, password, updateLastLogin);
 	    }
 
-        public bool CheckPassword(string username, string password, bool updateLastLogin)
+        public override bool CheckPassword(string username, string password, bool updateLastLogin)
 	    {
 	        username = username.Trim();
 	        password = password.Trim();
