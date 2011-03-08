@@ -7,7 +7,7 @@ namespace RavenDBMembership.IntegrationTests
 {
     public abstract class SpecificationForAllMembershipProviders : MembershipSpecification
     {
-        public abstract void SpecifyForEach(bool usingOriginalMembershipProvider);
+        public abstract void SpecifyForEach(bool testingOriginalMembershipProvider);
 
         public sealed override void Specify()
         {

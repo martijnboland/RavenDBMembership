@@ -11,7 +11,7 @@ namespace RavenDBMembership.IntegrationTests
     {
         public abstract int GetMinimumPasswordLength();
 
-        public override void SpecifyForEach(bool usingOriginalMembershipProvider)
+        public override void SpecifyForEach(bool testingOriginalMembershipProvider)
         {
             given("the configuration file has a minimum password specified", delegate
             {
@@ -78,7 +78,7 @@ namespace RavenDBMembership.IntegrationTests
                             return () => Membership.Provider.ChangePassword(user.UserName, op, np);
                         };
 
-                        then_changing_password_behaves_correctly(usingOriginalMembershipProvider, changePasswordAction, existingUser, password, username);
+                        then_changing_password_behaves_correctly(testingOriginalMembershipProvider, changePasswordAction, existingUser, password, username);
                     });
 
                     when("the user tries to change their password via MembershipUser.ChangePassword()", delegate
@@ -88,13 +88,13 @@ namespace RavenDBMembership.IntegrationTests
                             return () => user.ChangePassword(op, np);
                         };
 
-                        then_changing_password_behaves_correctly(usingOriginalMembershipProvider, changePasswordAction, existingUser, password, username);
+                        then_changing_password_behaves_correctly(testingOriginalMembershipProvider, changePasswordAction, existingUser, password, username);
                     });
                 });
             });
         }
 
-        private void then_changing_password_behaves_correctly(bool usingOriginalMembershipProvider, Func<MembershipUser, string, string, Func<bool>> changePasswordAction, MembershipUser existingUser, string password, string username)
+        private void then_changing_password_behaves_correctly(bool testingOriginalMembershipProvider, Func<MembershipUser, string, string, Func<bool>> changePasswordAction, MembershipUser existingUser, string password, string username)
         {
             when("the user tries to change their password to something too short", delegate
             {
@@ -107,19 +107,29 @@ namespace RavenDBMembership.IntegrationTests
                     var exception = Assert.Throws<ArgumentException>(() => testDelegate());
                 });
 
-                if (usingOriginalMembershipProvider)
+                if (testingOriginalMembershipProvider)
                 {
-                    ignoreBecause("The original SqlMembershipProvider does not check password length on update with MembershipUser.ChangePassword, but it does for MembershipProvider.ChangePassword.");
-                } 
-                then("an exception is thrown that has friendly user string and debug info", delegate
+                    then("an exception is thrown that has programmer-friendly message", delegate
+                    {
+                        var testDelegate = changePasswordAction(existingUser, password, newPassword);
+
+                        var exception = Assert.Throws<ArgumentException>(() => testDelegate());
+
+                        Assert.That(exception.Message, Is.StringContaining("length of parameter 'newPassword' needs to be greater or equal to '" + Membership.MinRequiredPasswordLength));
+                    });
+                }
+                else
                 {
-                    var testDelegate = changePasswordAction(existingUser, password, newPassword);
+                    then("an exception is thrown that has user-friendly message", delegate
+                    {
+                        var testDelegate = changePasswordAction(existingUser, password, newPassword);
 
-                    var exception = Assert.Throws<ArgumentException>(() => testDelegate());
+                        var exception = Assert.Throws<ArgumentException>(() => testDelegate());
 
-                    expect(() => exception.ParamName == "newPassword"); 
-                    Assert.That(exception.Message, Is.StringContaining("Password is shorter than the minimum"));
-                });
+                        expect(() => exception.ParamName == "newPassword");
+                        Assert.That(exception.Message, Is.StringContaining("Password is shorter than the minimum"));
+                    });
+                }
             });
 
             when("the user changes their password to something reasonable", delegate
