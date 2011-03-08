@@ -1,0 +1,6 @@
+RavenDBMembershipUser needs to override any other member of MembershipUser to call into RavenDBMembershipProvider.
+For now, it only overrides MembershipUser.ChangePassword.
+
+MembershipProviderValidated should wrap each override in RavenDBMembership, to include validation equivalent to SqlMembershipProvider's validation.
+
+There's lots of room for optimizing by reducing the number of sessions created, once things are functionally complete.
