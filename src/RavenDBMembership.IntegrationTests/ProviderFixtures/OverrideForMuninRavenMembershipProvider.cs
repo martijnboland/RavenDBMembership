@@ -19,6 +19,8 @@ namespace RavenDBMembership.IntegrationTests.ProviderFixtures
                 RunInMemory = false,
                 DataDirectory = dataDirectory
             };
+            store.Configuration.DefaultStorageTypeName = "munin";
+
             store.Initialize();
 
             return new RavenDBMembershipProviderThatDisposesStore()

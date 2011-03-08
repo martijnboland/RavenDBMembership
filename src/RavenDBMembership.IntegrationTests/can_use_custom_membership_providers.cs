@@ -107,9 +107,9 @@ namespace RavenDBMembership.IntegrationTests
 
         void expect_embedded_TransactionalStorage_FriendlyName_is(string value)
         {
-            expect(() => value.Equals(
-                (GetMembershipDocumentStore() as EmbeddableDocumentStore).DocumentDatabase.TransactionalStorage.
-                    FriendlyName));
+            string friendlyName = (GetMembershipDocumentStore() as EmbeddableDocumentStore).DocumentDatabase.TransactionalStorage.FriendlyName;
+
+            expect(() => value == friendlyName);
         }
 
         public void then_membership_provider_should_be<T>()
