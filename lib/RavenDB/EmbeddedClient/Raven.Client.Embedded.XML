@@ -73,6 +73,11 @@
              Create a new instance
             </summary>
         </member>
+        <member name="M:Raven.Client.Client.EmbededDatabaseCommands.StartsWith(System.String,System.Int32,System.Int32)">
+            <summary>
+            Gets documents for the specified key prefix
+            </summary>
+        </member>
         <member name="M:Raven.Client.Client.EmbededDatabaseCommands.Get(System.String)">
             <summary>
             Gets the document for the specified key.
