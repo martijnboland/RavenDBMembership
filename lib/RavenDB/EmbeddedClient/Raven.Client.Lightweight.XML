@@ -2670,12 +2670,11 @@
             <param name="latitude">The latitude.</param>
             <param name="longitude">The longitude.</param>
         </member>
-        <member name="M:Raven.Client.Document.AsyncSpatialDocumentQuery`1.#ctor(Raven.Client.Document.AsyncDocumentQuery{`0},System.Boolean)">
+        <member name="M:Raven.Client.Document.AsyncSpatialDocumentQuery`1.#ctor(Raven.Client.Document.AsyncDocumentQuery{`0})">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.SpatialDocumentQuery`1"/> class.
             </summary>
             <param name="documentQuery">The document query.</param>
-            <param name="sortByDistance">if set to <c>true</c> the query will be sorted by distance.</param>
         </member>
         <member name="M:Raven.Client.Document.AsyncSpatialDocumentQuery`1.GenerateIndexQuery(System.String)">
             <summary>
@@ -4203,20 +4202,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.IDocumentStore.RegisterListener(Raven.Client.IDocumentDeleteListener)">
-            <summary>
-            Registers the delete listener.
-            </summary>
-            <param name="deleteListener">The delete listener.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.IDocumentStore.RegisterListener(Raven.Client.IDocumentStoreListener)">
-            <summary>
-            Registers the store listener.
-            </summary>
-            <param name="documentStoreListener">The document store listener.</param>
-            <returns></returns>
-        </member>
         <member name="M:Raven.Client.IDocumentStore.OpenAsyncSession">
             <summary>
             Opens the async session.
@@ -5099,12 +5084,11 @@
             <param name="latitude">The latitude.</param>
             <param name="longitude">The longitude.</param>
         </member>
-        <member name="M:Raven.Client.Document.SpatialDocumentQuery`1.#ctor(Raven.Client.Document.DocumentQuery{`0},System.Boolean)">
+        <member name="M:Raven.Client.Document.SpatialDocumentQuery`1.#ctor(Raven.Client.Document.DocumentQuery{`0})">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.SpatialDocumentQuery`1"/> class.
             </summary>
             <param name="documentQuery">The document query.</param>
-            <param name="sortByDistance">if set to <c>true</c> the query will be sorted by distance.</param>
         </member>
         <member name="M:Raven.Client.Document.SpatialDocumentQuery`1.GenerateIndexQuery(System.String)">
             <summary>
@@ -6954,13 +6938,6 @@
             Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
-        <member name="M:Raven.Client.Shard.ShardedDocumentStore.RegisterListener(Raven.Client.IDocumentStoreListener)">
-            <summary>
-            Registers the store listener.
-            </summary>
-            <param name="documentStoreListener">The document store listener.</param>
-            <returns></returns>
-        </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentStore.OpenAsyncSession">
             <summary>
             Opens the async session.
@@ -6999,13 +6976,6 @@
             <summary>
             Initializes this instance.
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Shard.ShardedDocumentStore.RegisterListener(Raven.Client.IDocumentDeleteListener)">
-            <summary>
-            Registers the delete listener.
-            </summary>
-            <param name="deleteListener">The delete listener.</param>
             <returns></returns>
         </member>
         <member name="P:Raven.Client.Shard.ShardedDocumentStore.SharedOperationsHeaders">
