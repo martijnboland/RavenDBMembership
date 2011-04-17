@@ -4,10 +4,10 @@ using System.Configuration.Provider;
 using System.Linq;
 using System.Text;
 using System.Web.Security;
+using Raven.Abstractions.Exceptions;
 using Raven.Client;
 using Microsoft.Practices.ServiceLocation;
 using System.Collections.Specialized;
-using Raven.Client.Client;
 using System.IO;
 using Raven.Http.Exceptions;
 

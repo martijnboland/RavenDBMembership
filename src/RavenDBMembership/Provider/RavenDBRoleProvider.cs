@@ -6,7 +6,6 @@ using System.Web.Security;
 using System.Collections.Specialized;
 using Microsoft.Practices.ServiceLocation;
 using Raven.Client;
-using Raven.Client.Client;
 using System.IO;
 
 namespace RavenDBMembership.Provider

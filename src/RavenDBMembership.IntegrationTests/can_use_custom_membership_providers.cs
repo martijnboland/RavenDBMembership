@@ -8,7 +8,7 @@ using System.Web.Security;
 using NJasmine;
 using NUnit.Framework;
 using Raven.Client;
-using Raven.Client.Client;
+using Raven.Client.Embedded;
 using Raven.Database.Config;
 using RavenDBMembership.IntegrationTests.ProviderFixtures;
 using RavenDBMembership.Provider;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
-using Raven.Client.Client;
 using RavenDBMembership.Provider;
 using System.Web.Security;
 using Raven.Client;
