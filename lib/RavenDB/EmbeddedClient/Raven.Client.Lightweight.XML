@@ -3072,6 +3072,20 @@
             <param name="id">The id.</param>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.MultiLoadAsync``1(System.String[])">
             <summary>
             Begins the async multi load operation
@@ -3287,6 +3301,20 @@
             Dynamically query RavenDB using Lucene syntax
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.LoadAsync``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.LoadAsync``1(System.String)">
             <summary>
             Begins the async load operation
@@ -3384,6 +3412,13 @@
             Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentConvention"/> class.
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.DocumentConvention.DefaultFindFullDocumentKeyFromValueTypeIdentifier(System.ValueType,System.Type)">
+            <summary>
+             Find the full document name assuming that we are using the standard conventions
+             for generating a document key
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Raven.Client.Document.DocumentConvention.GenerateDocumentKeyUsingIdentity(Raven.Client.Document.DocumentConvention,System.Object)">
             <summary>
             Generates the document key using identity.
@@ -3461,6 +3496,12 @@
         <member name="P:Raven.Client.Document.DocumentConvention.FindClrType">
             <summary>
             Gets or sets the function to find the clr type of a document.
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Document.DocumentConvention.FindFullDocumentKeyFromValueTypeIdentifier">
+            <summary>
+            Gets or sets the function to find the full document key based on the type of a document
+            and the value type identifier (just the numeric part of the id).
             </summary>
         </member>
         <member name="P:Raven.Client.Document.DocumentConvention.JsonContractResolver">
@@ -3901,6 +3942,20 @@
             </summary>
             <param name="ids">The ids.</param>
         </member>
+        <member name="M:Raven.Client.IDocumentSession.Load``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.IDocumentSession.Query``1(System.String)">
             <summary>
             Queries the specified index using Linq.
@@ -4067,6 +4122,20 @@
             Loads the specified entities with the specified ids.
             </summary>
             <param name="ids">The ids.</param>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentSession.Load``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
         </member>
         <member name="M:Raven.Client.Document.DocumentSession.Query``1(System.String)">
             <summary>
@@ -4548,6 +4617,20 @@
             <param name="id">The id.</param>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Document.ILoaderWithInclude`1.Load(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Document.ILoaderWithInclude`1.Load``1(System.String[])">
             <summary>
             Loads the specified ids.
@@ -4562,6 +4645,20 @@
             <typeparam name="TResult"></typeparam>
             <param name="id">The id.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.ILoaderWithInclude`1.Load``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
         </member>
         <member name="T:Raven.Client.Document.MultiLoaderWithInclude`1">
             <summary>
@@ -4593,6 +4690,20 @@
             </summary>
             <param name="id">The id.</param>
         </member>
+        <member name="M:Raven.Client.Document.MultiLoaderWithInclude`1.Load(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Document.MultiLoaderWithInclude`1.#ctor(Raven.Client.Document.DocumentSession)">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Document.MultiLoaderWithInclude`1"/> class.
@@ -4612,6 +4723,20 @@
             </summary>
             <typeparam name="TResult"></typeparam>
             <param name="id">The id.</param>
+        </member>
+        <member name="M:Raven.Client.Document.MultiLoaderWithInclude`1.Load``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
         </member>
         <member name="T:Raven.Client.Document.MultiTypeHiLoKeyGenerator">
             <summary>
@@ -5916,7 +6041,7 @@
         </member>
         <member name="T:Raven.Client.Indexes.IndexCreation">
             <summary>
-            Helper class for creating indexed from implementations of <see cref="T:Raven.Client.Indexes.AbstractIndexCreationTask"/>.
+            Helper class for creating indexes from implementations of <see cref="T:Raven.Client.Indexes.AbstractIndexCreationTask"/>.
             </summary>
         </member>
         <member name="M:Raven.Client.Indexes.IndexCreation.CreateIndexes(System.Reflection.Assembly,Raven.Client.IDocumentStore)">
@@ -6553,6 +6678,12 @@
              implementation of In operator
             </summary>
         </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Skip``1(Raven.Client.Linq.IRavenQueryable{``0},System.Int32)">
+            <summary>
+            Bypasses a specified number of elements in a sequence and then returns the remaining elements.
+            </summary>
+            Summary:
+        </member>
         <member name="T:Raven.Client.Linq.RavenQueryProvider`1">
             <summary>
             An implementation of <see cref="T:Raven.Client.Linq.IRavenQueryProvider"/>
@@ -6728,6 +6859,20 @@
             <typeparam name="T"></typeparam>
             <param name="ids">The ids.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentSession.Load``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
         </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentSession.Include(System.String)">
             <summary>
