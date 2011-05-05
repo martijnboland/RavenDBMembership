@@ -1287,7 +1287,7 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.ITypeConverter.ConvertFrom(System.String,System.Object)">
+        <member name="M:Raven.Client.Converters.ITypeConverter.ConvertFrom(System.String,System.Object,System.Boolean)">
             <summary>
             Converts the given object to the type of this converter.
             </summary>
@@ -1296,6 +1296,7 @@
             </returns>
             <param name="tag">The tag prefix to use</param>
             <param name="value">The <see cref="T:System.Object"/> to convert. </param>
+            <param name="allowNull">Whatever null is a valid value</param>
             <exception cref="T:System.NotSupportedException">The conversion cannot be performed. </exception>
         </member>
         <member name="M:Raven.Client.Converters.ITypeConverter.ConvertTo(System.String)">
@@ -1317,14 +1318,13 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.GuidConverter.ConvertFrom(System.String,System.Object)">
+        <member name="M:Raven.Client.Converters.GuidConverter.ConvertFrom(System.String,System.Object,System.Boolean)">
             <summary>
             Converts the given object to the type of this converter, using the specified context and culture information.
             </summary>
             <returns>
             An <see cref="T:System.Object"/> that represents the converted value.
             </returns>
-            <param name="value">The <see cref="T:System.Object"/> to convert. </param>
             <exception cref="T:System.NotSupportedException">The conversion cannot be performed. </exception>
         </member>
         <member name="M:Raven.Client.Converters.GuidConverter.ConvertTo(System.String)">
@@ -1351,14 +1351,13 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.Int32Converter.ConvertFrom(System.String,System.Object)">
+        <member name="M:Raven.Client.Converters.Int32Converter.ConvertFrom(System.String,System.Object,System.Boolean)">
             <summary>
             Converts the given object to the type of this converter, using the specified context and culture information.
             </summary>
             <returns>
             An <see cref="T:System.Object"/> that represents the converted value.
             </returns>
-            <param name="value">The <see cref="T:System.Object"/> to convert. </param>
             <exception cref="T:System.NotSupportedException">The conversion cannot be performed. </exception>
         </member>
         <member name="M:Raven.Client.Converters.Int32Converter.ConvertTo(System.String)">
@@ -1385,14 +1384,13 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.Int64Converter.ConvertFrom(System.String,System.Object)">
+        <member name="M:Raven.Client.Converters.Int64Converter.ConvertFrom(System.String,System.Object,System.Boolean)">
             <summary>
             Converts the given object to the type of this converter, using the specified context and culture information.
             </summary>
             <returns>
             An <see cref="T:System.Object"/> that represents the converted value.
             </returns>
-            <param name="value">The <see cref="T:System.Object"/> to convert. </param>
             <exception cref="T:System.NotSupportedException">The conversion cannot be performed. </exception>
         </member>
         <member name="M:Raven.Client.Converters.Int64Converter.ConvertTo(System.String)">
@@ -3737,7 +3735,7 @@
             Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentConvention"/> class.
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentConvention.DefaultFindFullDocumentKeyFromNonStringIdentifier(System.Object,System.Type)">
+        <member name="M:Raven.Client.Document.DocumentConvention.DefaultFindFullDocumentKeyFromNonStringIdentifier(System.Object,System.Type,System.Boolean)">
             <summary>
              Find the full document name assuming that we are using the standard conventions
              for generating a document key
