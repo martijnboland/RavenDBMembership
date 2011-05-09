@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RavenDBMembership.IntegrationTests.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AccessibleTempPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">c:\temp</Value>
+    </Setting>
+    <Setting Name="SqlConnectionString" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Database='master';Data Source=.;User Id=testusersdeletesyourdata;Password=1Password0;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

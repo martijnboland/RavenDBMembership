@@ -37,7 +37,7 @@ Sys.Mvc.RequiredValidator.$4=function($p0){for(var $0=0;$0<$p0.length;$0++){var 
 Sys.Mvc.RequiredValidator.$5=function($p0){return (!Sys.Mvc._ValidationUtil.$1($p0.value));}
 Sys.Mvc.RequiredValidator.prototype={validate:function(value,context){var $0=context.fieldContext.elements;if(!$0.length){return true;}var $1=$0[0];if(Sys.Mvc.RequiredValidator.$2($1)){return Sys.Mvc.RequiredValidator.$5($1);}if(Sys.Mvc.RequiredValidator.$0($1)){return Sys.Mvc.RequiredValidator.$3($0);}if(Sys.Mvc.RequiredValidator.$1($1)){return Sys.Mvc.RequiredValidator.$4(($1).options);}return true;}}
 Sys.Mvc.StringLengthValidator=function(minLength,maxLength){this.$1=minLength;this.$0=maxLength;}
-Sys.Mvc.StringLengthValidator.create=function(rule){var $0=rule.ValidationParameters['min'];var $1=rule.ValidationParameters['max'];return Function.createDelegate(new Sys.Mvc.StringLengthValidator($0,$1),new Sys.Mvc.StringLengthValidator($0,$1).validate);}
+Sys.Mvc.StringLengthValidator.create=function(rule){var $0=(rule.ValidationParameters['min']||0);var $1=(rule.ValidationParameters['max']||Number.MAX_VALUE);return Function.createDelegate(new Sys.Mvc.StringLengthValidator($0,$1),new Sys.Mvc.StringLengthValidator($0,$1).validate);}
 Sys.Mvc.StringLengthValidator.prototype={$0:0,$1:0,validate:function(value,context){if(Sys.Mvc._ValidationUtil.$1(value)){return true;}return (this.$1<=value.length&&value.length<=this.$0);}}
 Sys.Mvc._ValidationUtil=function(){}
 Sys.Mvc._ValidationUtil.$0=function($p0){return (!$p0||!$p0.length);}
