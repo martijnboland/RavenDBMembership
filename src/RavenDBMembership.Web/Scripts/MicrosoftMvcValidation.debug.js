@@ -767,8 +767,8 @@ Sys.Mvc.StringLengthValidator.create = function Sys_Mvc_StringLengthValidator$cr
     /// <param name="rule" type="Sys.Mvc.JsonValidationRule">
     /// </param>
     /// <returns type="Sys.Mvc.Validator"></returns>
-    var minLength = rule.ValidationParameters['min'];
-    var maxLength = rule.ValidationParameters['max'];
+    var minLength = (rule.ValidationParameters['min'] || 0);
+    var maxLength = (rule.ValidationParameters['max'] || Number.MAX_VALUE);
     return Function.createDelegate(new Sys.Mvc.StringLengthValidator(minLength, maxLength), new Sys.Mvc.StringLengthValidator(minLength, maxLength).validate);
 }
 Sys.Mvc.StringLengthValidator.prototype = {

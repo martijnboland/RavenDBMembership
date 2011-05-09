@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-1.4.1.js" />
+/// <reference path="jquery-1.4.4.js" />
 /// <reference path="jquery.validate.js" />
 
 /*!
@@ -23,6 +23,17 @@
 
     function splitAndTrim(value) {
         return value.replace(/^\s+|\s+$/g, "").split(/\s*,\s*/g);
+    }
+
+    function getModelPrefix(fieldName) {
+        return fieldName.substr(0, fieldName.lastIndexOf(".") + 1);
+    }
+
+    function appendModelPrefix(value, prefix) {
+        if (value.indexOf("*.") === 0) {
+            value = value.replace("*.", prefix);
+        }
+        return value;
     }
 
     function onError(error, inputElement) {  // 'this' is the form element
@@ -145,6 +156,8 @@
                 }
             });
 
+            jQuery.extend(rules, { "__dummy__": true });
+
             if (!skipAttach) {
                 valInfo.attachValidation();
             }
@@ -251,6 +264,10 @@
         });
     };
 
+    $jQval.addMethod("__dummy__", function (value, element, params) {
+        return true;
+    });
+
     $jQval.addMethod("regex", function (value, element, params) {
         var match;
         if (this.optional(element)) {
@@ -265,7 +282,11 @@
     adapters.addBool("creditcard").addBool("date").addBool("digits").addBool("email").addBool("number").addBool("url");
     adapters.addMinMax("length", "minlength", "maxlength", "rangelength").addMinMax("range", "min", "max", "range");
     adapters.add("equalto", ["other"], function (options) {
-        var element = $(options.form).find(":input[name=" + options.params.other + "]")[0];
+        var prefix = getModelPrefix(options.element.name),
+            other = options.params.other,
+            fullOtherName = appendModelPrefix(other, prefix),
+            element = $(options.form).find(":input[name=" + fullOtherName + "]")[0];
+
         setValidationValues(options, "equalTo", element);
     });
     adapters.add("required", function (options) {
@@ -274,15 +295,18 @@
             setValidationValues(options, "required", true);
         }
     });
-    adapters.add("remote", ["url", "type", "fields"], function (options) {
+    adapters.add("remote", ["url", "type", "additionalfields"], function (options) {
         var value = {
             url: options.params.url,
             type: options.params.type || "GET",
             data: {}
-        };
-        $.each(splitAndTrim(options.params.fields || options.element.name), function (i, fieldName) {
-            value.data[fieldName] = function () {
-                return $(options.form).find(":input[name='" + fieldName + "']").val();
+        },
+            prefix = getModelPrefix(options.element.name);
+
+        $.each(splitAndTrim(options.params.additionalfields || options.element.name), function (i, fieldName) {
+            var paramName = appendModelPrefix(fieldName, prefix);
+            value.data[paramName] = function () {
+                return $(options.form).find(":input[name='" + paramName + "']").val();
             };
         });
 
