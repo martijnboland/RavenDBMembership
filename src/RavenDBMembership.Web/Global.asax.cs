@@ -12,7 +12,6 @@ using Raven.Client;
 using Castle.MicroKernel.Registration;
 using System.Reflection;
 using System.IO;
-using Raven.Http;
 
 namespace RavenDBMembership.Web
 {

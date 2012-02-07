@@ -9,7 +9,6 @@ using Raven.Client;
 using Microsoft.Practices.ServiceLocation;
 using System.Collections.Specialized;
 using System.IO;
-using Raven.Http.Exceptions;
 
 namespace RavenDBMembership.Provider
 {
