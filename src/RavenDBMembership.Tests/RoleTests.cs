@@ -29,7 +29,7 @@ namespace RavenDBMembership.Tests
 				{
 					var role = session.Query<Role>().FirstOrDefault();
 					Assert.NotNull(role);
-                    Assert.Equal("raven/authorization/roles/Users", role.Id);
+                    Assert.Equal("raven/authorization/roles/users", role.Id.ToLowerInvariant());
 				}
 			}
 		}
@@ -54,7 +54,7 @@ namespace RavenDBMembership.Tests
 				{
 					var role = session.Query<Role>().FirstOrDefault();
 					Assert.NotNull(role);
-                    Assert.Equal("raven/authorization/roles/MyApplication/Users", role.Id);
+                    Assert.Equal("raven/authorization/roles/myapplication/users", role.Id.ToLowerInvariant());
 				}
 			}
 		}
@@ -81,7 +81,7 @@ namespace RavenDBMembership.Tests
 					var roles = session.Query<Role>().ToList();
 					Assert.Equal(2, roles.Count);
 					var childRoleFromDb = roles.Single(r => r.ParentRoleId != null);
-					Assert.Equal("raven/authorization/roles/Users/Contributors", childRoleFromDb.Id);
+					Assert.Equal("raven/authorization/roles/users/contributors", childRoleFromDb.Id.ToLowerInvariant());
 				}
 			}
 		}

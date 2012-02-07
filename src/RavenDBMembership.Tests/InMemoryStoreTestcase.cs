@@ -22,7 +22,6 @@ namespace RavenDBMembership.Tests
 			var documentStore = new EmbeddableDocumentStore
 			{
                 DataDirectory = directory
-				//RunInMemory = true
 			};
 			documentStore.Initialize();
 			return documentStore;
