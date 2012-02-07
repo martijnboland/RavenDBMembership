@@ -77,8 +77,7 @@ namespace RavenDBMembership.Web
 		{
 			var documentStore = new EmbeddableDocumentStore
 			{
-				DataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"App_Data\RavenDB"),
-				UseEmbeddedHttpServer = true
+				DataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"App_Data\RavenDB")
 			};
 			documentStore.Initialize();
 			return documentStore;
