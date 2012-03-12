@@ -21,7 +21,7 @@ namespace RavenDBMembership
 		public User()
 		{
 			Roles = new List<string>();
-			Id = "raven/authorization/users/"; // db assigns id
+			Id = "authorization/users/"; // db assigns id
 		}
 	}
 }

@@ -43,7 +43,7 @@ namespace RavenDBMembership
 			}
 			else
 			{
-				var defaultNameSpace = "raven/authorization/roles/";
+				var defaultNameSpace = "authorization/roles/";
 				// Also use application name for ID generation so we can have multiple roles with the same name.
 				if (!String.IsNullOrEmpty(this.ApplicationName))
 				{
