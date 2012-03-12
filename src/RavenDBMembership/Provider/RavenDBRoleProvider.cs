@@ -162,7 +162,7 @@ namespace RavenDBMembership.Provider
 				{
 					// Find users
 					var users = from u in session.Query<User>()
-								where u.Roles.Contains(role.Id) && u.Username.Contains(usernameToMatch)
+								where u.Roles.Any(r => r == role.Id) && u.Username.Contains(usernameToMatch)
 								select u.Username;
 					return users.ToArray();
 				}
@@ -191,7 +191,7 @@ namespace RavenDBMembership.Provider
 				if (user.Roles.Any())
 				{
 					var dbRoles = session.Query<Role>().ToList();
-					return dbRoles.Where(r => user.Roles.Contains(r.Id)).Select(r => r.Name).ToArray();
+					return dbRoles.Where(r => user.Roles.Any(role => role == r.Id)).Select(r => r.Name).ToArray();
 				}
 				return new string[0];
 			}
@@ -207,7 +207,7 @@ namespace RavenDBMembership.Provider
 				if (role != null)
 				{
 					var usernames = from u in session.Query<User>()
-									where u.Roles.Contains(role.Id)
+									where u.Roles.Any(r => r == role.Id)
 									select u.Username;
 					return usernames.ToArray();
 				}
@@ -219,9 +219,7 @@ namespace RavenDBMembership.Provider
 		{
 			using (var session = this.DocumentStore.OpenSession())
 			{
-				var user = session.Query<User>()
-					.Where(u => u.Username == username && u.ApplicationName == this.ApplicationName)
-					.SingleOrDefault();
+				var user = session.Query<User>().SingleOrDefault(u => u.Username == username && u.ApplicationName == this.ApplicationName);
 				if (user != null)
 				{
 					var role = (from r in session.Query<Role>()
