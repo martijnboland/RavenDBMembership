@@ -165,14 +165,12 @@ namespace RavenDBMembership.Web.Controllers
 			if (String.IsNullOrEmpty(roleName))
 			{
 				ModelState.AddModelError("roleName", "Name is required");
-				return ManageRoles();
 			}
 			else
 			{
 				MembershipService.AddRole(roleName);
-				return RedirectToAction("ManageRoles");
 			}
-
+			return RedirectToAction("ManageRoles");
 		}
 
 		public ActionResult EditUser(string username)

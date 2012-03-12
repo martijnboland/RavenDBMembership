@@ -10,3 +10,5 @@ _ReSharper.*
 *.aps
 *.suo
 *.sln.cache
+
+/src/RavenDBMembership.Web/App_Data

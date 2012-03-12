@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Linq;
-using System.Text;
 using System.Web.Security;
 using Raven.Abstractions.Exceptions;
 using Raven.Client;
 using Microsoft.Practices.ServiceLocation;
 using System.Collections.Specialized;
-using System.IO;
 
 namespace RavenDBMembership.Provider
 {
@@ -116,8 +114,8 @@ namespace RavenDBMembership.Provider
                 try
                 {
                     session.Store(user);
-                    session.Store(new ReservationForUniqueFieldValue() { Id = "username/" + user.Username });
-                    session.Store(new ReservationForUniqueFieldValue() { Id = "email/" + user.Email });
+                    session.Store(new ReservationForUniqueFieldValue { Id = "username/" + user.Username });
+                    session.Store(new ReservationForUniqueFieldValue { Id = "email/" + user.Email });
 
                     session.SaveChanges();
 
